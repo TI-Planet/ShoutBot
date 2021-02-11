@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
+import os
 import json
-
+from dotenv import load_dotenv
 from discord.ext import commands
 
 from src.tiplanet import tiplanet
 
-def action() :
-	print("test")
+load_dotenv()
 
 __version__ = "under developpement"
 
@@ -19,11 +19,10 @@ with open("config.json", "r") as file:
 bot = commands.Bot(command_prefix=config["PREFIX"])
 chat = tiplanet(config)
 
+
 @bot.event
 async def on_ready():
 	print(f"Bot {bot.user.name} connected on {len(bot.guilds)} servers")
-
-	
 
 
 @bot.event
@@ -35,4 +34,4 @@ async def on_message(message):
 		await message.channel.send(message.content)
 
 
-bot.run(config["TOKEN"])
+bot.run(os.getenv('DISCORD_TOKEN'))

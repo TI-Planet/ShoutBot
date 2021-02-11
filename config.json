@@ -1,19 +1,18 @@
 {
-  "TOKEN": "",
-  "PREFIX": "/",
+	"PREFIX": "/",
 
-  "SHOUTBOX": {
-    "channel": 809440143734996992
-  },
+	"SHOUTBOX": {
+		"channel": 809440143734996992
+	},
 
-  "TIPLANET": {
-    "host": "tiplanet.org",
-    "login": "/forum/ucp.php?mode=login",
-    "logout": "/forum/ucp.php?mode=logout",
-    "chat": "/forum/chat/?ajax=true&shoutbox=true",
-    "user": {
-      "username": "",
-      "password": ""
-    }
-  }
+	"TIPLANET": {
+		"host": "tiplanet.org",
+		"login": "/forum/ucp.php?mode=login",
+		"logout": "/forum/ucp.php?mode=logout",
+		"chat": "/forum/chat/?ajax=true&shoutbox=true",
+		"user": {
+			"username": "",
+			"password": ""
+		}
+	}
 }
