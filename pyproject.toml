@@ -9,6 +9,7 @@ license = "GPL-3.0-or-later"
 python = "^3.8"
 "discord.py" = "^1.6.0"
 beautifulsoup4 = "^4.9.3"
+requests = "^2.25.1"
 
 [tool.poetry.dev-dependencies]
 
