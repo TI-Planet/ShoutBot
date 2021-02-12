@@ -1,12 +1,14 @@
 import requests
-
 from bs4 import BeautifulSoup
+
+from .bbcodeParser import bbcodeParser
 
 
 class tiplanet:
 	def __init__(self, config):
 		self.config = config["TIPLANET"]
 		self.session = requests.Session()
+		self.parser = bbcodeParser()
 		self.login()
 
 	def login(self):
@@ -46,10 +48,11 @@ class tiplanet:
 				"userId": message.get("userid"),
 				"userRole": message.get("userrole"),
 				"userName": message.username.text,
-				'content': message.find('text').text
+				'content': self.parser.parse_bbcode2markdown(message.find('text').text)
 			})
 
 		return messages
 
 	def getUrl(self, url):
 		return f"https://{self.config['host']}{url}"
+
