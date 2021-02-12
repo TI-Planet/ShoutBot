@@ -35,8 +35,21 @@ class tiplanet:
 		self.session.post(f"{logoutUrl}&sid={sid}", data=payload)
 
 	def getChat(self):
-		r = self.session.get(self.getUrl(self.config["chat"]))
-		print(r.text)
+		chat = self.session.get(self.getUrl(self.config["chat"]))
+		soup = BeautifulSoup(chat.text, "html.parser")
+
+		messages = []
+
+		for message in soup.find_all("message"):
+			messages.append({
+				"id": message.get("id"),
+				"userId": message.get("userid"),
+				"userRole": message.get("userrole"),
+				"userName": message.username.text,
+				'content': message.find('text').text
+			})
+
+		return messages
 
 	def getUrl(self, url):
 		return f"https://{self.config['host']}{url}"
