@@ -1,21 +1,14 @@
 #!/usr/bin/env python3
 
-import os
-import json
-from dotenv import load_dotenv
 from discord.ext import commands
 
+from src.config import config
 from src.tiplanet import tiplanet
 
-load_dotenv()
 
 __version__ = "under developpement"
 
-# Configuration
-with open("config.json", "r") as file:
-	config = json.load(file)
-
-
+config = config().LoadConfig()
 bot = commands.Bot(command_prefix=config["PREFIX"])
 chat = tiplanet(config)
 
@@ -34,4 +27,4 @@ async def on_message(message):
 		await message.channel.send(message.content)
 
 
-bot.run(os.getenv('DISCORD_TOKEN'))
+bot.run(config["DISCORD_TOKEN"])

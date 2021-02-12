@@ -9,10 +9,7 @@
 		"host": "tiplanet.org",
 		"login": "/forum/ucp.php?mode=login",
 		"logout": "/forum/ucp.php?mode=logout",
-		"chat": "/forum/chat/?ajax=true&shoutbox=true",
-		"user": {
-			"username": "",
-			"password": ""
-		}
+		"chat": "/forum/chat/?ajax=true",
+		"user": {}
 	}
 }
