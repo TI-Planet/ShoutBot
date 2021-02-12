@@ -50,9 +50,12 @@ class tiplanet:
 				"userId": message.get("userid"),
 				"userRole": message.get("userrole"),
 				"userName": message.username.text,
-				"content": html.unescape(message.find('text').text)
+				"content": html.unescape(self.parser.parse_bbcode2markdown(message.find('text').text))
 			})
 
+		for message in messages:
+			print(message)
+			self.postMessage(message)
 		return messages
 
 	def postMessage(self, message):

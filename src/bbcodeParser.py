@@ -12,16 +12,13 @@ class bbcodeParser:
 				author = options['quote']
 			return f'> {value} — {author}\n\n'
 
-		self.bbcode2markdown = bbcode.Parser(
-			url_template="{text}(<{href}>)", install_defaults=False)
-		self.bbcode2markdown.add_simple_formatter(
-			'ispoiler', '|| %(value)s ||')
+		self.bbcode2markdown = bbcode.Parser(url_template="{text}(<{href}>)", install_defaults=False, escape_html=False)
+		self.bbcode2markdown.add_simple_formatter('ispoiler', '|| %(value)s ||')
 		self.bbcode2markdown.add_simple_formatter('color', '%(value)s')
 		self.bbcode2markdown.add_simple_formatter('b', '**%(value)s**')
 		self.bbcode2markdown.add_simple_formatter('u', '__%(value)s__')
-		self.bbcode2markdown.add_simple_formatter('i', '__%(value)s__')
-		self.bbcode2markdown.add_formatter(
-			'quote', render_quote, strip=True, swallow_trailing_newline=True)
+		self.bbcode2markdown.add_simple_formatter('i', '*%(value)s*')
+		self.bbcode2markdown.add_formatter('quote', render_quote, strip=True, swallow_trailing_newline=True)
 
 	def parse_bbcode2markdown(self, content):
 		return self.bbcode2markdown.format(content)
