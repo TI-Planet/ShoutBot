@@ -26,3 +26,5 @@ class config:
         self.config["DISCORD_TOKEN"] = os.getenv('DISCORD_TOKEN')
         self.config["TIPLANET"]["user"]["username"] = os.getenv('TIPLANET_USER_USERNAME') 
         self.config["TIPLANET"]["user"]["password"] = os.getenv('TIPLANET_USER_PASSWORD') 
+        self.config["TIPLANET"]['webhook']['id'] = os.getenv('TIPLANET_WEBHOOK_ID') 
+        self.config["TIPLANET"]['webhook']['token'] = os.getenv('TIPLANET_WEBHOOK_TOKEN') 

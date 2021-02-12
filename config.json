@@ -13,6 +13,7 @@
 			"sid": "phpbb3_pasr5_sid"
 		},
 		"chat": "/forum/chat/?ajax=true",
-		"user": {}
+		"user": {},
+		"webhook": {}
 	}
 }

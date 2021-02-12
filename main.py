@@ -16,7 +16,7 @@ chat = tiplanet(config)
 @bot.event
 async def on_ready():
 	print(f"Bot {bot.user.name} connected on {len(bot.guilds)} servers")
-	print(chat.getChat())
+	chat.getChat()
 
 
 @bot.event
@@ -24,8 +24,8 @@ async def on_message(message):
 	if message.author == bot.user:
 		return
 
-	if (message.channel.id == config["SHOUTBOX"]["channel"]):
-		await message.channel.send(message.content)
+	# if (message.channel.id == config["SHOUTBOX"]["channel"]):
+	# 	await message.channel.send(message.content)
 
 
 bot.run(config["DISCORD_TOKEN"])

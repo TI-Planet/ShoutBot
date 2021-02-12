@@ -1,3 +1,4 @@
+import html
 import requests
 from bs4 import BeautifulSoup
 
@@ -48,11 +49,19 @@ class tiplanet:
 				"userId": message.get("userid"),
 				"userRole": message.get("userrole"),
 				"userName": message.username.text,
-				'content': self.parser.parse_bbcode2markdown(message.find('text').text)
+				"content": html.unescape(message.find('text').text)
 			})
 
 		return messages
 
+	def postMessage(self, message):
+		payload = {
+			"username": message["userName"],
+			"avatar_url": f"https://tiplanet.org/forum/avatar.php?id={message['userId']}",
+			"content": message["content"],
+		}
+		requests.post(f"https://discord.com/api/webhooks/{self.config['webhook']['id']}/{self.config['webhook']['token']}", data=payload)
+		
 	def getUrl(self, url):
 		return f"https://{self.config['host']}{url}"
 
