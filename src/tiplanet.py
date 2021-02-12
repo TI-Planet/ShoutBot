@@ -25,13 +25,14 @@ class tiplanet:
 
 	def logout(self):
 		logoutUrl = self.getUrl(self.config["logout"])
+		sid = self.session.cookies.get_dict()[self.config["cookies"]["sid"]]
 
 		payload = {
 			'username': self.config["user"]["username"],
 			'password': self.config["user"]["password"],
 		}
 
-		self.session.post(logoutUrl, data=payload)
+		self.session.post(f"{logoutUrl}&sid={sid}", data=payload)
 
 	def getChat(self):
 		r = self.session.get(self.getUrl(self.config["chat"]))
