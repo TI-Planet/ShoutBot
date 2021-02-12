@@ -1,4 +1,5 @@
 import html
+import json
 import requests
 from bs4 import BeautifulSoup
 
@@ -59,9 +60,12 @@ class tiplanet:
 			"username": message["userName"],
 			"avatar_url": f"https://tiplanet.org/forum/avatar.php?id={message['userId']}",
 			"content": message["content"],
+			"allowed_mentions": {
+				"parse": []
+			}
 		}
-		requests.post(f"https://discord.com/api/webhooks/{self.config['webhook']['id']}/{self.config['webhook']['token']}", data=payload)
-		
+		requests.post(f"https://discord.com/api/webhooks/{self.config['webhook']['id']}/{self.config['webhook']['token']}", headers={'Content-Type': 'application/json'}, data=json.dumps(payload))
+
 	def getUrl(self, url):
 		return f"https://{self.config['host']}{url}"
 
