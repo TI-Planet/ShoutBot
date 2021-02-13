@@ -10,7 +10,7 @@ class tiplanet:
 	def __init__(self, config):
 		self.config = config["TIPLANET"]
 		self.session = requests.Session()
-		self.parser = bbcodeParser()
+		self.parser = bbcodeParser(self.config)
 		self.webhook = Webhook.partial(self.config['webhook']['id'], self.config['webhook']['token'], adapter=RequestsWebhookAdapter())
 		self.lastId = None
 		self.login()

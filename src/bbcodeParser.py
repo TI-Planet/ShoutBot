@@ -3,7 +3,8 @@ import html
 import re
 
 class bbcodeParser:
-	def __init__(self):
+	def __init__(self, config):
+		self.config = config
 		self.init_bbcode2markdown()
 
 	def init_bbcode2markdown(self):
@@ -38,5 +39,8 @@ class bbcodeParser:
 			s = s[0:s.rfind('%')]
 			return s
 		msg = re.sub(r'<a rel="nofollow" href="(.*)<\/a>', repl_func, msg)
+
+		for tp_name, ds_name in self.config["emojis"].items():
+			msg = msg.replace(f':{tp_name}:', f'<:{ds_name}>')
 
 		return msg
