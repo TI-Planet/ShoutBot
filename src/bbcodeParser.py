@@ -1,5 +1,6 @@
 import bbcode
 import html
+import re
 
 class bbcodeParser:
 	def __init__(self):
@@ -28,4 +29,14 @@ class bbcodeParser:
 		self.bbcode2markdown.add_formatter('url', render_url, strip=True, swallow_trailing_newline=True)
 
 	def parse_bbcode2markdown(self, content):
-		return html.unescape(html.unescape(self.bbcode2markdown.format(content.replace('[url=/forum', '[url=https://www.tiplanet.org/forum'))))
+		msg = html.unescape(html.unescape(self.bbcode2markdown.format(content.replace('[url=/forum', '[url=https://www.tiplanet.org/forum'))))
+
+		# simple urls are transformed to a weird bugged <a>
+		def repl_func(s):
+			s = s.group(1)
+			s = s[0:int(len(s)/2)]
+			s = s[0:s.rfind('%')]
+			return s
+		msg = re.sub(r'<a rel="nofollow" href="(.*)<\/a>', repl_func, msg)
+
+		return msg
