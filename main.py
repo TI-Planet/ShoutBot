@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import time
 from discord.ext import commands
 
 from src.config import config
@@ -16,9 +17,9 @@ chat = tiplanet(config)
 @bot.event
 async def on_ready():
 	print(f"Bot {bot.user.name} connected on {len(bot.guilds)} servers")
-	chat.getChat()
-	await bot.close()
-
+	while True:
+		chat.updateChat()
+		time.sleep(2)
 
 @bot.event
 async def on_message(message):
@@ -28,5 +29,7 @@ async def on_message(message):
 	# if (message.channel.id == config["SHOUTBOX"]["channel"]):
 	# 	await message.channel.send(message.content)
 
-
-bot.run(config["DISCORD_TOKEN"])
+try:
+	bot.run(config["DISCORD_TOKEN"])
+finally:
+	print('EXITING GRACEFULLY')
