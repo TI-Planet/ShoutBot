@@ -30,7 +30,9 @@ class bbcodeParser:
 		self.bbcode2markdown.add_formatter('url', render_url, strip=True, swallow_trailing_newline=True)
 
 	def parse_bbcode2markdown(self, content):
+		# bbcode and html escaping
 		msg = html.unescape(html.unescape(self.bbcode2markdown.format(content.replace('[url=/forum', '[url=https://www.tiplanet.org/forum'))))
+		msg = re.sub(r'< *br *\/? *>', r'\n', msg)
 
 		# simple urls are transformed to a weird bugged <a>
 		def repl_func(s):
@@ -40,6 +42,7 @@ class bbcodeParser:
 			return s
 		msg = re.sub(r'<a rel="nofollow" href="(.*)<\/a>', repl_func, msg)
 
+		# emojis
 		for tp_name, ds_name in self.config["emojis"].items():
 			msg = msg.replace(f':{tp_name}:', f'<:{ds_name}>')
 
