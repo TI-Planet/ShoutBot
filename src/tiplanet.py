@@ -1,6 +1,7 @@
 import json
 import requests
 from bs4 import BeautifulSoup
+from discord import Webhook, RequestsWebhookAdapter, AllowedMentions
 
 from .bbcodeParser import bbcodeParser
 
@@ -10,6 +11,7 @@ class tiplanet:
 		self.config = config["TIPLANET"]
 		self.session = requests.Session()
 		self.parser = bbcodeParser()
+		self.webhook = Webhook.partial(self.config['webhook']['id'], self.config['webhook']['token'], adapter=RequestsWebhookAdapter())
 		self.lastId = None
 		self.login()
 
@@ -66,15 +68,12 @@ class tiplanet:
 
 
 	def postMessage(self, message):
-		payload = {
-			"username": message["userName"],
-			"avatar_url": f"https://tiplanet.org/forum/avatar.php?id={message['userId']}",
-			"content": message["content"],
-			"allowed_mentions": {
-				"parse": []
-			}
-		}
-		requests.post(f"https://discord.com/api/webhooks/{self.config['webhook']['id']}/{self.config['webhook']['token']}", headers={'Content-Type': 'application/json'}, data=json.dumps(payload))
+		self.webhook.send(
+			message["content"],
+			avatar_url=f"https://tiplanet.org/forum/avatar.php?id={message['userId']}",
+			username=message["userName"],
+			allowed_mentions=AllowedMentions(everyone=False, users=False, roles=False, replied_user=False)
+		)
 
 	def getUrl(self, url):
 		return f"https://{self.config['host']}{url}"
