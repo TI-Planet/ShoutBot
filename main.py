@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import time
+import asyncio
 from discord.ext import commands
 
 from src.config import config
@@ -19,7 +20,7 @@ async def on_ready():
 	print(f"Bot {bot.user.name} connected on {len(bot.guilds)} servers")
 	while True:
 		chat.updateChat()
-		time.sleep(2)
+		await asyncio.sleep(2)
 
 @bot.event
 async def on_message(message):
