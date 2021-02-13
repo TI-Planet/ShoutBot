@@ -17,7 +17,7 @@ class bbcodeParser:
 			url = u''
 			if 'url' in options:
 				url = options['url']
-			return f'{value} (<{url}>)'
+			return f'[{value}]({url})'
 
 		self.bbcode2markdown = bbcode.Parser(install_defaults=False, escape_html=False)
 		self.bbcode2markdown.add_simple_formatter('ispoiler', '|| %(value)s ||')
