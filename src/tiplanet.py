@@ -63,7 +63,7 @@ class tiplanet:
 			self.lastId = messages[-1]["id"]
 
 		for message in messages:
-			if int(message["id"]) > int(self.lastId):
+			if int(message["id"]) > int(self.lastId) and message["userName"] != self.config["user"]["username"]:
 				self.postDiscordMessage(message)
 
 		self.lastId = messages[-1]["id"]
