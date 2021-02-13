@@ -63,19 +63,27 @@ class tiplanet:
 			self.lastId = messages[-1]["id"]
 
 		for message in messages:
-			if int(message["id"]) > int(self.lastId):
-				self.postMessage(message)
+			if int(message["id"]) > int(self.lastId) and message["userName"] != self.config["user"]["username"]:
+				self.postDiscordMessage(message)
 
 		self.lastId = messages[-1]["id"]
 
 
-	def postMessage(self, message):
+	def postDiscordMessage(self, message):
 		self.webhook.send(
 			message["content"],
 			avatar_url=f"https://tiplanet.org/forum/avatar.php?id={message['userId']}",
 			username=message["userName"],
 			allowed_mentions=AllowedMentions(everyone=False, users=False, roles=False, replied_user=False)
 		)
+
+
+	def postChatMessage(self, message, channel="Public"):
+		payload = {
+			"channelName": channel,
+			"text": message
+		}
+		self.session.post(self.getUrl(self.config["chat"]), data=payload)
 
 	def getUrl(self, url):
 		return f"https://{self.config['host']}{url}"
