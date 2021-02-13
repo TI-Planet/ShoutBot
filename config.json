@@ -1,8 +1,19 @@
 {
-  "TOKEN": "",
-  "PREFIX": "/",
+	"PREFIX": "/",
 
-  "SHOUTBOX": {
-    "channel": 809440143734996992
-  }
+	"SHOUTBOX": {
+		"channel": 809440143734996992
+	},
+
+	"TIPLANET": {
+		"host": "tiplanet.org",
+		"login": "/forum/ucp.php?mode=login",
+		"logout": "/forum/ucp.php?mode=logout",
+		"cookies": {
+			"sid": "phpbb3_pasr5_sid"
+		},
+		"chat": "/forum/chat/?ajax=true",
+		"user": {},
+		"webhook": {}
+	}
 }

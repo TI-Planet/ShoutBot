@@ -1,37 +1,35 @@
 #!/usr/bin/env python3
 
-import json
-
+import time
 from discord.ext import commands
 
+from src.config import config
+from src.tiplanet import tiplanet
 
-
-def action() :
-	print("test")
 
 __version__ = "under developpement"
 
-# Configuration
-with open("config.json", "r") as file:
-	config = json.load(file)
-
-
+config = config().LoadConfig()
 bot = commands.Bot(command_prefix=config["PREFIX"])
+chat = tiplanet(config)
 
 
 @bot.event
 async def on_ready():
 	print(f"Bot {bot.user.name} connected on {len(bot.guilds)} servers")
-	
-
+	while True:
+		chat.updateChat()
+		time.sleep(2)
 
 @bot.event
 async def on_message(message):
 	if message.author == bot.user:
 		return
 
-	if (message.channel.id == config["SHOUTBOX"]["channel"]):
-		await message.channel.send(message.content)
+	# if (message.channel.id == config["SHOUTBOX"]["channel"]):
+	# 	await message.channel.send(message.content)
 
-
-bot.run(config["TOKEN"])
+try:
+	bot.run(config["DISCORD_TOKEN"])
+finally:
+	print('EXITING GRACEFULLY')
