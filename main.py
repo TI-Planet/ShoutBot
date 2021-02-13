@@ -17,6 +17,7 @@ chat = tiplanet(config)
 async def on_ready():
 	print(f"Bot {bot.user.name} connected on {len(bot.guilds)} servers")
 	chat.getChat()
+	await bot.close()
 
 
 @bot.event
