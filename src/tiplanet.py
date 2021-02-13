@@ -52,6 +52,8 @@ class tiplanet:
 			"content": self.parser.parse_bbcode2markdown(message.find('text').text)
 		} for message in soup.find_all("message")]
 
+		messages = [message for message in messages if not message["content"].startswith("/log") ]
+
 		return messages
 
 	def updateChat(self):
