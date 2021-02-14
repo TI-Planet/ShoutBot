@@ -24,7 +24,7 @@ class bonfire:
 
 		# this contains files
 		if (message.attachments != None and len(message.attachments) != 0):
-			attachmentSuffix = '\n'.join([attachmentToString(a) for a in message.attachments])
+			attachmentSuffix = '\n'.join([self.attachmentToString(a) for a in message.attachments])
 			attachmentSuffix = f'\n{attachmentSuffix}'
 
 		return f"[b]{self.removeDiscordID(message.author)}[/b] : {quotePrefix}{message.content}{attachmentSuffix}"
@@ -32,23 +32,27 @@ class bonfire:
 	def removeDiscordID(self, username):
 		return str(username)[0:-5]
 
-def attachmentToString(attachment):
-	extension = attachment.url.split('.')[-1]
+	def attachmentToString(self, attachment):
+		extension = attachment.url.split('.')[-1]
 
-	if attachment.width != None and extension in ['png', 'jpg', 'jpeg', 'gif', 'bmp']:
-		width, height = thumbnailDimensions(attachment.width, attachment.height)
-		ret = f'[url={attachment.url}][img]{attachment.proxy_url}?width={width}&height={height}[/img][/url]'
-	else:
-		basename = attachment.url.split('/')[-1]
-		ret = f'[url={attachment.url}]{basename}[/url]'
+		if attachment.width != None and extension in ['png', 'jpg', 'jpeg', 'gif', 'bmp']:
+			width, height = self.thumbnailDimensions(attachment.width, attachment.height)
+			ret = f'[url={attachment.url}][img]{attachment.proxy_url}?width={width}&height={height}[/img][/url]'
+		else:
+			basename = attachment.url.split('/')[-1]
+			ret = f'[url={attachment.url}]{basename}[/url]'
 
-	if attachment.is_spoiler():
-		ret = f'[ispoiler]{ret}[/ispoiler]'
+		if attachment.is_spoiler():
+			ret = f'[ispoiler]{ret}[/ispoiler]'
 
-	return ret
+		return ret
 
-def thumbnailDimensions(width, height):
-	# TODO
-	# - use config rather than hardcode values
-	# - keep proportions
-	return (50, 50)
+	def thumbnailDimensions(self, width, height):
+		max_w = self.config["TIPLANET"]["thumbnails"]["maxWidth"]
+		max_h = self.config["TIPLANET"]["thumbnails"]["maxHeight"]
+		computed_w = width * max_h/height
+		computed_h = height * max_w/width
+		if max_w * computed_h < computed_w * max_h:
+			return (int(max_w), int(computed_h))
+		else:
+			return (int(computed_w), int(max_h))
