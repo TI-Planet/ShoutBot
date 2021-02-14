@@ -8,14 +8,14 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# texlive texlive-extra-utils poppler-utils netpbm
-RUN rm -rf /var/lib/apt/lists/* && apt-get update && apt-get --no-install-recommends -y install git -y
+# Install system deps
+RUN apt-get update && apt-get upgrade -y && apt-get install git texlive texlive-extra-utils poppler-utils netpbm -y
 
 # Install the package manager
 RUN pip install 'poetry>=1.0'
 
 # Clone repository
-RUN git clone https://github.com/LeGmask/NotWistaBot.git ./
+RUN git clone https://github.com/LeGmask/ShoutBot.git ./
 
 
 # Install stuff

@@ -4,6 +4,7 @@ import time
 import asyncio
 from discord.ext import commands
 
+from src.cog import Cog
 from src.config import config
 from src.bonfire import bonfire
 from src.tiplanet import tiplanet
@@ -14,6 +15,7 @@ __version__ = "under developpement"
 config = config().LoadConfig()
 bot = commands.Bot(command_prefix=config["PREFIX"])
 chat = tiplanet(config)
+cogs = Cog(config, bot).LoadCogs()
 discord = bonfire(config, bot, chat)
 
 

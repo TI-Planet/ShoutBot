@@ -1,5 +1,8 @@
 .env
 
+# ignore pnglatex generation folder
+latex/
+
 # Ignore prettier config
 .prettierrc
 
