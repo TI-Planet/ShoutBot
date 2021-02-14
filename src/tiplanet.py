@@ -14,7 +14,7 @@ class tiplanet:
 		self.parser = bbcodeParser(self.config)
 		self.webhook = Webhook.partial(self.config['webhook']['id'], self.config['webhook']['token'], adapter=RequestsWebhookAdapter())
 		self.lastId = None
-		self.deletionQueue = [(0, 0) for i in range(1000)]
+		self.deletionQueue = [(0, 0) for i in range(config["SHARED"]["deletionQueueSize"])]
 		self.deletionQueueIndex = 0
 		self.login()
 

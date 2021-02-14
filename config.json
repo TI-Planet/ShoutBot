@@ -1,6 +1,10 @@
 {
 	"PREFIX": "/",
 
+	"SHARED": {
+		"deletionQueueSize": 1000
+	},
+
 	"SHOUTBOX": {
 		"channel": 809440143734996992
 	},
