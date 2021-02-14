@@ -1,18 +1,21 @@
 import json
 import requests
 from bs4 import BeautifulSoup
-from discord import Webhook, RequestsWebhookAdapter, AllowedMentions
+from discord import Webhook, RequestsWebhookAdapter, AllowedMentions, Object
 
 from .bbcodeParser import bbcodeParser
 
 
 class tiplanet:
 	def __init__(self, config):
+		self.channel = config["SHOUTBOX"]["channel"]
 		self.config = config["TIPLANET"]
 		self.session = requests.Session()
 		self.parser = bbcodeParser(self.config)
 		self.webhook = Webhook.partial(self.config['webhook']['id'], self.config['webhook']['token'], adapter=RequestsWebhookAdapter())
 		self.lastId = None
+		self.deletionQueue = [(0, 0) for i in range(1000)]
+		self.deletionQueueIndex = 0
 		self.login()
 
 	def login(self):
@@ -52,30 +55,55 @@ class tiplanet:
 			"content": self.parser.parse_bbcode2markdown(message.find('text').text)
 		} for message in soup.find_all("message")]
 
-		messages = [message for message in messages if not message["content"].startswith("/log") ]
-
 		return messages
 
-	def updateChat(self):
+	async def updateChat(self, bot):
 		messages = self.getChat()
+		lastId = messages[-1]["id"]
 
 		if self.lastId == None:
-			self.lastId = messages[-1]["id"]
+			self.lastId = lastId
+
+		# keep recent content only
+		messages = [m for m in messages if int(m["id"]) > int(self.lastId) and m["userName"] != self.config["user"]["username"]]
+
+		self.lastId = lastId
+
+		# split between deletions and actual messages
+		deletions = [m for m in messages if m['content'].startswith('/delete')]
+		messages = [m for m in messages if not m['content'].startswith('/delete')]
+
+		for deletion in deletions:
+			await self.deleteDiscordMessage(bot, deletion['content'].strip().split(' ')[-1])
 
 		for message in messages:
-			if int(message["id"]) > int(self.lastId) and message["userName"] != self.config["user"]["username"]:
-				self.postDiscordMessage(message)
+			self.postDiscordMessage(message)
 
-		self.lastId = messages[-1]["id"]
-
+	async def deleteDiscordMessage(self, bot, id):
+		try:
+			candidates = [ds_id for tp_id, ds_id in self.deletionQueue if tp_id == int(id)]
+			if len(candidates) == 0:
+				return
+			ds_id = candidates[0]
+			channel = await bot.fetch_channel(self.channel)
+			await channel.delete_messages([Object(ds_id)])
+		finally:
+			pass
 
 	def postDiscordMessage(self, message):
-		self.webhook.send(
+		if message["content"].startswith("/log"):
+			return
+
+		ds_msg = self.webhook.send(
 			message["content"],
+			wait=True, # so we can get the ds_msg
 			avatar_url=f"https://tiplanet.org/forum/avatar.php?id={message['userId']}",
 			username=message["userName"],
 			allowed_mentions=AllowedMentions(everyone=False, users=False, roles=False, replied_user=False)
 		)
+		if ds_msg != None:
+			self.deletionQueue[self.deletionQueueIndex] = (int(message["id"]), ds_msg.id)
+			self.deletionQueueIndex = (self.deletionQueueIndex + 1) % len(self.deletionQueue)
 
 
 	def postChatMessage(self, message, channel="Public"):
