@@ -27,7 +27,7 @@ class bonfire:
 			attachmentSuffix = '\n'.join([self.attachmentToString(a) for a in message.attachments])
 			attachmentSuffix = f'\n{attachmentSuffix}'
 
-		return f"[b]{self.removeDiscordID(message.author)}[/b] : {quotePrefix}{message.content}{attachmentSuffix}"
+		return f"[b][color=block]{self.removeDiscordID(message.author)}[/color][/b]: {quotePrefix}{message.content}{attachmentSuffix}"
 
 	def removeDiscordID(self, username):
 		return str(username)[0:-5]
