@@ -16,7 +16,7 @@ For this bot you need to install `python3.8`, `pip` and `poetry`. There is also 
 
 ### Install
 
-You need to setup depandencies, in your terminal run :
+You need to setup dependencies, in your terminal run :
 
 ```sh
 poetry install
