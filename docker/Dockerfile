@@ -15,7 +15,7 @@ RUN rm -rf /var/lib/apt/lists/* && apt-get update && apt-get --no-install-recomm
 RUN pip install 'poetry>=1.0'
 
 # Clone repository
-RUN git clone https://github.com/LeGmask/NotWistaBot.git ./
+RUN git clone https://github.com/LeGmask/ShoutBot.git ./
 
 
 # Install stuff
