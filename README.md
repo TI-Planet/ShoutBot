@@ -8,9 +8,13 @@
 
 This project is a bridge between tiplanet shoutbox and discord
 
-## Setup :
+## Contribute: 
 
-### Requirements:
+If you find a bug, or want some feature you can open an [issue](https://github.com/LeGmask/ShoutBot/issues/new/choose). Otherwise you could create a pull request, and if the pull request is good we can think about merging it.
+
+## Setup:
+
+### Requirements
 
 For this bot you need to install `python3.8`, `pip` and `poetry`. There is also a [docker](#docker) for easy deployment.
 
