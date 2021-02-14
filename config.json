@@ -19,9 +19,17 @@
 		"chat": "/forum/chat/?ajax=true",
 		"user": {},
 		"webhook": {},
-		"emojis" : {
+		"emojis": {
 			"troll": "troll:810143192581668885",
 			"wat": "wat:810143891855507517"
+		}
+	},
+
+	"DISCORD": {
+		"cogs": {
+			"latex": {
+				"enable": true
+			}
 		}
 	}
 }
