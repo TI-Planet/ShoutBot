@@ -21,7 +21,7 @@ discord = bonfire(config, bot, chat)
 async def on_ready():
 	print(f"Bot {bot.user.name} connected on {len(bot.guilds)} servers")
 	while True:
-		chat.updateChat()
+		await chat.updateChat(bot)
 		await asyncio.sleep(2)
 
 
