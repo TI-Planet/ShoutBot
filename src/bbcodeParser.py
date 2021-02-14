@@ -26,6 +26,7 @@ class bbcodeParser:
 		self.bbcode2markdown.add_simple_formatter('img', '%(value)s')
 		self.bbcode2markdown.add_simple_formatter('b', '**%(value)s**')
 		self.bbcode2markdown.add_simple_formatter('u', '__%(value)s__')
+		self.bbcode2markdown.add_simple_formatter('s', '~~%(value)s~~')
 		self.bbcode2markdown.add_simple_formatter('i', '*%(value)s*')
 		self.bbcode2markdown.add_formatter('quote', render_quote, strip=True, swallow_trailing_newline=True)
 		self.bbcode2markdown.add_formatter('url', render_url, strip=True, swallow_trailing_newline=True)
