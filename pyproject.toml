@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "notwistabot"
+name = "shoutbot"
 version = "0.1.0"
 description = ""
 authors = ["Evann DREUMONT <53308142+LeGmask@users.noreply.github.com>"]
