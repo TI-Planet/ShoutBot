@@ -6,7 +6,7 @@
   </a>
 </p>
 
-This project is a bridge between tiplanet shoutbox and discord
+This project is a bridge between TI-Planet shoutbox and Discord
 
 ## Contribute: 
 
@@ -30,13 +30,13 @@ poetry install
 
 For setting up the bot, you need :
 
--   A discord bot
--   A tiplanet account
--   A webhook in your shoutbox discord channel
+-   A Discord bot
+-   A TI-Planet account
+-   A webhook in your shoutbox Discord channel
 
 In `config.json` you will find every common settings that are not private.
 
-In `.env` you will find settings that are private such as your Discord bot token, your wehbook id and token, or your tiplanet account.
+In `.env` you will find settings that are private such as your Discord bot token, your wehbook id and token, or your TI-Planet account.
 
 ### Usage
 
@@ -48,10 +48,10 @@ poetry run python main.py
 
 ### Docker
 
-You can easly setup this project using docker:
+You can easily setup this project using docker:
 
 1. First download `docker-compose.yml` and `config.js` and default `.env`;
-2. Edit settings in function of your server (see [config](#config) part);
+2. Edit settings depending on your server (see [config](#config) part);
 3. Run the docker using the following command :
 
 -   run in foreground:
@@ -72,9 +72,6 @@ _if you need more help see the docker documentation_
 ```sh
 docker-compose pull
 ``` -->
-## Contribute : 
-
-You can open an [issue](https://github.com/LeGmask/NotWistaBot/issues/new/choose), or you can fork and open a pull request
 
 ## Licence
 
