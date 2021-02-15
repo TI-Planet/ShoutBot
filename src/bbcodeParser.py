@@ -32,8 +32,12 @@ class bbcodeParser:
 		self.bbcode2markdown.add_formatter('url', render_url, strip=True, swallow_trailing_newline=True)
 
 	def parse_bbcode2markdown(self, content):
+		# shortcut completions and other quick changes
+		msg = content.replace('[url=/forum', '[url=https://www.tiplanet.org/forum')
+		msg = content.replace('[img]/forum', '[img]https://www.tiplanet.org/forum')
+
 		# bbcode and html escaping
-		msg = html.unescape(html.unescape(self.bbcode2markdown.format(content.replace('[url=/forum', '[url=https://www.tiplanet.org/forum'))))
+		msg = html.unescape(html.unescape(self.bbcode2markdown.format(msg)))
 		msg = re.sub(r'< *br *\/? *>', r'\n', msg)
 
 		# simple urls are transformed to a weird bugged <a>
