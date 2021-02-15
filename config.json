@@ -9,6 +9,14 @@
 		"channel": 809440143734996992
 	},
 
+	"REQUESTS": {
+		"retry": {
+			"total": 1,
+			"status_forcelist": [429, 500, 502, 503, 504],
+			"method_whitelist": ["GET", "POST", "PUT", "DELETE", "TRACE"]
+		}
+	},
+
 	"TIPLANET": {
 		"host": "tiplanet.org",
 		"login": "/forum/ucp.php?mode=login",
@@ -17,13 +25,14 @@
 			"sid": "phpbb3_pasr5_sid"
 		},
 		"chat": "/forum/chat/?ajax=true",
+		"keepAwake": 40000,
 		"user": {},
 		"webhook": {},
 		"thumbnails": {
 			"maxWidth": 125,
 			"maxHeight": 125
 		},
-		"emojis" : {
+		"emojis": {
 			"troll": "troll:810143192581668885",
 			"wat": "wat:810143891855507517"
 		},
