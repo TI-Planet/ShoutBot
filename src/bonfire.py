@@ -10,7 +10,10 @@ class bonfire:
 			return
 
 		if (message.channel.id == self.config["SHOUTBOX"]["channel"]):
-			self.chat.postChatMessage(self.generateMessage(message))
+			try:
+				self.chat.postChatMessage(self.generateMessage(message))
+			except:
+				raise("error while updating chat")
 
 
 	def generateMessage(self, message):

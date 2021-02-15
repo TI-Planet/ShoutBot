@@ -1,6 +1,8 @@
 import json
 import requests
 from bs4 import BeautifulSoup
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
 from discord import Webhook, RequestsWebhookAdapter, AllowedMentions, Object
 
 from .bbcodeParser import bbcodeParser
@@ -10,14 +12,26 @@ from .libs.setInterval import setInterval
 class tiplanet:
 	def __init__(self, config):
 		self.channel = config["SHOUTBOX"]["channel"]
-		self.config = config["TIPLANET"]
+
 		self.session = requests.Session()
+		self.session.mount("https://", 
+			HTTPAdapter(
+				max_retries=Retry(
+					total=config["REQUESTS"]["retry"]["total"],
+					status_forcelist=config["REQUESTS"]["retry"]["status_forcelist"],
+					method_whitelist=config["REQUESTS"]["retry"]["method_whitelist"]
+				)
+			)
+		)
+
+		self.config = config["TIPLANET"]
 		self.parser = bbcodeParser(self.config)
 		self.webhook = Webhook.partial(self.config['webhook']['id'], self.config['webhook']['token'], adapter=RequestsWebhookAdapter())
 		self.lastId = None
 		self.deletionQueue = [(0, 0) for i in range(config["SHARED"]["deletionQueueSize"])]
 		self.deletionQueueIndex = 0
 		self.login()
+	
 
 	def login(self):
 		loginUrl = self.getUrl(self.config["login"])
