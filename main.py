@@ -38,4 +38,5 @@ async def on_message(message):
 try:
 	bot.run(config["DISCORD_TOKEN"])
 finally:
+	chat.logout()
 	print('EXITING GRACEFULLY')

@@ -17,6 +17,7 @@
 			"sid": "phpbb3_pasr5_sid"
 		},
 		"chat": "/forum/chat/?ajax=true",
+		"keepAwake": 40000,
 		"user": {},
 		"webhook": {},
 		"thumbnails": {

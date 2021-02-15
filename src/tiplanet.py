@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 from discord import Webhook, RequestsWebhookAdapter, AllowedMentions, Object
 
 from .bbcodeParser import bbcodeParser
+from .libs.setInterval import setInterval
 
 
 class tiplanet:
@@ -31,6 +32,7 @@ class tiplanet:
 		}
 
 		self.session.post(loginUrl, data=payload)
+		self.keepAwake = setInterval(self.login, self.config["keepAwake"])
 
 	def logout(self):
 		logoutUrl = self.getUrl(self.config["logout"])
