@@ -31,10 +31,11 @@ class bbcodeParser:
 		self.bbcode2markdown.add_formatter('quote', render_quote, strip=True, swallow_trailing_newline=True)
 		self.bbcode2markdown.add_formatter('url', render_url, strip=True, swallow_trailing_newline=True)
 
-	def parse_bbcode2markdown(self, content):
+	def parse_bbcode2markdown(self, msg):
 		# shortcut completions and other quick changes
-		msg = content.replace('[url=/forum', '[url=https://www.tiplanet.org/forum')
-		msg = content.replace('[img]/forum', '[img]https://www.tiplanet.org/forum')
+		msg = msg.replace('[url=/forum', '[url=https://www.tiplanet.org/forum')
+		msg = msg.replace('[img]/forum', '[img]https://www.tiplanet.org/forum')
+		msg = re.sub(r'\[url=(.*)]\[img](.*)\[\/img]\[\/url]', r'\g<1>', msg)
 
 		# bbcode and html escaping
 		msg = html.unescape(html.unescape(self.bbcode2markdown.format(msg)))
