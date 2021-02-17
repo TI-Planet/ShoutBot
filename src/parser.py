@@ -1,11 +1,33 @@
-import bbcode
-import html
 import re
+import html
+import bbcode
+from markdown_it import MarkdownIt
+from markdown_it.renderer import RendererHTML
 
-class bbcodeParser:
+
+class Parser:
 	def __init__(self, config):
 		self.config = config
 		self.init_bbcode2markdown()
+		self.markdown = MarkdownIt(
+			{
+				'options': {
+					'maxNesting': 20,
+					'html': False,
+					'linkify': False,
+					'typographer': False,
+					'quotes': '“”‘’',
+					'xhtmlOut': False,
+					'breaks': False,
+					'langPrefix': 'language-',
+					'highlight': None
+				},
+				'components': {
+					'core': { 'rules': ['normalize', 'block', 'inline', 'linkify', 'replacements', 'smartquotes'] },
+					'block': { 'rules':  ['code', 'fence', 'blockquote', 'paragraph'] },
+					'inline': { 'rules': ['text', 'newline', 'escape', 'backticks', 'strikethrough', 'emphasis', 'entity'] }
+				}
+			}, renderer_cls=RendererBBCODE)
 
 	def init_bbcode2markdown(self):
 		def render_quote(tag_name, value, options, parent, context):
@@ -54,3 +76,60 @@ class bbcodeParser:
 			msg = msg.replace(f':{tp_name}:', f'<:{ds_name}>')
 
 		return msg
+
+	def parse_markdown2bbcode(self, msg):
+		return self.markdown.render(msg)
+
+
+class RendererBBCODE(RendererHTML):
+	def paragraph_open(self, tokens, idx, options, env):
+		return ''
+
+	def paragraph_close(self, tokens, idx, options, env):
+		return ''
+
+	def em_open(self, tokens, idx, options, env):
+		return '[i]'
+
+	def em_close(self, tokens, idx, options, env):
+		return '[/i]'
+
+	def s_open(self, tokens, idx, options, env):
+		return'[s]'
+	
+	def s_close(self, tokens, idx, options, env):
+		return'[/s]'
+
+	def strong_open(self, tokens, idx, options, env):
+		if tokens[idx].markup == "__":
+			return '[u]'
+		else:
+			return'[b]'
+	
+	def strong_close(self, tokens, idx, options, env):
+		if tokens[idx].markup == "__":
+			return '[/u]'
+		else:
+			return'[/b]'
+
+	def code_inline(self, tokens, idx, options, env):
+		token = tokens[idx]
+		return (
+			f"[code]{tokens[idx].content}[/code]"
+		)
+	
+	def code_block(self, tokens, idx, options, env):
+		return (
+			f"[code]{tokens[idx].content}[/code]\n"
+		)
+
+	def fence(self, tokens, idx, options, env):
+		return (
+			f"[code]{tokens[idx].content}[/code]\n"
+		)
+	
+	def blockquote_open(self, tokens, idx, options, env):
+		return "[quote]"
+	
+	def blockquote_close(self, tokens, idx, options, env):
+		return "[/quote]"
