@@ -37,7 +37,7 @@ class bonfire:
 
 		msg = self.parser.parse_markdown2bbcode(message.clean_content)
 
-		return f"{name if self.config['TIPLANET']['selfBot'] else ''}{quotePrefix}{msg}{attachmentSuffix}"
+		return f"{name if not self.config['TIPLANET']['selfBot'] else ''}{quotePrefix}{msg}{attachmentSuffix}"
 
 	def removeDiscordID(self, username):
 		return str(username)[0:-5]
