@@ -127,7 +127,11 @@ class tiplanet:
 			"channelName": channel,
 			"text": message
 		}
-		self.session.post(self.getUrl(self.config["chat"]), data=payload)
+		chat = self.session.post(self.getUrl(self.config["chat"]), data=payload)
+		soup = BeautifulSoup(chat.text, "html.parser")
+
+		return [message.get("id") for message in soup.find_all("message")][-1]
+		
 
 	def deleteChatMessage(self, id):
 		payload = {
