@@ -27,6 +27,7 @@
 		"chat": "/forum/chat/?ajax=true",
 		"keepAwake": 40000,
 		"user": {},
+		"selfBot": false,
 		"webhook": {},
 		"thumbnails": {
 			"maxWidth": 125,

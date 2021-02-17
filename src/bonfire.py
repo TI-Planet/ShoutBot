@@ -33,7 +33,11 @@ class bonfire:
 			attachmentSuffix = '\n'.join([self.attachmentToString(a) for a in message.attachments])
 			attachmentSuffix = f'\n{attachmentSuffix}'
 
-		return f"[b][color=block]{'[IRC] ' if str(message.webhook_id) == str(self.config['TIPLANET']['irc']['id']) else ''}{self.removeDiscordID(message.author)}[/color][/b]: {quotePrefix}{self.parser.parse_markdown2bbcode(message.clean_content)}{attachmentSuffix}"
+		name = f"[b][color=block]{'[IRC] ' if str(message.webhook_id) == str(self.config['TIPLANET']['irc']['id']) else ''}{self.removeDiscordID(message.author)}[/color][/b]: "
+
+		msg = self.parser.parse_markdown2bbcode(message.clean_content)
+
+		return f"{name if self.config['TIPLANET']['selfBot'] else ''}{quotePrefix}{msg}{attachmentSuffix}"
 
 	def removeDiscordID(self, username):
 		return str(username)[0:-5]
