@@ -83,6 +83,8 @@ class Parser:
 		return msg.strip()
 
 	def parse_markdown2bbcode(self, msg):
+		# fix emojis
+		msg = re.sub(r'<(:\S+:)\S+>', r'\g<1>', msg)
 		return self.markdown.render(msg)
 
 
