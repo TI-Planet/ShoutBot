@@ -35,6 +35,10 @@ async def on_message(message):
 	discord.updateChat(message)
 
 
+@bot.event
+async def on_message_delete(message):
+	discord.deleteChat(message)
+
 try:
 	bot.run(config["DISCORD_TOKEN"])
 finally:

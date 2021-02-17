@@ -14,9 +14,13 @@ class bonfire:
 
 		if (message.channel.id == self.config["SHOUTBOX"]["channel"]):
 			try:
-				self.chat.postChatMessage(self.generateMessage(message))
+				chat_id = self.chat.postChatMessage(self.generateMessage(message))
 			except:
 				raise("error while updating chat")
+			
+			if chat_id != None:
+				self.chat.deletionQueue[self.chat.deletionQueueIndex] = (int(chat_id), message.id)
+				self.chat.deletionQueueIndex = (self.chat.deletionQueueIndex + 1) % len(self.chat.deletionQueue)
 
 
 	def generateMessage(self, message):
@@ -66,3 +70,17 @@ class bonfire:
 			return (int(max_w), int(computed_h))
 		else:
 			return (int(computed_w), int(max_h))
+
+	def deleteChat(self, message):
+		if message.author == self.bot.user:
+			return
+		if (message.channel.id == self.config["SHOUTBOX"]["channel"]):
+			try:
+				id = message.id
+				candidates = [tp_id for tp_id, ds_id in self.chat.deletionQueue if ds_id == int(id)]
+				if len(candidates) == 0:
+					return
+				tp_id = candidates[0]
+				self.chat.deleteChatMessage(tp_id)
+			finally:
+				pass
