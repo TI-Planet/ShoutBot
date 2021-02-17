@@ -129,6 +129,12 @@ class tiplanet:
 		}
 		self.session.post(self.getUrl(self.config["chat"]), data=payload)
 
+	def deleteChatMessage(self, id):
+		payload = {
+			"delete": id
+		}
+		self.session.post(self.getUrl(self.config['chat']), data=payload)
+
 	def getUrl(self, url):
 		return f"https://{self.config['host']}{url}"
 
