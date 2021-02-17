@@ -1,8 +1,9 @@
-import bbcode
-import html
 import re
+import html
+import bbcode
 
-class bbcodeParser:
+
+class Parser:
 	def __init__(self, config):
 		self.config = config
 		self.init_bbcode2markdown()
@@ -54,3 +55,5 @@ class bbcodeParser:
 			msg = msg.replace(f':{tp_name}:', f'<:{ds_name}>')
 
 		return msg
+
+

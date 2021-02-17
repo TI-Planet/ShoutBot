@@ -5,7 +5,7 @@ from requests.adapters import HTTPAdapter
 from requests.packages.urllib3.util.retry import Retry
 from discord import Webhook, RequestsWebhookAdapter, AllowedMentions, Object
 
-from .bbcodeParser import bbcodeParser
+from .parser import Parser
 from .libs.setInterval import setInterval
 
 
@@ -25,7 +25,7 @@ class tiplanet:
 		)
 
 		self.config = config["TIPLANET"]
-		self.parser = bbcodeParser(self.config)
+		self.parser = Parser(self.config)
 		self.webhook = Webhook.partial(self.config['webhook']['id'], self.config['webhook']['token'], adapter=RequestsWebhookAdapter())
 		self.lastId = None
 		self.deletionQueue = [(0, 0) for i in range(config["SHARED"]["deletionQueueSize"])]
