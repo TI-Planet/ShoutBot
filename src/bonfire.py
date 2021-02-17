@@ -9,10 +9,10 @@ class bonfire:
 
 
 	def updateChat(self, message):
-		if message.author == self.bot.user or str(message.webhook_id) == str(self.config["TIPLANET"]["webhook"]["id"]):
+		if message.author == self.bot.user or str(message.webhook_id) == str(self.config.TIPLANET.webhook.id):
 			return
 
-		if (message.channel.id == self.config["SHOUTBOX"]["channel"]):
+		if (message.channel.id == self.config.SHOUTBOX.channel):
 			try:
 				chat_id = self.chat.postChatMessage(self.generateMessage(message))
 			except:
@@ -37,11 +37,11 @@ class bonfire:
 			attachmentSuffix = '\n'.join([self.attachmentToString(a) for a in message.attachments])
 			attachmentSuffix = f'\n{attachmentSuffix}'
 
-		name = f"[b][color=block]{'[IRC] ' if str(message.webhook_id) == str(self.config['TIPLANET']['irc']['id']) else ''}{self.removeDiscordID(message.author)}[/color][/b]: "
+		name = f"[b][color=block]{'[IRC] ' if str(message.webhook_id) == str(self.config.TIPLANET.irc.id) else ''}{self.removeDiscordID(message.author)}[/color][/b]: "
 
 		msg = self.parser.parse_markdown2bbcode(message.clean_content)
 
-		return f"{name if not self.config['TIPLANET']['selfBot'] else ''}{quotePrefix}{msg}{attachmentSuffix}"
+		return f"{name if not self.config.TIPLANET.selfBot else ''}{quotePrefix}{msg}{attachmentSuffix}"
 
 	def removeDiscordID(self, username):
 		return str(username)[0:-5]
@@ -62,8 +62,8 @@ class bonfire:
 		return ret
 
 	def thumbnailDimensions(self, width, height):
-		max_w = self.config["TIPLANET"]["thumbnails"]["maxWidth"]
-		max_h = self.config["TIPLANET"]["thumbnails"]["maxHeight"]
+		max_w = self.config.TIPLANET.thumbnails.maxWidth
+		max_h = self.config.TIPLANET.thumbnails.maxHeight
 		computed_w = width * max_h/height
 		computed_h = height * max_w/width
 		if max_w * computed_h < computed_w * max_h:
@@ -74,7 +74,7 @@ class bonfire:
 	def deleteChat(self, message):
 		if message.author == self.bot.user:
 			return
-		if (message.channel.id == self.config["SHOUTBOX"]["channel"]):
+		if (message.channel.id == self.config.SHOUTBOX.channel):
 			try:
 				id = message.id
 				candidates = [tp_id for tp_id, ds_id in self.chat.deletionQueue if ds_id == int(id)]

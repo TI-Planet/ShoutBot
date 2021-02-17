@@ -11,34 +11,34 @@ from .libs.setInterval import setInterval
 
 class tiplanet:
 	def __init__(self, config):
-		self.channel = config["SHOUTBOX"]["channel"]
+		self.channel = config.SHOUTBOX.channel
 
 		self.session = requests.Session()
 		self.session.mount("https://", 
 			HTTPAdapter(
 				max_retries=Retry(
-					total=config["REQUESTS"]["retry"]["total"],
-					status_forcelist=config["REQUESTS"]["retry"]["status_forcelist"],
-					method_whitelist=config["REQUESTS"]["retry"]["method_whitelist"]
+					total=config.REQUESTS.retry.total,
+					status_forcelist=config.REQUESTS.retry.status_forcelist,
+					method_whitelist=config.REQUESTS.retry.method_whitelist
 				)
 			)
 		)
 
-		self.config = config["TIPLANET"]
+		self.config = config.TIPLANET
 		self.parser = Parser(self.config)
-		self.webhook = Webhook.partial(self.config['webhook']['id'], self.config['webhook']['token'], adapter=RequestsWebhookAdapter())
+		self.webhook = Webhook.partial(self.config.webhook.id, self.config.webhook.token, adapter=RequestsWebhookAdapter())
 		self.lastId = None
-		self.deletionQueue = [(0, 0) for i in range(config["SHARED"]["deletionQueueSize"])]
+		self.deletionQueue = [(0, 0) for i in range(config.SHARED.deletionQueueSize)]
 		self.deletionQueueIndex = 0
 		self.login()
 	
 
 	def login(self):
-		loginUrl = self.getUrl(self.config["login"])
+		loginUrl = self.getUrl(self.config.login)
 
 		payload = {
-			'username': self.config["user"]["username"],
-			'password': self.config["user"]["password"],
+			'username': self.config.username,
+			'password': self.config.password,
 			'autologin': 'true',
 			'viewonline': 'false',
 			'redirect': '',
@@ -46,21 +46,21 @@ class tiplanet:
 		}
 
 		self.session.post(loginUrl, data=payload)
-		self.keepAwake = setInterval(self.login, self.config["keepAwake"])
+		self.keepAwake = setInterval(self.login, self.config.keepAwake)
 
 	def logout(self):
-		logoutUrl = self.getUrl(self.config["logout"])
-		sid = self.session.cookies.get_dict()[self.config["cookies"]["sid"]]
+		logoutUrl = self.getUrl(self.config.logout)
+		sid = self.session.cookies.get_dict()[self.config.cookies.sid]
 
 		payload = {
-			'username': self.config["user"]["username"],
-			'password': self.config["user"]["password"],
+			'username': self.config.username,
+			'password': self.config.password,
 		}
 
 		self.session.post(f"{logoutUrl}&sid={sid}", data=payload)
 
 	def getChat(self):
-		chat = self.session.get(self.getUrl(self.config["chat"]))
+		chat = self.session.get(self.getUrl(self.config.chat))
 		soup = BeautifulSoup(chat.text, "html.parser")
 
 		messages = [{
@@ -81,7 +81,7 @@ class tiplanet:
 			self.lastId = lastId
 
 		# keep recent content only
-		messages = [m for m in messages if int(m["id"]) > int(self.lastId) and m["userName"] != self.config["user"]["username"]]
+		messages = [m for m in messages if int(m["id"]) > int(self.lastId) and m["userName"] != self.config.username]
 
 		self.lastId = lastId
 
@@ -127,7 +127,8 @@ class tiplanet:
 			"channelName": channel,
 			"text": message
 		}
-		chat = self.session.post(self.getUrl(self.config["chat"]), data=payload)
+
+		chat = self.session.post(self.getUrl(self.config.chat), data=payload)
 		soup = BeautifulSoup(chat.text, "html.parser")
 
 		return [message.get("id") for message in soup.find_all("message")][-1]
@@ -137,8 +138,9 @@ class tiplanet:
 		payload = {
 			"delete": id
 		}
-		self.session.post(self.getUrl(self.config['chat']), data=payload)
+		self.session.post(self.getUrl(self.config.chat), data=payload)
+
 
 	def getUrl(self, url):
-		return f"https://{self.config['host']}{url}"
+		return f"https://{self.config.host}{url}"
 
