@@ -1,8 +1,11 @@
+from .parser import Parser
+
 class bonfire:
 	def __init__(self, config, bot, chat):
 		self.config = config
 		self.chat = chat
 		self.bot = bot
+		self.parser = Parser(self.config)
 
 
 	def updateChat(self, message):
@@ -23,14 +26,14 @@ class bonfire:
 		# this is a reply, add quote
 		if (message.reference):
 			ref = message.reference
-			quotePrefix = f'[quote={self.removeDiscordID(ref.resolved.author)}]{ref.resolved.clean_content}[/quote] '
+			quotePrefix = f'[quote={self.removeDiscordID(ref.resolved.author)}]{self.parser.parse_markdown2bbcode(ref.resolved.clean_content)}[/quote] '
 
 		# this contains files
 		if (message.attachments != None and len(message.attachments) != 0):
 			attachmentSuffix = '\n'.join([self.attachmentToString(a) for a in message.attachments])
 			attachmentSuffix = f'\n{attachmentSuffix}'
 
-		return f"[b][color=block]{'[IRC] ' if str(message.webhook_id) == str(self.config['TIPLANET']['irc']['id']) else ''}{self.removeDiscordID(message.author)}[/color][/b]: {quotePrefix}{message.clean_content}{attachmentSuffix}"
+		return f"[b][color=block]{'[IRC] ' if str(message.webhook_id) == str(self.config['TIPLANET']['irc']['id']) else ''}{self.removeDiscordID(message.author)}[/color][/b]: {quotePrefix}{self.parser.parse_markdown2bbcode(message.clean_content)}{attachmentSuffix}"
 
 	def removeDiscordID(self, username):
 		return str(username)[0:-5]
