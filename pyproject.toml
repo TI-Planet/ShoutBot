@@ -13,6 +13,7 @@ requests = "^2.25.1"
 python-dotenv = "^0.15.0"
 bbcode = "^1.1.0"
 pnglatex = "^1.1"
+markdown-it-py = "^0.6.2"
 
 [tool.poetry.dev-dependencies]
 
