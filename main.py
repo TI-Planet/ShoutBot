@@ -27,7 +27,7 @@ async def on_ready():
 			await chat.updateChat(bot)
 		except:
 			pass
-		await asyncio.sleep(2)
+		await asyncio.sleep(config["TIPLANET"]["pollingInterval"])
 
 
 @bot.event

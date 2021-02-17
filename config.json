@@ -26,6 +26,7 @@
 		},
 		"chat": "/forum/chat/?ajax=true",
 		"keepAwake": 40000,
+		"pollingInterval": 2,
 		"user": {},
 		"selfBot": false,
 		"webhook": {},
