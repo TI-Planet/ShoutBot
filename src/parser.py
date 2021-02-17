@@ -34,7 +34,12 @@ class Parser:
 			author = u''
 			if 'quote' in options:
 				author = options['quote']
-			return f'> {value} — {author}\n\n'
+
+			# for some reason \n are replaced with \r when landing here
+			value = value.replace('\r', '\n')
+
+			nl = '\n' # can't be used in fstrings
+			return f"\n{nl.join([f'> {line}' for line in value.split(nl)])}\n— {author}\n"
 
 		def render_url(tag_name, value, options, parent, context):
 			url = u''
@@ -75,7 +80,7 @@ class Parser:
 		for tp_name, ds_name in self.config["emojis"].items():
 			msg = msg.replace(f':{tp_name}:', f'<:{ds_name}>')
 
-		return msg
+		return msg.strip()
 
 	def parse_markdown2bbcode(self, msg):
 		return self.markdown.render(msg)
@@ -96,7 +101,7 @@ class RendererBBCODE(RendererHTML):
 
 	def s_open(self, tokens, idx, options, env):
 		return'[s]'
-	
+
 	def s_close(self, tokens, idx, options, env):
 		return'[/s]'
 
@@ -105,7 +110,7 @@ class RendererBBCODE(RendererHTML):
 			return '[u]'
 		else:
 			return'[b]'
-	
+
 	def strong_close(self, tokens, idx, options, env):
 		if tokens[idx].markup == "__":
 			return '[/u]'
@@ -117,7 +122,7 @@ class RendererBBCODE(RendererHTML):
 		return (
 			f"[code]{tokens[idx].content}[/code]"
 		)
-	
+
 	def code_block(self, tokens, idx, options, env):
 		return (
 			f"[code]{tokens[idx].content}[/code]\n"
@@ -127,9 +132,9 @@ class RendererBBCODE(RendererHTML):
 		return (
 			f"[code]{tokens[idx].content}[/code]\n"
 		)
-	
+
 	def blockquote_open(self, tokens, idx, options, env):
 		return "[quote]"
-	
+
 	def blockquote_close(self, tokens, idx, options, env):
 		return "[/quote]"
