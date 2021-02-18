@@ -144,14 +144,6 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
-name = "pnglatex"
-version = "1.1"
-description = "A small program that converts latex snippets to png"
-category = "main"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "python-dotenv"
 version = "0.15.0"
 description = "Add .env support to your django/flask apps in development and deployments"
@@ -224,7 +216,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "f0f04425ce47c592e8403441ccea48e76a5b82b9080bab0edb9a498f3c1a604c"
+content-hash = "21da5ecc8a1929e85d9e4fdbb1b140eebbd6df34f1810107afe9c3db9aec1de8"
 
 [metadata.files]
 aiohttp = [
@@ -345,10 +337,6 @@ multidict = [
     {file = "multidict-5.1.0-cp39-cp39-win32.whl", hash = "sha256:fc13a9524bc18b6fb6e0dbec3533ba0496bbed167c56d0aabefd965584557d80"},
     {file = "multidict-5.1.0-cp39-cp39-win_amd64.whl", hash = "sha256:7df80d07818b385f3129180369079bd6934cf70469f99daaebfac89dca288359"},
     {file = "multidict-5.1.0.tar.gz", hash = "sha256:25b4e5f22d3a37ddf3effc0710ba692cfc792c2b9edfb9c05aefe823256e84d5"},
-]
-pnglatex = [
-    {file = "pnglatex-1.1-py2.py3-none-any.whl", hash = "sha256:8d1d01c59e14ad05ef152194c1bd28f996f0d999b93a67110f24e8be7c0aee20"},
-    {file = "pnglatex-1.1.tar.gz", hash = "sha256:0995060d4926b6d3b40731586c615234c3e45b3142fc15b836601e3b0cf863d3"},
 ]
 python-dotenv = [
     {file = "python-dotenv-0.15.0.tar.gz", hash = "sha256:587825ed60b1711daea4832cf37524dfd404325b7db5e25ebe88c495c9f807a0"},

@@ -3,7 +3,6 @@ import re
 import urllib
 import requests
 from discord import File
-from pnglatex import pnglatex
 from discord.ext import commands
 
 
