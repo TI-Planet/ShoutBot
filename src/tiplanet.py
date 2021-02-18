@@ -51,16 +51,10 @@ class tiplanet:
 		self.keepAwake = setInterval(self.login, self.config.keepAwake)
 
 	def logout(self):
-<<<<<<< HEAD
+
+		self.writeLastIdFile()
 		logoutUrl = self.getUrl(self.config.logout)
 		sid = self.session.cookies.get_dict()[self.config.cookies.sid]
-=======
-		self.writeLastIdFile()
-
-		logoutUrl = self.getUrl(self.config["logout"])
-		sid = self.session.cookies.get_dict()[self.config["cookies"]["sid"]]
->>>>>>> master
-
 		payload = {
 			'username': self.config.user.username,
 			'password': self.config.user.password,
@@ -69,14 +63,10 @@ class tiplanet:
 		self.session.post(f"{logoutUrl}&sid={sid}", data=payload)
 
 	def getChat(self):
-<<<<<<< HEAD
-		chat = self.session.get(self.getUrl(self.config.chat))
-=======
 		payload = {}
 		if self.lastId:
 			payload["lastID"] = self.lastId
-		chat = self.session.post(self.getUrl(self.config["chat"]), data=payload)
->>>>>>> master
+		chat = self.session.post(self.getUrl(self.config.chat), data=payload)
 		soup = BeautifulSoup(chat.text, "html.parser")
 
 		messages = [{
