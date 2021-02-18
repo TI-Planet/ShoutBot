@@ -1,4 +1,5 @@
 import json
+import os
 import requests
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
@@ -27,7 +28,8 @@ class tiplanet:
 		self.config = config["TIPLANET"]
 		self.parser = Parser(self.config)
 		self.webhook = Webhook.partial(self.config['webhook']['id'], self.config['webhook']['token'], adapter=RequestsWebhookAdapter())
-		self.lastId = None
+		# self.lastId = None
+		self.loadLastIdFile()
 		self.deletionQueue = [(0, 0) for i in range(config["SHARED"]["deletionQueueSize"])]
 		self.deletionQueueIndex = 0
 		self.login()
@@ -49,6 +51,8 @@ class tiplanet:
 		self.keepAwake = setInterval(self.login, self.config["keepAwake"])
 
 	def logout(self):
+		self.writeLastIdFile()
+
 		logoutUrl = self.getUrl(self.config["logout"])
 		sid = self.session.cookies.get_dict()[self.config["cookies"]["sid"]]
 
@@ -124,7 +128,6 @@ class tiplanet:
 			self.deletionQueue[self.deletionQueueIndex] = (int(message["id"]), ds_msg.id)
 			self.deletionQueueIndex = (self.deletionQueueIndex + 1) % len(self.deletionQueue)
 
-
 	def postChatMessage(self, message, channel="Public"):
 		payload = {
 			"channelName": channel,
@@ -145,3 +148,19 @@ class tiplanet:
 	def getUrl(self, url):
 		return f"https://{self.config['host']}{url}"
 
+	def loadLastIdFile(self):
+		try:
+			with open(os.path.join(os.path.dirname(__file__), '../lastId.json'), "r") as file:
+				file = json.load(file)
+				
+				if file["lastId"]:
+					self.lastId = file["lastId"]
+				else:
+					self.lastId = None
+		except:
+			self.lastId = None
+			pass
+
+	def writeLastIdFile(self):
+		with open(os.path.join(os.path.dirname(__file__), '../lastId.json'), "w") as file:
+			file.write(json.dumps({ "lastId": self.lastId }))
