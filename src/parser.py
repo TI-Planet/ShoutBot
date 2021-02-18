@@ -45,6 +45,8 @@ class Parser:
 			url = u''
 			if 'url' in options:
 				url = options['url']
+			if 'memberlist' in url and 'viewprofile' in url:
+				url = f'<{url}>'
 			return f'[{value}]({url})'
 
 		self.bbcode2markdown = bbcode.Parser(install_defaults=False, escape_html=False)

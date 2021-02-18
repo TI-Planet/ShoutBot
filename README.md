@@ -18,12 +18,6 @@ If you find a bug, or want some feature you can open an [issue](https://github.c
 
 For this bot you need to install `python3.8`, `pip` and `poetry`. There is also a [docker](#docker) for easy deployment.
 
-- For latex you will need:
-  - A LaTeX distribution such as [TeX Live](https://www.tug.org/texlive/) or [MiKTeX](https://miktex.org/)
-  - `pdfcrop`
-  - `pnmtopng`
-  - `pdftoppm`
-
 ### Install
 
 You need to setup dependencies, in your terminal run :
