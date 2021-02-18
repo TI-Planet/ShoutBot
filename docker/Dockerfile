@@ -9,7 +9,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Install system deps
-RUN apt-get update && apt-get upgrade -y && apt-get install git -y
+RUN rm -rf /var/lib/apt/lists/* && apt-get update && apt-get --no-install-recommends -y install git -y
 
 # Install the package manager
 RUN pip install 'poetry>=1.0'
