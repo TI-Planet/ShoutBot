@@ -3,6 +3,9 @@
 # ignore pnglatex generation folder
 latex/
 
+# ignore lasId.json file
+lastId.json
+
 # Ignore prettier config
 .prettierrc
 
