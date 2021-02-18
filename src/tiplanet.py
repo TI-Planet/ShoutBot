@@ -60,7 +60,10 @@ class tiplanet:
 		self.session.post(f"{logoutUrl}&sid={sid}", data=payload)
 
 	def getChat(self):
-		chat = self.session.get(self.getUrl(self.config["chat"]))
+		payload = {}
+		if self.lastId:
+			payload["lastID"] = self.lastId
+		chat = self.session.post(self.getUrl(self.config["chat"]), data=payload)
 		soup = BeautifulSoup(chat.text, "html.parser")
 
 		messages = [{
