@@ -146,13 +146,17 @@ class tiplanet:
 		return f"https://{self.config['host']}{url}"
 
 	def loadLastIdFile(self):
-		with open(os.path.join(os.path.dirname(__file__), '../lastId.json'), "r") as file:
-			file = json.load(file)
-			
-			if (file["lastId"]):
-				self.lastId = file["lastId"]
-			else:
-				self.lastId = None
+		try:
+			with open(os.path.join(os.path.dirname(__file__), '../lastId.json'), "r") as file:
+				file = json.load(file)
+				
+				if (file["lastId"]):
+					self.lastId = file["lastId"]
+				else:
+					self.lastId = None
+		except:
+			self.lastId = None
+			pass
 
 	def writeLastIdFile(self):
 		with open(os.path.join(os.path.dirname(__file__), '../lastId.json'), "w") as file:
