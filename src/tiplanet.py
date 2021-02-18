@@ -150,7 +150,7 @@ class tiplanet:
 			with open(os.path.join(os.path.dirname(__file__), '../lastId.json'), "r") as file:
 				file = json.load(file)
 				
-				if (file["lastId"]):
+				if file["lastId"]:
 					self.lastId = file["lastId"]
 				else:
 					self.lastId = None
