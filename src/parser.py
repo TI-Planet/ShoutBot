@@ -77,7 +77,7 @@ class Parser:
 		msg = re.sub(r'<a rel="nofollow" href="(.*)<\/a>', repl_func, msg)
 
 		# emojis
-		for tp_name, ds_name in self.config["emojis"].items():
+		for tp_name, ds_name in self.config.emojis.items():
 			msg = msg.replace(f':{tp_name}:', f'<:{ds_name}>')
 
 		return msg.strip()
