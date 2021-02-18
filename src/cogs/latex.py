@@ -28,7 +28,7 @@ class Latex(commands.Cog):
 			async with ctx.typing():
 				try:
 					for i in range(len(latexMsgs)):
-						img = requests.get(f"https://chart.googleapis.com/chart?cht=tx&chco=FFFFFF&chf=bg,s,36393F&chl={urllib.parse.quote(latexMsgs[i])}")
+						img = requests.get(f"https://chart.googleapis.com/chart?cht=tx&chco=FFFFFF&chf=bg,s,36393F&chl={urllib.parse.quote(latexMsgs[i])}", stream=True)
 						if img.status_code == 200:
 							with open(os.path.join(os.path.dirname(__file__), f"../../latex/{message.id}-{i}.png"), 'wb') as file:
 								for chunk in img:
