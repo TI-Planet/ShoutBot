@@ -37,8 +37,8 @@ class tiplanet:
 		loginUrl = self.getUrl(self.config.login)
 
 		payload = {
-			'username': self.config.username,
-			'password': self.config.password,
+			'username': self.config.user.username,
+			'password': self.config.user.password,
 			'autologin': 'true',
 			'viewonline': 'false',
 			'redirect': '',
@@ -53,8 +53,8 @@ class tiplanet:
 		sid = self.session.cookies.get_dict()[self.config.cookies.sid]
 
 		payload = {
-			'username': self.config.username,
-			'password': self.config.password,
+			'username': self.config.user.username,
+			'password': self.config.user.password,
 		}
 
 		self.session.post(f"{logoutUrl}&sid={sid}", data=payload)
@@ -81,7 +81,7 @@ class tiplanet:
 			self.lastId = lastId
 
 		# keep recent content only
-		messages = [m for m in messages if int(m["id"]) > int(self.lastId) and m["userName"] != self.config.username]
+		messages = [m for m in messages if int(m["id"]) > int(self.lastId) and m["userName"] != self.config.user.username]
 
 		self.lastId = lastId
 
