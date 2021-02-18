@@ -17,7 +17,7 @@ class Latex(commands.Cog):
 			return
 
 		os.makedirs("latex", exist_ok=True)
-		latexMsgs = re.findall(r"\$\$(.*?)\$\$", message.content)
+		latexMsgs = re.findall(r"\$\$([\s\S]*?)\$\$", message.content)
 		
 		if latexMsgs:
 			ctx = await self.bot.get_context(message)
