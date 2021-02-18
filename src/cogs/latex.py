@@ -9,7 +9,7 @@ from discord.ext import commands
 class Latex(commands.Cog):
 	def __init__(self, bot, config):
 		self.bot = bot
-		self.config = config["DISCORD"]["cogs"]["latex"]
+		self.config = config.DISCORD.cogs.latex
 
 	@commands.Cog.listener()
 	async def on_message(self, message):

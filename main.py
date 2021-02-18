@@ -12,8 +12,7 @@ from src.tiplanet import tiplanet
 
 __version__ = "under developpement"
 
-config = config().LoadConfig()
-bot = commands.Bot(command_prefix=config["PREFIX"])
+bot = commands.Bot(command_prefix=config.PREFIX)
 chat = tiplanet(config)
 cogs = Cog(config, bot).LoadCogs()
 discord = bonfire(config, bot, chat)
@@ -21,13 +20,13 @@ discord = bonfire(config, bot, chat)
 
 @bot.event
 async def on_ready():
-	print(f"Bot {bot.user.name} connected on {len(bot.guilds)} servers")
+	print(f"Bot {bot.user.name} connected on {len(bot.guilds)} server{'s'*(len(bot.guilds)>1)}")
 	while True:
 		try:
 			await chat.updateChat(bot)
 		except:
 			pass
-		await asyncio.sleep(config["TIPLANET"]["pollingInterval"])
+		await asyncio.sleep(config.TIPLANET.pollingInterval)
 
 
 @bot.event
@@ -40,7 +39,7 @@ async def on_message_delete(message):
 	discord.deleteChat(message)
 
 try:
-	bot.run(config["DISCORD_TOKEN"])
+	bot.run(config.DISCORD.token)
 finally:
 	chat.logout()
 	print('EXITING GRACEFULLY')
