@@ -9,14 +9,13 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Install system deps
-RUN apt-get update && apt-get upgrade -y && apt-get install git texlive texlive-extra-utils poppler-utils netpbm -y
+RUN apt-get update && apt-get upgrade -y && apt-get install git -y
 
 # Install the package manager
 RUN pip install 'poetry>=1.0'
 
 # Clone repository
 RUN git clone https://github.com/LeGmask/ShoutBot.git ./
-
 
 # Install stuff
 RUN poetry install
