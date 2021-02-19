@@ -6,6 +6,9 @@ latex/
 # ignore lasId.json file
 lastId.json
 
+# ignore personal configurations
+config_override.json
+
 # Ignore prettier config
 .prettierrc
 

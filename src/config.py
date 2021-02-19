@@ -1,63 +1,70 @@
 import os
 import json
-from dotenv import load_dotenv
 
 with open(os.path.join(os.path.dirname(__file__), '../config.json'), "r") as file:
-	CONFIG = json.load(file)
+	config_default = json.load(file)
+with open(os.path.join(os.path.dirname(__file__), '../config_override.json'), "r") as file:
+	config_override = json.load(file)
 
-load_dotenv()
+def config_field(names):
+	global config_default, config_override
+	def load(cfg):
+		ret = cfg
+		for name in names:
+			if not name in ret:
+				return None
+			ret = ret[name]
+		return ret
+	return load(config_override) or load(config_default)
 
 class config:
-	PREFIX = os.getenv("PREFIX") or CONFIG["PREFIX"]
-	
+	PREFIX = config_field(["PREFIX"])
+
 	class SHARED:
-		deletionQueueSize = os.getenv("SHARED_DELETION_QUEUE_SIZE") or CONFIG["SHARED"]["deletionQueueSize"]
-		
+		deletionQueueSize = config_field(["SHARED", "deletionQueueSize"])
+
 	class SHOUTBOX:
-		channel = os.getenv("SHOUTBOX_CHANNEL") or CONFIG["SHOUTBOX"]["channel"]
-		
+		channel = config_field(["SHOUTBOX", "channel"])
+
 	class REQUESTS:
 		class retry:
-			total = os.getenv("REQUESTS_RETRY_TOTAL") or CONFIG["REQUESTS"]["retry"]["total"]
-			status_forcelist = os.getenv("REQUESTS_RETRY_STATUS_FORCELIST") or CONFIG["REQUESTS"]["retry"]["status_forcelist"]
-			method_whitelist = os.getenv("REQUESTS_RETRY_METHOD_WHITELIST") or CONFIG["REQUESTS"]["retry"]["method_whitelist"]
-			
+			total = config_field(["REQUESTS", "retry", "total"])
+			status_forcelist = config_field(["REQUESTS", "retry", "status_forcelist"])
+			method_whitelist = config_field(["REQUESTS", "retry", "method_whitelist"])
+
 	class TIPLANET:
-		host = os.getenv("TIPLANET_HOST") or CONFIG["TIPLANET"]["host"]
-		login = os.getenv("TIPLANET_LOGIN") or CONFIG["TIPLANET"]["login"]
-		logout = os.getenv("TIPLANET_LOGOUT") or CONFIG["TIPLANET"]["logout"]
-		
+		host = config_field(["TIPLANET", "host"])
+		login = config_field(["TIPLANET", "login"])
+		logout = config_field(["TIPLANET", "logout"])
+
 		class cookies:
-			sid = os.getenv("TIPLANET_COOKIES_SID") or CONFIG["TIPLANET"]["cookies"]["sid"]
-			
-		chat = os.getenv("TIPLANET_CHAT") or CONFIG["TIPLANET"]["chat"]
-		keepAwake = os.getenv("TIPLANET_KEEPAWAKE") or CONFIG["TIPLANET"]["keepAwake"]
-		pollingInterval = os.getenv("TIPLANET_POLLINGINTERVAL") or CONFIG["TIPLANET"]["pollingInterval"]
-		
+			sid = config_field(["TIPLANET", "cookies", "sid"])
+
+		chat = config_field(["TIPLANET", "chat"])
+		keepAwake = config_field(["TIPLANET", "keepAwake"])
+		pollingInterval = config_field(["TIPLANET", "pollingInterval"])
+
 		class user:
-			username = os.getenv("TIPLANET_USER_USERNAME")
-			password = os.getenv("TIPLANET_USER_PASSWORD")
-			
-		selfBot = os.getenv("TIPLANET_SELFBOT") or CONFIG["TIPLANET"]["selfBot"]
-		
+			username = config_field(["TIPLANET", "USER", "USERNAME"])
+			password = config_field(["TIPLANET", "USER", "PASSWORD"])
+
+		selfBot = config_field(["TIPLANET", "selfBot"])
+
 		class webhook:
-			id = os.getenv("TIPLANET_WEBHOOK_ID")
-			token = os.getenv("TIPLANET_WEBHOOK_TOKEN")
-		
+			id = config_field(["TIPLANET", "WEBHOOK", "ID"])
+			token = config_field(["TIPLANET", "WEBHOOK", "TOKEN"])
+
 		class thumbnails:
-			maxWidth = os.getenv("TIPLANET_THUMBNAILS_MAXWIDTH") or CONFIG["TIPLANET"]["thumbnails"]["maxWidth"]
-			maxHeight = os.getenv("TIPLANET_THUMBNAILS_MAXHEIGHT") or CONFIG["TIPLANET"]["thumbnails"]["maxHeight"]
-			
-		emojis = {
-			"troll": os.getenv("TIPLANET_EMOJI_TROLL") or CONFIG["TIPLANET"]["emojis"]["troll"],
-			"wat": os.getenv("TIPLANET_EMOJI_WAT") or CONFIG["TIPLANET"]["emojis"]["wat"]
-		}
-			
+			maxWidth = config_field(["TIPLANET", "thumbnails", "maxWidth"])
+			maxHeight = config_field(["TIPLANET", "thumbnails", "maxHeight"])
+
+		emojis = config_field(["TIPLANET", "emojis"])
+
 		class irc:
-			id = os.getenv("TIPLANET_IRC") or CONFIG["TIPLANET"]["irc"]["id"]
-		
+			id = config_field(["TIPLANET", "irc", "id"])
+
 	class DISCORD:
-		token = os.getenv('DISCORD_TOKEN')
+		token = config_field(["DISCORD", "TOKEN"])
 		class cogs:
 			class latex:
-				enable = os.getenv("DISCORD_LATEX_ENABLE") or CONFIG["DISCORD"]["cogs"]["latex"]["enable"]
+				enable = config_field(["DISCORD", "cogs", "latex", "enable"])
