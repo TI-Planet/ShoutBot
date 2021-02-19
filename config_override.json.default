@@ -1,0 +1,15 @@
+{
+	"DISCORD": {
+		"TOKEN": ""
+	},
+	"TIPLANET": {
+		"USER": {
+			"USERNAME": "",
+			"PASSWORD": ""
+		},
+		"WEBHOOK": {
+			"ID": ,
+			"TOKEN": ""
+		}
+	}
+}
