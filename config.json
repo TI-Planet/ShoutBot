@@ -37,23 +37,27 @@
 		"emojis" : {
 			":troll:": "<:troll:810143192581668885>",
 			":wat:": "<:wat:810143891855507517>",
-			":p": ":stuck_out_tongue:"
+			":p": ":stuck_out_tongue:",
+			":D": ":smile:",
+			":)": "slight_smile",
+			":bj:": ":thumbsup:"
 		},
 		"censorship" : {
 			"merde": "saperlipopette",
-			"bordel": "sapristi",
+			"bordel": "bazar",
 			"foutre": "faire",
-			"chiant": "très embettant",
+			"chiant": "enquiquinant",
+			"chier": "suer",
 			"couille": "bonbon",
-			"putain": "fichtre",
-			"putin": "fichtre",
+			"putain": ["fichtre", "diantre", "bigre", "sacrebleu"],
+			"putin": ["fichtre", "diantre", "bigre", "sacrebleu"],
 			"prenium": "premium",
 			"pretium": "premium",
-			"bonjours": "bonjour",
-			"ce jeux": "ce jeu",
-			"le jeux": "le jeu",
-			"un jeux": "un jeu",
-			"du jeux": "du jeu",
+			"bonjours": "bonjour~~s~~",
+			"ce jeux": "ce jeu~~x~~",
+			"le jeux": "le jeu~~x~~",
+			"un jeux": "un jeu~~x~~",
+			"du jeux": "du jeu~~x~~",
 			"enfaite": "en fait"
 		},
 		"irc": {
