@@ -48,28 +48,9 @@ class config:
 			maxWidth = os.getenv("TIPLANET_THUMBNAILS_MAXWIDTH") or CONFIG["TIPLANET"]["thumbnails"]["maxWidth"]
 			maxHeight = os.getenv("TIPLANET_THUMBNAILS_MAXHEIGHT") or CONFIG["TIPLANET"]["thumbnails"]["maxHeight"]
 			
-		emojis = {
-			":troll:": "<:troll:810143192581668885:>",
-			":wat:": "<:wat:810143891855507517:>",
-			":p": ":stuck_out_tongue:"
-		}
-		censure = {
-			"merde": "saperlipopette",
-			"bordel": "sapristi",
-			"foutre": "faire",
-			"chiant": "très embettant",
-			"couille": "bonbon",
-			"putain": "fichtre",
-			"putin": "fichtre",
-			"prenium": "premium",
-			"pretium": "premium",
-			"bonjours": "bonjour",
-			"ce jeux": "ce jeu",
-			"le jeux": "le jeu",
-			"un jeux": "un jeu",
-			"du jeux": "du jeu",
-			"enfaite": "en fait"
-		}	
+		emojis = CONFIG["TIPLANET"]["emojis"]
+		censorship = CONFIG["TIPLANET"]["censorship"]
+		
 		class irc:
 			id = os.getenv("TIPLANET_IRC") or CONFIG["TIPLANET"]["irc"]["id"]
 		

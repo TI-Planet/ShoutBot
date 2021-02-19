@@ -34,9 +34,27 @@
 			"maxWidth": 125,
 			"maxHeight": 125
 		},
-		"emojis": {
-			"troll": "troll:810143192581668885",
-			"wat": "wat:810143891855507517"
+		"emojis" : {
+			":troll:": "<:troll:810143192581668885>",
+			":wat:": "<:wat:810143891855507517>",
+			":p": ":stuck_out_tongue:"
+		},
+		"censorship" : {
+			"merde": "saperlipopette",
+			"bordel": "sapristi",
+			"foutre": "faire",
+			"chiant": "très embettant",
+			"couille": "bonbon",
+			"putain": "fichtre",
+			"putin": "fichtre",
+			"prenium": "premium",
+			"pretium": "premium",
+			"bonjours": "bonjour",
+			"ce jeux": "ce jeu",
+			"le jeux": "le jeu",
+			"un jeux": "un jeu",
+			"du jeux": "du jeu",
+			"enfaite": "en fait"
 		},
 		"irc": {
 			"id": 753785049970901114
