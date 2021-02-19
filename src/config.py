@@ -51,7 +51,7 @@ class config:
 		emojis = {
 			":troll:": "<:troll:810143192581668885:>",
 			":wat:": "<:wat:810143891855507517:>",
-            ":p": ":stuck_out_tongue:"
+			":p": ":stuck_out_tongue:"
 		}
 		censure = {
 			"merde": "saperlipopette",
