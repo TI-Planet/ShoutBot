@@ -80,7 +80,11 @@ class Parser:
 
 		# emojis
 		for tp_name, ds_name in self.config.emojis.items():
-			msg = msg.replace(f':{tp_name}:', f'<:{ds_name}>')
+			msg = msg.replace(f'{tp_name}', f'{ds_name}')
+
+		# censure
+		for tp_name, ds_name in self.config.censure.items():
+			msg = msg.replace(f'{tp_name}', f'{ds_name}')
 
 		return msg.strip()
 
