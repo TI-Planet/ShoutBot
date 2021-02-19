@@ -36,7 +36,7 @@ For setting up the bot, you need :
 
 In `config.json` you will find every common settings that are not private.
 
-In `.env` you will find settings that are private such as your Discord bot token, your wehbook id and token, or your TI-Planet account.
+In `config_override.json` you will find settings that are private such as your Discord bot token, your wehbook id and token, or your TI-Planet account. In this file you can overrite every setting you fin in config.json
 
 ### Usage
 
@@ -50,7 +50,7 @@ poetry run python main.py
 
 You can easily setup this project using docker:
 
-1. First download `docker-compose.yml` and `config.js` and default `.env`;
+1. First download `docker-compose.yml` and `config.json` and default `config_override.json`;
 2. Edit settings depending on your server (see [config](#config) part);
 3. Run the docker using the following command :
 
