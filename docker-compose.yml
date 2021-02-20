@@ -1,10 +1,9 @@
 version: "3.7"
 
 services:
-  bot:
-    build: ./docker/
-    command: poetry run python main.py
-    restart: always
-    env_file: .env
-    volumes:
-      - ./config.json:/app/config.json
+    bot:
+        build: ./docker/
+        command: poetry run python main.py
+        restart: always
+        volumes:
+            - ./config_override.json:/app/config_override.json
