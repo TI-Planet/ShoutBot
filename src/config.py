@@ -59,6 +59,7 @@ class config:
 			maxHeight = config_field(["TIPLANET", "thumbnails", "maxHeight"])
 
 		emojis = config_field(["TIPLANET", "emojis"])
+		censorship = config_field(["TIPLANET", "censorship"])
 
 		class irc:
 			id = config_field(["TIPLANET", "irc", "id"])

@@ -3,7 +3,7 @@ import html
 import bbcode
 from markdown_it import MarkdownIt
 from markdown_it.renderer import RendererHTML
-
+from random import choice
 
 class Parser:
 	def __init__(self, config):
@@ -80,7 +80,11 @@ class Parser:
 
 		# emojis
 		for tp_name, ds_name in self.config.emojis.items():
-			msg = msg.replace(f':{tp_name}:', f'<:{ds_name}>')
+			msg = msg.replace(f'{tp_name}', f'{ds_name}')
+
+		# censorship
+		for uncensored, censored in self.config.censorship.items():
+			msg = msg.replace(f'{uncensored}', f'{[censored,choice(censored)][isinstance(censored,list)]}')
 
 		return msg.strip()
 
