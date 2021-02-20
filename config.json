@@ -37,9 +37,10 @@
 		"emojis" : {
 			":troll:": "<:troll:810143192581668885>",
 			":wat:": "<:wat:810143891855507517>",
+			":favorite:": ":heart:",
 			":p": ":stuck_out_tongue:",
 			":D": ":smile:",
-			":)": "slight_smile",
+			":)": ":slight_smile:",
 			":bj:": ":thumbsup:"
 		},
 		"censorship" : {
@@ -47,8 +48,12 @@
 			"bordel": "bazar",
 			"foutre": "faire",
 			"chiant": "enquiquinant",
-			"chier": "suer",
+			" chier": " suer",
 			"couille": "bonbon",
+			"enculé": "fot-en-cul",
+			"enculer": ["dériver", "intégrer"],
+			" pute": [" fille de joie", " gourgandine", " coureuse de remparts"],
+			" putes": [" filles de joie", " gourgandines", " coureuses de remparts"],
 			"putain": ["fichtre", "diantre", "bigre", "sacrebleu"],
 			"putin": ["fichtre", "diantre", "bigre", "sacrebleu"],
 			"prenium": "pre__m__ium",
