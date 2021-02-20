@@ -47,6 +47,8 @@ class Parser:
 				url = options['url']
 			if 'memberlist' in url and 'viewprofile' in url:
 				url = f'<{url}>'
+			if 'album.php' in url:
+				url = f'<{url}>'
 			return f'[{value}]({url})'
 
 		self.bbcode2markdown = bbcode.Parser(install_defaults=False, escape_html=False)
@@ -64,7 +66,19 @@ class Parser:
 		# shortcut completions and other quick changes
 		msg = msg.replace('[url=/', '[url=https://www.tiplanet.org/')
 		msg = msg.replace('[img]/', '[img]https://www.tiplanet.org/')
-		msg = re.sub(r'\[url=(.*)]\[img](.*)\[\/img]\[\/url]', r'\g<1>', msg)
+
+		imginurl = r'\[url=(.*)]\[img](.*)\[\/img]\[\/url]'
+		for match in re.finditer(imginurl, msg):
+			matching_substring = match.group(0)
+			url = match.group(1)
+			img = match.group(2)
+			if "discord" in url:
+				# this is most likely someone on tiplanet quoting someone else's image sent from discord
+				replacement = f'[Image](<{url}>)'
+			else:
+				# this is most likely a thumbnail from the tiplanet archive/gallery
+				replacement = '' if 'gallery' in img else img
+			msg = msg.replace(matching_substring, replacement)
 
 		# bbcode and html escaping
 		msg = html.unescape(html.unescape(self.bbcode2markdown.format(msg)))
