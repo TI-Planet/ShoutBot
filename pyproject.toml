@@ -10,7 +10,6 @@ python = "^3.8"
 "discord.py" = "^1.6.0"
 beautifulsoup4 = "^4.9.3"
 requests = "^2.25.1"
-python-dotenv = "^0.15.0"
 bbcode = "^1.1.0"
 markdown-it-py = "^0.6.2"
 

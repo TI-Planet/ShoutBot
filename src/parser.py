@@ -62,8 +62,8 @@ class Parser:
 
 	def parse_bbcode2markdown(self, msg):
 		# shortcut completions and other quick changes
-		msg = msg.replace('[url=/forum', '[url=https://www.tiplanet.org/forum')
-		msg = msg.replace('[img]/forum', '[img]https://www.tiplanet.org/forum')
+		msg = msg.replace('[url=/', '[url=https://www.tiplanet.org/')
+		msg = msg.replace('[img]/', '[img]https://www.tiplanet.org/')
 		msg = re.sub(r'\[url=(.*)]\[img](.*)\[\/img]\[\/url]', r'\g<1>', msg)
 
 		# bbcode and html escaping
