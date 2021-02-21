@@ -74,8 +74,8 @@ class Parser:
 			img = match.group(2)
 
 			if "cdn.discordapp.com" in url and "media.discordapp.net" in img:
-				# it's an image sent from discord (probably quoted here if it lands in this parser)
-				replacement = f'[Image](<{url}>)'
+				# it's an image sent from discord, either quoted from tiplanet or sent from a selfbot then coming here from tiplanet (or similar cases)
+				replacement = url
 			elif id == self.config.TiBotId and 'gallery' in img:
 				# it's TI-Bot for the gallery
 				replacement = '' # there is already an embed with link and thumbnail
