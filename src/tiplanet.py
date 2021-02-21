@@ -106,7 +106,7 @@ class tiplanet:
 			if len(candidates) == 0:
 				return
 			ds_id = candidates[0]
-			channel = await bot.fetch_channel(fullconfig.SHOUTBOX.channel)
+			channel = await bot.fetch_channel(self.fullconfig.SHOUTBOX.channel)
 			await channel.delete_messages([Object(ds_id)])
 		finally:
 			pass
