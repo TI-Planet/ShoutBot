@@ -13,7 +13,7 @@ from src.tiplanet import tiplanet
 
 __version__ = "under developpement"
 
-bot = commands.Bot(command_prefix=config.PREFIX, intents=discord.Intents.all())
+bot = commands.Bot(command_prefix=config.PREFIX)
 chat = tiplanet(config)
 cogs = Cog(config, bot, chat)
 discord = bonfire(config, bot, chat, cogs)
