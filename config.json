@@ -24,6 +24,7 @@
 		"cookies": {
 			"sid": "phpbb3_pasr5_sid"
 		},
+		"TiBotId" : 2147483647,
 		"chat": "/forum/chat/?ajax=true",
 		"keepAwake": 40000,
 		"pollingInterval": 2,

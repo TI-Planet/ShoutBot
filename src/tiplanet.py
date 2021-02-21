@@ -15,7 +15,7 @@ class tiplanet:
 		self.channel = config.SHOUTBOX.channel
 
 		self.session = requests.Session()
-		self.session.mount("https://", 
+		self.session.mount("https://",
 			HTTPAdapter(
 				max_retries=Retry(
 					total=config.REQUESTS.retry.total,
@@ -33,7 +33,7 @@ class tiplanet:
 		self.deletionQueue = [(0, 0) for i in range(config.SHARED.deletionQueueSize)]
 		self.deletionQueueIndex = 0
 		self.login()
-	
+
 
 	def login(self):
 		loginUrl = self.getUrl(self.config.login)
@@ -74,7 +74,7 @@ class tiplanet:
 			"userId": message.get("userid"),
 			"userRole": message.get("userrole"),
 			"userName": message.username.text,
-			"content": self.parser.parse_bbcode2markdown(message.find('text').text)
+			"content": message.find('text').text
 		} for message in soup.find_all("message")]
 
 		return messages
@@ -117,7 +117,7 @@ class tiplanet:
 			return
 
 		ds_msg = self.webhook.send(
-			message["content"],
+			self.parser.parse_bbcode2markdown(message["content"], int(message["userId"])),
 			wait=True, # so we can get the ds_msg
 			avatar_url=f"https://tiplanet.org/forum/avatar.php?id={message['userId']}",
 			username=message["userName"],
@@ -137,7 +137,7 @@ class tiplanet:
 		soup = BeautifulSoup(chat.text, "html.parser")
 
 		return [message.get("id") for message in soup.find_all("message")][-1]
-		
+
 
 	def deleteChatMessage(self, id):
 		payload = {
@@ -153,7 +153,7 @@ class tiplanet:
 		try:
 			with open(os.path.join(os.path.dirname(__file__), '../lastId.json'), "r") as file:
 				file = json.load(file)
-				
+
 				if file["lastId"]:
 					self.lastId = file["lastId"]
 				else:

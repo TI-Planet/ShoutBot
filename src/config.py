@@ -36,6 +36,7 @@ class config:
 		host = config_field(["TIPLANET", "host"])
 		login = config_field(["TIPLANET", "login"])
 		logout = config_field(["TIPLANET", "logout"])
+		TiBotId = int(config_field(["TIPLANET", "TiBotId"]))
 
 		class cookies:
 			sid = config_field(["TIPLANET", "cookies", "sid"])
