@@ -1,5 +1,5 @@
 {
-	"PREFIX": "/",
+	"PREFIX": "&",
 
 	"SHARED": {
 		"deletionQueueSize": 1000
@@ -24,7 +24,7 @@
 		"cookies": {
 			"sid": "phpbb3_pasr5_sid"
 		},
-		"TiBotId" : 2147483647,
+		"TiBotId": 2147483647,
 		"chat": "/forum/chat/?ajax=true",
 		"keepAwake": 40000,
 		"pollingInterval": 2,
@@ -35,7 +35,7 @@
 			"maxWidth": 125,
 			"maxHeight": 125
 		},
-		"emojis" : {
+		"emojis": {
 			":troll:": "<:troll:810143192581668885>",
 			":wat:": "<:wat:810143891855507517>",
 			":favorite:": ":heart:",
@@ -44,7 +44,7 @@
 			":)": ":slight_smile:",
 			":bj:": ":thumbsup:"
 		},
-		"censorship" : {
+		"censorship": {
 			"merde": "saperlipopette",
 			"bordel": "bazar",
 			"foutre": "faire",
@@ -53,8 +53,16 @@
 			"couille": "bonbon",
 			"enculé": "fot-en-cul",
 			"enculer": ["dériver", "intégrer"],
-			" pute": [" fille de joie", " gourgandine", " coureuse de remparts"],
-			" putes": [" filles de joie", " gourgandines", " coureuses de remparts"],
+			" pute": [
+				" fille de joie",
+				" gourgandine",
+				" coureuse de remparts"
+			],
+			" putes": [
+				" filles de joie",
+				" gourgandines",
+				" coureuses de remparts"
+			],
 			"putain": ["fichtre", "diantre", "bigre", "sacrebleu"],
 			"putin": ["fichtre", "diantre", "bigre", "sacrebleu"],
 			"prenium": "pre__m__ium",

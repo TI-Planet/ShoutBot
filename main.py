@@ -2,6 +2,7 @@
 
 import time
 import asyncio
+import discord
 from discord.ext import commands
 
 from src.cog import Cog
@@ -12,10 +13,10 @@ from src.tiplanet import tiplanet
 
 __version__ = "under developpement"
 
-bot = commands.Bot(command_prefix=config.PREFIX)
+bot = commands.Bot(command_prefix=config.PREFIX, intents=discord.Intents.all())
 chat = tiplanet(config)
-cogs = Cog(config, bot).LoadCogs()
-discord = bonfire(config, bot, chat)
+cogs = Cog(config, bot, chat)
+discord = bonfire(config, bot, chat, cogs)
 
 
 @bot.event
@@ -32,11 +33,13 @@ async def on_ready():
 @bot.event
 async def on_message(message):
 	discord.updateChat(message)
+	await bot.process_commands(message)
 
 
 @bot.event
 async def on_message_delete(message):
 	discord.deleteChat(message)
+
 
 try:
 	bot.run(config.DISCORD.token)

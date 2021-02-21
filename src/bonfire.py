@@ -1,15 +1,18 @@
 from .parser import Parser
 
 class bonfire:
-	def __init__(self, config, bot, chat):
+	def __init__(self, config, bot, chat, cogs):
 		self.config = config
 		self.chat = chat
 		self.bot = bot
 		self.parser = Parser(self.config)
-
+		self.commands = cogs.getCommands()
 
 	def updateChat(self, message):
 		if message.author == self.bot.user or str(message.webhook_id) == str(self.config.TIPLANET.webhook.id):
+			return
+
+		if message.content in self.commands:
 			return
 
 		if (message.channel.id == self.config.SHOUTBOX.channel):
