@@ -64,8 +64,8 @@ class Parser:
 
 	def parse_bbcode2markdown(self, msg, id):
 		# shortcut completions and other quick changes
-		msg = msg.replace('[url=/', '[url=https://www.tiplanet.org/')
-		msg = msg.replace('[img]/', '[img]https://www.tiplanet.org/')
+		msg = msg.replace('[url=/', '[url=https://tiplanet.org/')
+		msg = msg.replace('[img]/', '[img]https://tiplanet.org/')
 
 		imginurl = r'\[url=(.*)]\[img](.*)\[\/img]\[\/url]'
 		for match in re.finditer(imginurl, msg):
