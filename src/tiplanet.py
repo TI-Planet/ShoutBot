@@ -97,8 +97,9 @@ class tiplanet:
 			self.lastId = lastId
 
 		# keep recent content only
+		latestMsg = [m for m in messages if int(m["id"]) > int(self.lastId)]
 		messages = []
-		for msg in [m for m in messages if int(m["id"]) > int(self.lastId)]:
+		for msg in latestMsg:
 			if msg["userName"] == self.config.user.username:
 				if int(msg["id"]) in [tp_id for tp_id, ds_id in self.deletionQueue]:
 					return # it's a message from myself
