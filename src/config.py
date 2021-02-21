@@ -19,6 +19,7 @@ def config_field(names):
 
 class config:
 	PREFIX = config_field(["PREFIX"])
+	DEVPREFIX = config_field(["DEVPREFIX"]) or ""
 
 	class SHARED:
 		deletionQueueSize = config_field(["SHARED", "deletionQueueSize"])

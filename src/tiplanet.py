@@ -12,8 +12,6 @@ from .libs.setInterval import setInterval
 
 class tiplanet:
 	def __init__(self, config):
-		self.channel = config.SHOUTBOX.channel
-
 		self.session = requests.Session()
 		self.session.mount("https://",
 			HTTPAdapter(
@@ -25,6 +23,7 @@ class tiplanet:
 			)
 		)
 
+		self.fullconfig = config
 		self.config = config.TIPLANET
 		self.parser = Parser(self.config)
 		self.webhook = Webhook.partial(self.config.webhook.id, self.config.webhook.token, adapter=RequestsWebhookAdapter())
@@ -107,7 +106,7 @@ class tiplanet:
 			if len(candidates) == 0:
 				return
 			ds_id = candidates[0]
-			channel = await bot.fetch_channel(self.channel)
+			channel = await bot.fetch_channel(fullconfig.SHOUTBOX.channel)
 			await channel.delete_messages([Object(ds_id)])
 		finally:
 			pass
@@ -120,7 +119,7 @@ class tiplanet:
 			self.parser.parse_bbcode2markdown(message["content"], int(message["userId"])),
 			wait=True, # so we can get the ds_msg
 			avatar_url=f"https://tiplanet.org/forum/avatar.php?id={message['userId']}",
-			username=message["userName"],
+			username=f'{self.fullconfig.DEVPREFIX}{message["userName"]}',
 			allowed_mentions=AllowedMentions(everyone=False, users=False, roles=False, replied_user=False)
 		)
 		if ds_msg != None:

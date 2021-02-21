@@ -17,7 +17,7 @@ class bonfire:
 				chat_id = self.chat.postChatMessage(self.generateMessage(message))
 			except:
 				raise("error while updating chat")
-			
+
 			if chat_id != None:
 				self.chat.deletionQueue[self.chat.deletionQueueIndex] = (int(chat_id), message.id)
 				self.chat.deletionQueueIndex = (self.chat.deletionQueueIndex + 1) % len(self.chat.deletionQueue)
@@ -41,7 +41,7 @@ class bonfire:
 
 		msg = self.parser.parse_markdown2bbcode(message.clean_content)
 
-		return f"{name if not self.config.TIPLANET.selfBot else ''}{quotePrefix}{msg}{attachmentSuffix}"
+		return f"{f'{self.config.DEVPREFIX}{name}' if not self.config.TIPLANET.selfBot else ''}{quotePrefix}{msg}{attachmentSuffix}"
 
 	def removeDiscordID(self, username):
 		return str(username)[0:-5]
