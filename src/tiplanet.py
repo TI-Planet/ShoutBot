@@ -77,6 +77,17 @@ class tiplanet:
 		} for message in soup.find_all("message")]
 
 		return messages
+	
+	def getOnline(self):
+		chat = self.session.get(self.getUrl(self.config.chat))
+		soup = BeautifulSoup(chat.text, "html.parser")
+
+		users = [{
+			"username": user.text,
+			"mobile": int(user.get("ismobile")) == 1
+		} for user in soup.find_all("user")]
+
+		return users
 
 	async def updateChat(self, bot):
 		messages = self.getChat()
