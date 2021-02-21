@@ -54,6 +54,7 @@ class Parser:
 		self.bbcode2markdown = bbcode.Parser(install_defaults=False, escape_html=False)
 		self.bbcode2markdown.add_simple_formatter('ispoiler', '|| %(value)s ||')
 		self.bbcode2markdown.add_simple_formatter('color', '%(value)s')
+		self.bbcode2markdown.add_simple_formatter('code', '```%(value)s```')
 		self.bbcode2markdown.add_simple_formatter('img', '%(value)s')
 		self.bbcode2markdown.add_simple_formatter('b', '**%(value)s**')
 		self.bbcode2markdown.add_simple_formatter('u', '__%(value)s__')
