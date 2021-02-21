@@ -117,7 +117,7 @@ class tiplanet:
 			return
 
 		ds_msg = self.webhook.send(
-			self.parser.parse_bbcode2markdown(message["content"]),
+			self.parser.parse_bbcode2markdown(message["content"], int(message["userId"])),
 			wait=True, # so we can get the ds_msg
 			avatar_url=f"https://tiplanet.org/forum/avatar.php?id={message['userId']}",
 			username=message["userName"],

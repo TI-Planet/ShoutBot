@@ -62,7 +62,7 @@ class Parser:
 		self.bbcode2markdown.add_formatter('quote', render_quote, strip=True, swallow_trailing_newline=True)
 		self.bbcode2markdown.add_formatter('url', render_url, strip=True, swallow_trailing_newline=True)
 
-	def parse_bbcode2markdown(self, msg):
+	def parse_bbcode2markdown(self, msg, id):
 		# shortcut completions and other quick changes
 		msg = msg.replace('[url=/', '[url=https://www.tiplanet.org/')
 		msg = msg.replace('[img]/', '[img]https://www.tiplanet.org/')
@@ -72,12 +72,19 @@ class Parser:
 			matching_substring = match.group(0)
 			url = match.group(1)
 			img = match.group(2)
-			if "discord" in url:
-				# this is most likely someone on tiplanet quoting someone else's image sent from discord
+
+			if "cdn.discordapp.com" in url and "media.discordapp.net" in img:
+				# it's an image sent from discord (probably quoted here if it lands in this parser)
 				replacement = f'[Image](<{url}>)'
+			elif id == self.config.TiBotId and 'gallery' in img:
+				# it's TI-Bot for the gallery
+				replacement = '' # there is already an embed with link and thumbnail
+			elif id == self.config.TiBotId:
+				# it's TI-Bot for a new archive with the archive's image
+				replacement = img # keep image only becase the link is already given in the message
 			else:
-				# this is most likely a thumbnail from the tiplanet archive/gallery
-				replacement = '' if 'gallery' in img else img
+				replacement = f'[img]{img}[/img] - [url=<{url}>]url[/url]' # can't do better
+
 			msg = msg.replace(matching_substring, replacement)
 
 		# bbcode and html escaping
