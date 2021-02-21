@@ -101,9 +101,7 @@ class tiplanet:
 		messages = []
 		for msg in latestMsg:
 			if msg["userName"] == self.config.user.username:
-				if int(msg["id"]) in [tp_id for tp_id, ds_id in self.deletionQueue]:
-					return # it's a message from myself
-				else:
+				if int(msg["id"]) not in [tp_id for tp_id, ds_id in self.deletionQueue]:
 					messages.append(msg) # this is a message from an other bot, not this instance
 			else:
 				messages.append(msg)
