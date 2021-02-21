@@ -6,7 +6,7 @@ authors = ["Evann DREUMONT <53308142+LeGmask@users.noreply.github.com>"]
 license = "GPL-3.0-or-later"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.7"
 "discord.py" = "^1.6.0"
 beautifulsoup4 = "^4.9.3"
 requests = "^2.25.1"
