@@ -68,27 +68,14 @@ class tiplanet:
 			payload["lastID"] = self.lastId
 		chat = self.session.post(self.getUrl(self.config.chat), data=payload)
 		soup = BeautifulSoup(chat.text, "html.parser")
-		
-		messages = []
-		for message in soup.find_all("message"):
-			if int(message.get("userid")) in self.config.bots: # if it's a bot we parse content for the user who post
-				content = message.find('text').text
-				match = re.match(r"^\[b\]\[color=(#?\w+)\]((?:\[IRC\]\s*)?[^\[]+)\[\/color\]\[\/b\]: ", content)
-				messages.append({
-					"id": message.get("id"),
-					"userId": message.get("userid"),
-					"userRole": message.get("userrole"),
-					"userName": match.group(2),
-					"content": content[len(match.group()):]
-				})
-			else:
-				messages.append({
-					"id": message.get("id"),
-					"userId": message.get("userid"),
-					"userRole": message.get("userrole"),
-					"userName": message.username.text,
-					"content": message.find('text').text
-				})
+
+		messages = [{
+			"id": message.get("id"),
+			"userId": message.get("userid"),
+			"userRole": message.get("userrole"),
+			"userName": message.username.text,
+			"content": message.find('text').text
+		} for message in soup.find_all("message")]
 
 		return messages
 	
@@ -130,6 +117,12 @@ class tiplanet:
 			await self.deleteDiscordMessage(bot, deletion['content'].strip().split(' ')[-1])
 
 		for message in messages:
+			if int(message["userId"]) in self.config.bots: # if it's a bot we parse content for the user who post
+				content = message["content"]
+				match = re.match(r"^\[b\]\[color=(#?\w+)\]((?:\[IRC\]\s*)?[^\[]+)\[\/color\]\[\/b\]: ", content)
+				message["content"] = content[len(match.group()):]
+				message["userName"] = match.group(2)
+
 			self.postDiscordMessage(message)
 
 	async def deleteDiscordMessage(self, bot, id):
