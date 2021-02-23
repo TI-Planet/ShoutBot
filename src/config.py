@@ -50,6 +50,8 @@ class config:
 			username = config_field(["TIPLANET", "USER", "USERNAME"])
 			password = config_field(["TIPLANET", "USER", "PASSWORD"])
 
+		bots = config_field(["TIPLANET", "bots"])
+
 		selfBot = config_field(["TIPLANET", "selfBot"])
 
 		class webhook:

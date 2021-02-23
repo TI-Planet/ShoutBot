@@ -29,6 +29,7 @@
 		"keepAwake": 40000,
 		"pollingInterval": 2,
 		"user": {},
+		"bots": [258498, 251027],
 		"selfBot": false,
 		"webhook": {},
 		"thumbnails": {
