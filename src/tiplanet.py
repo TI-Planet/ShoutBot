@@ -1,5 +1,6 @@
-import json
 import os
+import re
+import json
 import requests
 from bs4 import BeautifulSoup
 from requests.adapters import HTTPAdapter
@@ -67,14 +68,27 @@ class tiplanet:
 			payload["lastID"] = self.lastId
 		chat = self.session.post(self.getUrl(self.config.chat), data=payload)
 		soup = BeautifulSoup(chat.text, "html.parser")
-
-		messages = [{
-			"id": message.get("id"),
-			"userId": message.get("userid"),
-			"userRole": message.get("userrole"),
-			"userName": message.username.text,
-			"content": message.find('text').text
-		} for message in soup.find_all("message")]
+		
+		messages = []
+		for message in soup.find_all("message"):
+			if int(message.get("userid")) in self.config.bots: # if it's a bot we parse content for the user who post
+				content = message.find('text').text
+				match = re.match(r"^\[b\]\[color=(#?\w+)\]((?:\[IRC\]\s*)?[^\[]+)\[\/color\]\[\/b\]: ", content)
+				messages.append({
+					"id": message.get("id"),
+					"userId": message.get("userid"),
+					"userRole": message.get("userrole"),
+					"userName": match.group(2),
+					"content": content[len(match.group()):]
+				})
+			else:
+				messages.append({
+					"id": message.get("id"),
+					"userId": message.get("userid"),
+					"userRole": message.get("userrole"),
+					"userName": message.username.text,
+					"content": message.find('text').text
+				})
 
 		return messages
 	
