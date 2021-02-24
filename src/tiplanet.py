@@ -78,7 +78,7 @@ class tiplanet:
 		} for message in soup.find_all("message")]
 
 		return messages
-	
+
 	def getOnline(self):
 		chat = self.session.get(self.getUrl(self.config.chat))
 		soup = BeautifulSoup(chat.text, "html.parser")
@@ -140,11 +140,17 @@ class tiplanet:
 		if message["content"].startswith("/log"):
 			return
 
+		role = message["userRole"]
+		if role in self.config.roles:
+			roleSuffix = f' {self.config.roles[role]}'
+		else:
+			roleSuffix = ''
+
 		ds_msg = self.webhook.send(
 			self.parser.parse_bbcode2markdown(message["content"], int(message["userId"])),
 			wait=True, # so we can get the ds_msg
 			avatar_url=f"https://tiplanet.org/forum/avatar.php?id={message['userId']}",
-			username=f'{self.fullconfig.DEVPREFIX}{message["userName"]}',
+			username=f'{self.fullconfig.DEVPREFIX}{message["userName"]}{roleSuffix}',
 			allowed_mentions=AllowedMentions(everyone=False, users=False, roles=False, replied_user=False)
 		)
 		if ds_msg != None:
