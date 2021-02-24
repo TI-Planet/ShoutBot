@@ -1,9 +1,9 @@
 import os
 import json
 
-with open(os.path.join(os.path.dirname(__file__), '../config.json'), "r") as file:
+with open(os.path.join(os.path.dirname(__file__), '../config.json'), "r", encoding='utf-8') as file:
 	config_default = json.load(file)
-with open(os.path.join(os.path.dirname(__file__), '../config_override.json'), "r") as file:
+with open(os.path.join(os.path.dirname(__file__), '../config_override.json'), "r", encoding='utf-8') as file:
 	config_override = json.load(file)
 
 def config_field(names):
@@ -62,6 +62,7 @@ class config:
 			maxWidth = config_field(["TIPLANET", "thumbnails", "maxWidth"])
 			maxHeight = config_field(["TIPLANET", "thumbnails", "maxHeight"])
 
+		roles = config_field(["TIPLANET", "roles"])
 		emojis = config_field(["TIPLANET", "emojis"])
 		censorship = config_field(["TIPLANET", "censorship"])
 
