@@ -7,3 +7,4 @@ services:
         restart: always
         volumes:
             - ./config_override.json:/app/config_override.json
+            - ./lastId.json:/app/lastId.json
