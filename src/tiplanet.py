@@ -142,7 +142,7 @@ class tiplanet:
 
 		role = message["userRole"]
 		if role in self.config.roles:
-			roleSuffix = f' {self.config.roles[role]}'
+			roleSuffix = f' {self.config.roles[role][0]}'
 		else:
 			roleSuffix = ''
 
