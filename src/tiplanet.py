@@ -138,7 +138,17 @@ class tiplanet:
 
 	def postDiscordMessage(self, message):
 		if message["content"].startswith("/log"):
-			return
+			if self.config.sendLogs:
+				username = message["content"].split(" ")[1]
+				if message["content"].split(" ")[0] == "/login":
+				    message["content"]=f"*{username} se connecte au Chat.*"
+				else:
+					if len(message["content"].split(" "))>2:
+					    message["content"]=f"*{username} a été déconnecté (Temps écoulé).*"
+					else:
+						message["content"]=f"*{username} a été déconnecté.*"
+			else:
+				return
 
 		role = message["userRole"]
 		if role in self.config.roles:
