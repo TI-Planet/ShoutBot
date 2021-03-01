@@ -1,137 +1,137 @@
 {
-	"PREFIX": "&",
+    "PREFIX": "&",
 
-	"SHARED": {
-		"deletionQueueSize": 1000
-	},
+    "SHARED": {
+        "deletionQueueSize": 1000
+    },
 
-	"SHOUTBOX": {
-		"channel": 809440143734996992
-	},
+    "SHOUTBOX": {
+        "channel": 809440143734996992
+    },
 
-	"REQUESTS": {
-		"retry": {
-			"total": 1,
-			"status_forcelist": [429, 500, 502, 503, 504],
-			"method_whitelist": ["GET", "POST", "PUT", "DELETE", "TRACE"]
-		}
-	},
+    "REQUESTS": {
+        "retry": {
+            "total": 1,
+            "status_forcelist": [429, 500, 502, 503, 504],
+            "method_whitelist": ["GET", "POST", "PUT", "DELETE", "TRACE"]
+        }
+    },
 
-	"TIPLANET": {
-		"host": "tiplanet.org",
-		"login": "/forum/ucp.php?mode=login",
-		"logout": "/forum/ucp.php?mode=logout",
-		"cookies": {
-			"sid": "phpbb3_pasr5_sid"
-		},
-		"TiBotId": 2147483647,
-		"chat": "/forum/chat/?ajax=true",
-		"keepAwake": 40000,
-		"pollingInterval": 2,
-		"user": {},
-		"bots": [258498, 251027],
-		"selfBot": false,
-        "sendLogs": false,
-		"webhook": {},
-		"thumbnails": {
-			"maxWidth": 125,
-			"maxHeight": 125
-		},
-		"roles": {
-			"53": "🔴 Admin",
-			"42": "🟢 Modo global",
-			"102": "🟢 Modo",
-			"141": "⚒️ Fondateur",
-			"161": "🟣 Bureau UPECS",	
-			"171": "🟣 Membre UPECS",
-			"121": "⭐ Premium",
-			"181": "💲 Généreux",
-			"182": "💛 Généreux",
-			"241": "✨ VIP",
-			"251": "🌟 VIP+",
-			"261": "🌟 VIP++",
-			"221": "💻 Programmeur",
-			"271": "Ω Omega",
-			"281": "📋 Concepteur",
-			"82": "📝 Rédacteur",
-			"202": "🎆 Ambianceur",
-			"231": "🤝 Partenaire"
-		},
-		
-		"emojis": {
-			":troll:": "<:troll:810143192581668885>",
-			":wat:": "<:wat:810143891855507517>",
-			"^^": "<:eyebrows:813698380093980702>",
-			":#tritop#:": "<:tritop:813702986831757372>",
-			":#roll#:": "<:mmm:813704155469971487>",
-			":mmm:": "<:mmm:813704155469971487>",
-			":#fou#:": "<:fou:813706601851912223>",
-			":favorite:": ":heart:",
-			":p": ":stuck_out_tongue:",
-			":D": ":smile:",
-			":)": ":slight_smile:",
-			":(": ":slight_frown:",
-			":bj:": ":thumbsup:",
-			":o": ":open_mouth:",
-			":~o": ":open_mouth:",
-			":'(": ":cry:",
-			"/!\\": ":warning:",
-			";)": ":wink:",
-			":|": ":neutral_face:",
-			":?": ":woozy_face:",
-			"8-)": ":nerd:",
-			"B-)": ":sunglasses:",
-			"0:]": ":innocent:",
-			">:]": ":smiling_imp:",
-			":-@": "<:rage:813707452025143307>",
-			":help:": ":grey_question:",
-			":important:": ":exclamation:",
-			":idea:": ":bulb:",
-			":error:": ":no_entry:",
-			":lumi:": "<:lumi:813709208670568448>",
-			":whistle:": "<:whistle:813709493182529578>",
-			":'D": ":joy:"
-		},
-		"censorship": {
-			"merde": "saperlipopette",
-			"bordel": "bazar",
-			"foutre": "faire",
-			"chiant": "enquiquinant",
-			" chier": " suer",
-			"couille": "bonbon",
-			"enculé": "fot-en-cul",
-			"enculer": ["dériver", "intégrer"],
-			" pute": [
-				" fille de joie",
-				" gourgandine",
-				" coureuse de remparts"
-			],
-			" putes": [
-				" filles de joie",
-				" gourgandines",
-				" coureuses de remparts"
-			],
-			"putain": ["fichtre", "diantre", "bigre", "sacrebleu"],
-			"putin": ["fichtre", "diantre", "bigre", "sacrebleu"],
-			"prenium": "pre__m__ium",
-			"pretium": "pre__m__ium",
-			"bonjours": "bonjour~~s~~",
-			"ce jeux": "ce jeu~~x~~",
-			"le jeux": "le jeu~~x~~",
-			"un jeux": "un jeu~~x~~",
-			"du jeux": "du jeu~~x~~",
-			"enfaite": "en fait"
-		},
-		"irc": {
-			"id": 753785049970901114
-		}
-	},
+    "TIPLANET": {
+        "host": "tiplanet.org",
+        "login": "/forum/ucp.php?mode=login",
+        "logout": "/forum/ucp.php?mode=logout",
+        "cookies": {
+            "sid": "phpbb3_pasr5_sid"
+        },
+        "TiBotId": 2147483647,
+        "chat": "/forum/chat/?ajax=true",
+        "keepAwake": 40000,
+        "pollingInterval": 2,
+        "user": {},
+        "bots": [258498, 251027],
+        "selfBot": false,
+        "sendConnexion": false,
+        "webhook": {},
+        "thumbnails": {
+            "maxWidth": 125,
+            "maxHeight": 125
+        },
+        "roles": {
+            "53": "🔴 Admin",
+            "42": "🟢 Modo global",
+            "102": "🟢 Modo",
+            "141": "⚒️ Fondateur",
+            "161": "🟣 Bureau UPECS",
+            "171": "🟣 Membre UPECS",
+            "121": "⭐ Premium",
+            "181": "💲 Généreux",
+            "182": "💛 Généreux",
+            "241": "✨ VIP",
+            "251": "🌟 VIP+",
+            "261": "🌟 VIP++",
+            "221": "💻 Programmeur",
+            "271": "Ω Omega",
+            "281": "📋 Concepteur",
+            "82": "📝 Rédacteur",
+            "202": "🎆 Ambianceur",
+            "231": "🤝 Partenaire"
+        },
 
-	"DISCORD": {
-		"cogs": {
-			"latex": {
-				"enable": true
-			}
-		}
-	}
+        "emojis": {
+            ":troll:": "<:troll:810143192581668885>",
+            ":wat:": "<:wat:810143891855507517>",
+            "^^": "<:eyebrows:813698380093980702>",
+            ":#tritop#:": "<:tritop:813702986831757372>",
+            ":#roll#:": "<:mmm:813704155469971487>",
+            ":mmm:": "<:mmm:813704155469971487>",
+            ":#fou#:": "<:fou:813706601851912223>",
+            ":favorite:": ":heart:",
+            ":p": ":stuck_out_tongue:",
+            ":D": ":smile:",
+            ":)": ":slight_smile:",
+            ":(": ":slight_frown:",
+            ":bj:": ":thumbsup:",
+            ":o": ":open_mouth:",
+            ":~o": ":open_mouth:",
+            ":'(": ":cry:",
+            "/!\\": ":warning:",
+            ";)": ":wink:",
+            ":|": ":neutral_face:",
+            ":?": ":woozy_face:",
+            "8-)": ":nerd:",
+            "B-)": ":sunglasses:",
+            "0:]": ":innocent:",
+            ">:]": ":smiling_imp:",
+            ":-@": "<:rage:813707452025143307>",
+            ":help:": ":grey_question:",
+            ":important:": ":exclamation:",
+            ":idea:": ":bulb:",
+            ":error:": ":no_entry:",
+            ":lumi:": "<:lumi:813709208670568448>",
+            ":whistle:": "<:whistle:813709493182529578>",
+            ":'D": ":joy:"
+        },
+        "censorship": {
+            "merde": "saperlipopette",
+            "bordel": "bazar",
+            "foutre": "faire",
+            "chiant": "enquiquinant",
+            " chier": " suer",
+            "couille": "bonbon",
+            "enculé": "fot-en-cul",
+            "enculer": ["dériver", "intégrer"],
+            " pute": [
+                " fille de joie",
+                " gourgandine",
+                " coureuse de remparts"
+            ],
+            " putes": [
+                " filles de joie",
+                " gourgandines",
+                " coureuses de remparts"
+            ],
+            "putain": ["fichtre", "diantre", "bigre", "sacrebleu"],
+            "putin": ["fichtre", "diantre", "bigre", "sacrebleu"],
+            "prenium": "pre__m__ium",
+            "pretium": "pre__m__ium",
+            "bonjours": "bonjour~~s~~",
+            "ce jeux": "ce jeu~~x~~",
+            "le jeux": "le jeu~~x~~",
+            "un jeux": "un jeu~~x~~",
+            "du jeux": "du jeu~~x~~",
+            "enfaite": "en fait"
+        },
+        "irc": {
+            "id": 753785049970901114
+        }
+    },
+
+    "DISCORD": {
+        "cogs": {
+            "latex": {
+                "enable": true
+            }
+        }
+    }
 }

@@ -108,6 +108,16 @@ class Parser:
 		for uncensored, censored in self.config.censorship.items():
 			msg = msg.replace(f'{uncensored}', f'{[censored,choice(censored)][isinstance(censored,list)]}')
 
+		if msg.startswith("/login ") and self.config.sendConnexion:
+			username = msg.split(" ")[1]
+			msg=f"*{username} se connecte au Chat.*"
+		if msg.startswith("/logout ") and self.config.sendConnexion:
+			username = msg.split(" ")[1]
+			if len(msg.split(" "))>2:
+				msg=f"*{username} a été déconnecté (Temps écoulé).*"
+			else:
+				msg=f"*{username} a été déconnecté.*"
+
 		return msg.strip()
 
 	def parse_markdown2bbcode(self, msg):

@@ -54,7 +54,7 @@ class config:
 
 		selfBot = config_field(["TIPLANET", "selfBot"])
 
-		sendLogs = config_field(["TIPLANET", "sendLogs"])
+		sendConnexion = config_field(["TIPLANET", "sendConnexion"])
 
 		class webhook:
 			id = config_field(["TIPLANET", "WEBHOOK", "ID"])
