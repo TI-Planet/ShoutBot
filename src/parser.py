@@ -125,6 +125,11 @@ class Parser:
 		msg = re.sub(r'<(:\S+:)\S+>', r'\g<1>', msg)
 		return self.markdown.render(msg)
 
+	def remove_quotes(self, msg):
+		return '\n'.join([
+			line for line in msg.split('\n') if not line.startswith('> ') and not line.startswith('— ')
+		])
+
 
 class RendererBBCODE(RendererHTML):
 	def paragraph_open(self, tokens, idx, options, env):
