@@ -1,5 +1,6 @@
 from .cogs.latex import Latex
 from .cogs.chat import Chat
+from .cogs.admin import Admin
 
 class Cog:
 	def __init__(self, config, bot, chat):
@@ -18,6 +19,8 @@ class Cog:
 		
 		self.bot.add_cog(Chat(self.bot, self.config, self.chat))
 		self.registerCommands(self.bot.get_cog('Chat'))
+
+		self.bot.add_cog(Admin(self.bot, self.config))
 
 	def registerCommands(self, cog):
 		for c in cog.get_commands():
