@@ -137,7 +137,7 @@ class tiplanet:
 			pass
 
 	def postDiscordMessage(self, message):
-		if message["content"].startswith("/log"):
+		if (message["content"].startswith("/login ") or message["content"].startswith("/logout ")) and not self.config.sendConnections:
 			return
 
 		role = message["userRole"]

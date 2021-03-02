@@ -31,6 +31,7 @@
 		"user": {},
 		"bots": [258498, 251027],
 		"selfBot": false,
+		"sendConnections": false,
 		"webhook": {},
 		"thumbnails": {
 			"maxWidth": 125,
@@ -41,7 +42,7 @@
 			"42": "🟢 Modo global",
 			"102": "🟢 Modo",
 			"141": "⚒️ Fondateur",
-			"161": "🟣 Bureau UPECS",	
+			"161": "🟣 Bureau UPECS",
 			"171": "🟣 Membre UPECS",
 			"121": "⭐ Premium",
 			"181": "💲 Généreux",
@@ -56,7 +57,7 @@
 			"202": "🎆 Ambianceur",
 			"231": "🤝 Partenaire"
 		},
-		
+
 		"emojis": {
 			":troll:": "<:troll:810143192581668885>",
 			":wat:": "<:wat:810143891855507517>",
