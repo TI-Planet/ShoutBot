@@ -73,6 +73,7 @@ class config:
 
 	class DISCORD:
 		token = config_field(["DISCORD", "TOKEN"])
+		owners = config_field(["DISCORD", "OWNERS"])
 		class cogs:
 			class latex:
 				enable = config_field(["DISCORD", "cogs", "latex", "enable"])
