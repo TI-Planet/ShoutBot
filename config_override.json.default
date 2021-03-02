@@ -1,6 +1,9 @@
 {
 	"DISCORD": {
-		"TOKEN": ""
+		"TOKEN": "",
+		"OWNERS": [
+			0 #Liste d'ID discord
+		]
 	},
 	"TIPLANET": {
 		"USER": {

@@ -21,6 +21,7 @@ class Cog:
 		self.registerCommands(self.bot.get_cog('Chat'))
 
 		self.bot.add_cog(Admin(self.bot, self.config))
+		self.registerCommands(self.bot.get_cog('Admin'))
 
 	def registerCommands(self, cog):
 		for c in cog.get_commands():
