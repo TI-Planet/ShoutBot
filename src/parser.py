@@ -108,10 +108,10 @@ class Parser:
 		for uncensored, censored in self.config.censorship.items():
 			msg = msg.replace(f'{uncensored}', f'{[censored,choice(censored)][isinstance(censored,list)]}')
 
-		if msg.startswith("/login ") and self.config.sendConnexion:
+		if msg.startswith("/login ") and self.config.sendConnections:
 			username = msg.split(" ")[1]
 			msg=f"*{username} se connecte au Chat.*"
-		if msg.startswith("/logout ") and self.config.sendConnexion:
+		if msg.startswith("/logout ") and self.config.sendConnections:
 			username = msg.split(" ")[1]
 			if len(msg.split(" "))>2:
 				msg=f"*{username} a été déconnecté (Temps écoulé).*"
