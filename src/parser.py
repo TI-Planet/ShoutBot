@@ -106,7 +106,7 @@ class Parser:
 
 		# censorship
 		for uncensored, censored in self.config.censorship.items():
-			msg = msg.replace(f'{uncensored}', f'{[censored,choice(censored)][isinstance(censored,list)]}')
+			msg = re.compile(re.escape(uncensored), re.IGNORECASE).sub([censored, choice(censored)][isinstance(censored, list)], msg)
 
 		if msg.startswith("/login "):
 			username = msg.split(" ")[1]
