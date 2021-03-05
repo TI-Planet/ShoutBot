@@ -64,6 +64,11 @@ class Parser:
 		self.bbcode2markdown.add_formatter('url', render_url, strip=True, swallow_trailing_newline=True)
 
 	def parse_bbcode2markdown(self, msg, id):
+		if id == self.config.TiBotId and msg.startswith('/roll '):
+			split = msg.split()
+			if len(split) == 4:
+				return f'{split[1]} lance {split[2]} et obtient {split[3]}.'
+
 		# shortcut completions and other quick changes
 		msg = msg.replace('[url=/', '[url=https://tiplanet.org/')
 		msg = msg.replace('[img]/', '[img]https://tiplanet.org/')
