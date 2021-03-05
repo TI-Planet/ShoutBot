@@ -97,36 +97,33 @@
 			":'D": "😂"
 		},
 		"censorship": {
+			"d[ée]merde": "débrouille",
 			"merde": "saperlipopette",
 			"bordel": "bazar",
 			"foutre": "faire",
 			"chiant": "enquiquinant",
-			" chier": " suer",
+			"chier": "suer",
 			"couille": "bonbon",
-			"enculé": "fot-en-cul",
+			"enculée?": "fot-en-cul",
 			"enculer": ["dériver", "intégrer"],
-			" pute": [
-				" fille de joie",
-				" gourgandine",
-				" coureuse de remparts"
+			"pute": [
+				"fille de joie",
+				"gourgandine",
+				"coureuse de remparts"
 			],
-			" putes": [
-				" filles de joie",
-				" gourgandines",
-				" coureuses de remparts"
+			"putes": [
+				"filles de joie",
+				"gourgandines",
+				"coureuses de remparts"
 			],
-			"putain": ["fichtre", "diantre", "bigre", "sacrebleu", "punaise", "purée"],
-			"putin": ["fichtre", "diantre", "bigre", "sacrebleu", "punaise", "purée"],
-			"prenium": "pre__m__ium",
-			"prénium": "pre__m__ium",
-			"pretium": "pre__m__ium",
-			"prétium": "pre__m__ium",
+			"puta?in": ["fichtre", "diantre", "bigre", "sacrebleu", "punaise", "purée"],
+			"pr[eé][nt]ium": "pre__m__ium",
 			"bonjours": "bonjour~~s~~",
 			"ce jeux": "ce jeu~~x~~",
 			"le jeux": "le jeu~~x~~",
 			"un jeux": "un jeu~~x~~",
 			"du jeux": "du jeu~~x~~",
-			"enfaite": "en fait",
+			"en ?faite": "en fait",
 			"j'ai fais": "j'ai fait",
 			"je fait": "je fais"
 		},
