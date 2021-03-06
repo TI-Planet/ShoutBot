@@ -98,6 +98,7 @@
 		},
 		"censorship": {
 			"d[ée]merde": "débrouille",
+			"emm?erde": "embrouille",
 			"merde": "saperlipopette",
 			"bordel": "bazar",
 			"foutre": "faire",
@@ -117,6 +118,8 @@
 				"coureuses de remparts"
 			],
 			"puta?in": ["fichtre", "diantre", "bigre", "sacrebleu", "punaise", "purée"],
+			"conn?ard": ["crétin", "benêt", "bêta", "cornichon"],
+			"conn?asse": ["cruche", "andouille"],
 			"pr[eé][nt]ium": "pre__m__ium",
 			"bonjours": "bonjour~~s~~",
 			"ce jeux": "ce jeu~~x~~",
