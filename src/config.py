@@ -73,6 +73,8 @@ class config:
 
 	class DISCORD:
 		token = config_field(["DISCORD", "TOKEN"])
+    admins_commands
+		owners = config_field(["DISCORD", "OWNERS"])
 		roles = config_field(["DISCORD", "roles"])
 		class cogs:
 			class latex:
