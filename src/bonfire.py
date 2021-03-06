@@ -43,11 +43,18 @@ class bonfire:
 			attachmentSuffix = '\n'.join([self.attachmentToString(a) for a in message.attachments])
 			attachmentSuffix = f'\n{attachmentSuffix}'
 
-		name = f"[b][color=block]{'[IRC] ' if str(message.webhook_id) == str(self.config.TIPLANET.irc.id) else ''}{self.removeDiscordID(message.author)}[/color][/b]: "
+		name = f"[b][color={self.getColor(message.author)}]{self.config.DEVPREFIX}{'[IRC] ' if str(message.webhook_id) == str(self.config.TIPLANET.irc.id) else ''}{self.removeDiscordID(message.author)}[/color][/b]: "
 
 		msg = self.parser.parse_markdown2bbcode(message.clean_content)
 
-		return f"{f'{self.config.DEVPREFIX}{name}' if not self.config.TIPLANET.selfBot else ''}{quotePrefix}{msg}{attachmentSuffix}"
+		return f"{name if not self.config.TIPLANET.selfBot else ''}{quotePrefix}{msg}{attachmentSuffix}"
+
+	def getColor(self, author):
+		roleIds = [int(role.id) for role in author.roles]
+		for roleId, value in self.config.DISCORD.roles.items():
+			if int(roleId) in roleIds:
+				return value.split('//')[0].strip()
+		return 'block'
 
 	def removeDiscordID(self, username):
 		return str(username)[0:-5]
