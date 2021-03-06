@@ -43,7 +43,7 @@ class bonfire:
 			attachmentSuffix = '\n'.join([self.attachmentToString(a) for a in message.attachments])
 			attachmentSuffix = f'\n{attachmentSuffix}'
 
-		name = f"[b][color={self.getColor(message.author)}]{self.config.DEVPREFIX}{'[IRC] ' if str(message.webhook_id) == str(self.config.TIPLANET.irc.id) else ''}{self.removeDiscordID(message.author)}[/color][/b]: "
+		name = f"[b][color={self.getColor(message.author)}]{self.config.DEVPREFIX}{'[IRC] ' if str(message.webhook_id) == str(self.config.TIPLANET.irc.id) else ''}{self.getName(message.author)}[/color][/b]: "
 
 		msg = self.parser.parse_markdown2bbcode(message.clean_content)
 
@@ -56,8 +56,8 @@ class bonfire:
 				return value.split('//')[0].strip()
 		return 'block'
 
-	def removeDiscordID(self, username):
-		return str(username)[0:-5]
+	def getName(self, user):
+		return user.display_name if self.config.DISCORD.useDisplayName else user.name
 
 	def attachmentToString(self, attachment):
 		extension = attachment.url.split('.')[-1]
