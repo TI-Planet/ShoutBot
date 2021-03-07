@@ -36,7 +36,7 @@ class bonfire:
 			quote = ref.resolved.clean_content
 			quote = self.parser.remove_quotes(quote)
 			quote = self.parser.parse_markdown2bbcode(quote)
-			quotePrefix = f'[quote={self.removeDiscordID(ref.resolved.author)}]{quote}[/quote] '
+			quotePrefix = f'[quote={self.getName(ref.resolved.author)}]{quote}[/quote] '
 
 		# this contains files
 		if (message.attachments != None and len(message.attachments) != 0):
