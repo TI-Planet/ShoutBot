@@ -60,7 +60,7 @@ class bonfire:
 		return user.display_name if self.config.DISCORD.useDisplayName else user.name
 
 	def attachmentToString(self, attachment):
-		extension = attachment.url.split('.')[-1]
+		extension = attachment.url.split('.')[-1].lower()
 
 		if attachment.width != None and extension in ['png', 'jpg', 'jpeg', 'gif', 'bmp']:
 			width, height = self.thumbnailDimensions(attachment.width, attachment.height)
