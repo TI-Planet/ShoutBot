@@ -103,7 +103,7 @@ class Parser:
 			s = s[0:int(len(s)/2)]
 			s = s[0:s.rfind('%')]
 			return s
-		msg = re.sub(r'<a rel="nofollow" href="(.*)<\/a>', repl_func, msg)
+		msg = re.sub(r'<a rel="nofollow" href="(.*?)<\/a>', repl_func, msg)
 
 		# emojis
 		for tp_name, ds_name in self.config.emojis.items():
