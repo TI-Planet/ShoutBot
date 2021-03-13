@@ -9,6 +9,9 @@ class Parser:
 		self.bbcode2md = reParser()
 		self.md2bbcode = reParser()
 
+		# just a shortcut
+		sp = reParser.SubParser
+
 		# init bbcode2md
 		def render_quote(value, om, cm):
 			nl = '\n' # can't use it in f-strings
@@ -27,22 +30,22 @@ class Parser:
 		self.simpleBbcodeParser('u', '__')
 		self.simpleBbcodeParser('s', '~~')
 		self.simpleBbcodeParser('i', '*')
-		self.bbcode2md.declare(reParser.SubParser('$$', '$$', lambda value, om, cm: f'$${value}$$', parse_value=False))
-		self.bbcode2md.declare(reParser.SubParser(r'\[url=(?P<url>.*?)]', r'\[\/url]', render_url, escape_in_regex=False))
-		self.bbcode2md.declare(reParser.SubParser(r'\[quote=(?P<author>.*?)]', r'\[\/quote]', render_quote, escape_in_regex=False))
-		self.bbcode2md.declare(reParser.SubParser(r'\[color=(.*?)]', r'\[\/color]', lambda value, om, cm: value, escape_in_regex=False))
+		self.bbcode2md.declare(sp('$$', '$$', lambda value, om, cm: f'$${value}$$', parse_value=False))
+		self.bbcode2md.declare(sp(r'\[url=(?P<url>.*?)]', r'\[\/url]', render_url, escape_in_regex=False))
+		self.bbcode2md.declare(sp(r'\[quote=(?P<author>.*?)]', r'\[\/quote]', render_quote, escape_in_regex=False))
+		self.bbcode2md.declare(sp(r'\[color=(.*?)]', r'\[\/color]', lambda value, om, cm: value, escape_in_regex=False))
 
 		# init md2bbcode
-		self.md2bbcode.declare(reParser.SubParser('||', '||', self.bbcodeLambda('ispoiler')))
-		self.md2bbcode.declare(reParser.SubParser('___', '___', lambda value, om, cm: f'[i][u]{value}[/u][/i]'))
-		self.md2bbcode.declare(reParser.SubParser('__', '__', self.bbcodeLambda('u')))
-		self.md2bbcode.declare(reParser.SubParser('_', '_', self.bbcodeLambda('i'), requires_boundary=True))
-		self.md2bbcode.declare(reParser.SubParser('*', '*', self.bbcodeLambda('i'), allows_space=False))
-		self.md2bbcode.declare(reParser.SubParser('**', '**', self.bbcodeLambda('b')))
-		self.md2bbcode.declare(reParser.SubParser('***', '***', lambda value, om, cm: f'[i][b]{value}[/b][/i]'))
-		self.md2bbcode.declare(reParser.SubParser('`', '`', self.bbcodeLambda('code'), parse_value=False))
-		self.md2bbcode.declare(reParser.SubParser('```', '```', self.bbcodeLambda('code'), parse_value=False))
-		self.md2bbcode.declare(reParser.SubParser('~~', '~~', self.bbcodeLambda('s')))
+		self.md2bbcode.declare(sp('||', '||', self.bbcodeLambda('ispoiler')))
+		self.md2bbcode.declare(sp('___', '___', lambda value, om, cm: f'[i][u]{value}[/u][/i]'))
+		self.md2bbcode.declare(sp('__', '__', self.bbcodeLambda('u')))
+		self.md2bbcode.declare(sp('_', '_', self.bbcodeLambda('i'), requires_boundary=True))
+		self.md2bbcode.declare(sp('*', '*', self.bbcodeLambda('i'), allows_space=False))
+		self.md2bbcode.declare(sp('**', '**', self.bbcodeLambda('b')))
+		self.md2bbcode.declare(sp('***', '***', lambda value, om, cm: f'[i][b]{value}[/b][/i]'))
+		self.md2bbcode.declare(sp('`', '`', self.bbcodeLambda('code'), parse_value=False))
+		self.md2bbcode.declare(sp('```', '```', self.bbcodeLambda('code'), parse_value=False))
+		self.md2bbcode.declare(sp('~~', '~~', self.bbcodeLambda('s')))
 
 	def simpleBbcodeParser(self, bbctag, mdtag):
 		self.bbcode2md.declare(reParser.SubParser(f'[{bbctag}]', f'[/{bbctag}]', lambda value, om, cm: f'{mdtag}{value}{mdtag}'))
