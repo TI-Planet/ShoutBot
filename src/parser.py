@@ -67,7 +67,7 @@ class Parser:
 		msg = msg.replace('[url=/', '[url=https://tiplanet.org/')
 		msg = msg.replace('[img]/', '[img]https://tiplanet.org/')
 
-		imginurl = r'\[url=(.*)]\[img](.*)\[\/img]\[\/url]'
+		imginurl = r'\[url=([^\]]*)]\[img]([^\]]*)\[\/img]\[\/url]'
 		for match in re.finditer(imginurl, msg):
 			matching_substring = match.group(0)
 			url = match.group(1)
