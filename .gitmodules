@@ -1,0 +1,3 @@
+[submodule "reTagParser"]
+	path = reTagParser
+	url = https://github.com/Hayleia/reTagParser.git
