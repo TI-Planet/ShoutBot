@@ -37,20 +37,22 @@ class Parser:
 
 		# init md2bbcode
 		self.md2bbcode.declare(sp('||', '||', self.bbcodeLambda('ispoiler')))
-		self.md2bbcode.declare(sp('___', '___', lambda value, om, cm: f'[i][u]{value}[/u][/i]'))
+		self.md2bbcode.declare(sp('___', '___', self.bbcodeLambda(['i', 'u'])))
 		self.md2bbcode.declare(sp('__', '__', self.bbcodeLambda('u')))
 		self.md2bbcode.declare(sp('_', '_', self.bbcodeLambda('i'), requires_boundary=True))
 		self.md2bbcode.declare(sp('*', '*', self.bbcodeLambda('i'), allows_space=False))
 		self.md2bbcode.declare(sp('**', '**', self.bbcodeLambda('b')))
-		self.md2bbcode.declare(sp('***', '***', lambda value, om, cm: f'[i][b]{value}[/b][/i]'))
+		self.md2bbcode.declare(sp('***', '***', self.bbcodeLambda(['i', 'b'])))
 		self.md2bbcode.declare(sp('`', '`', self.bbcodeLambda('code'), parse_value=False))
 		self.md2bbcode.declare(sp('```', '```', self.bbcodeLambda('code'), parse_value=False))
 		self.md2bbcode.declare(sp('~~', '~~', self.bbcodeLambda('s')))
 
 	def simpleBbcodeParser(self, bbctag, mdtag):
 		self.bbcode2md.declare(reParser.SubParser(f'[{bbctag}]', f'[/{bbctag}]', lambda value, om, cm: f'{mdtag}{value}{mdtag}'))
-	def bbcodeLambda(self, tag):
-		return lambda value, om, cm: f'[{tag}]{value}[/{tag}]'
+	def bbcodeLambda(self, tags):
+		if isinstance(tags, str):
+			tags = [tags]
+		return lambda value, om, cm: f"{''.join([f'[{tag}]' for tag in tags])}{value}{''.join([f'[/{tag}]' for tag in tags[::-1]])}"
 
 	def parse_bbcode2markdown(self, msg, id):
 		msg = html.unescape(msg)
