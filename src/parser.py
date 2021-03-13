@@ -42,6 +42,7 @@ class Parser:
 		self.md2bbcode.declare(reParser.SubParser('***', '***', lambda value, om, cm: f'[i][b]{value}[/b][/i]'))
 		self.md2bbcode.declare(reParser.SubParser('`', '`', self.bbcodeLambda('code'), parse_value=False))
 		self.md2bbcode.declare(reParser.SubParser('```', '```', self.bbcodeLambda('code'), parse_value=False))
+		self.md2bbcode.declare(reParser.SubParser('~~', '~~', self.bbcodeLambda('s')))
 
 	def simpleBbcodeParser(self, bbctag, mdtag):
 		self.bbcode2md.declare(reParser.SubParser(f'[{bbctag}]', f'[/{bbctag}]', lambda value, om, cm: f'{mdtag}{value}{mdtag}'))
