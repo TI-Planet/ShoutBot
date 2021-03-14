@@ -115,7 +115,7 @@ class Parser:
 
 	def parse_markdown2bbcode(self, msg):
 		# fix emojis
-		msg = re.sub(r'<(:\S+:)\S+>', r'\g<1>', msg)
+		msg = re.sub(r'<(:\w+:)\d+>', r'\g<1>', msg)
 
 		# quotes
 		msg = self.mdquotes2bbcode(msg)
