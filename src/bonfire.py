@@ -30,13 +30,21 @@ class bonfire:
 		quotePrefix = ''
 		attachmentSuffix = ''
 
-		# this is a reply, add quote
+		# this is a reply, add quote and potential /msg
 		if (message.reference):
 			ref = message.reference
+			author = self.getName(ref.resolved.author)
+
 			quote = ref.resolved.clean_content
 			quote = self.parser.remove_quotes(quote)
 			quote = self.parser.parse_markdown2bbcode(quote)
-			quotePrefix = f'[quote={self.getName(ref.resolved.author)}]{quote}[/quote] '
+
+			privPrefix = ''
+			if ' (murmure)' in author:
+				privPrefix = f'/msg {author.split(" (murmure)")[0]} '
+				author = author.replace(' (murmure)', '')
+
+			quotePrefix = f'{privPrefix}[quote={author}]{quote}[/quote] '
 
 		# this contains files
 		if (message.attachments != None and len(message.attachments) != 0):
