@@ -32,8 +32,10 @@ class Parser:
 		self.simpleBbcodeParser('code', '`')
 		self.bbcode2md.declare(sp('[code]\n', '[/code]', lambda value, om, cm: f'```\n{value}```', parse_value=False))
 		self.bbcode2md.declare(sp('$$', '$$', lambda value, om, cm: f'$${value}$$', parse_value=False))
-		self.bbcode2md.declare(sp(r'\[url=(?P<url>.*?)]', r'\[\/url]', render_url, escape_in_regex=False))
+		self.bbcode2md.declare(sp('\n[quote]', '[/quote]', lambda value, om, cm: f'\n> {value}\n'))
+		self.bbcode2md.declare(sp('[quote]', '[/quote]', lambda value, om, cm: f'\n> {value}\n'))
 		self.bbcode2md.declare(sp(r'\[quote=(?P<author>.*?)]', r'\[\/quote]', render_quote, escape_in_regex=False))
+		self.bbcode2md.declare(sp(r'\[url=(?P<url>.*?)]', r'\[\/url]', render_url, escape_in_regex=False))
 		self.bbcode2md.declare(sp(r'\[color=(.*?)]', r'\[\/color]', lambda value, om, cm: value, escape_in_regex=False))
 
 		# init md2bbcode
