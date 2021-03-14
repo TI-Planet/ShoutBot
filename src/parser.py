@@ -58,6 +58,9 @@ class Parser:
 	def parse_bbcode2markdown(self, msg, id):
 		msg = html.unescape(msg)
 
+		if msg.startswith('/privmsg '):
+			msg = msg[9:]
+
 		if id == self.config.TiBotId and msg.startswith('/roll '):
 			split = msg.split()
 			if len(split) == 4:

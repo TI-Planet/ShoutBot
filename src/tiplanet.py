@@ -141,16 +141,15 @@ class tiplanet:
 			return
 
 		role = message["userRole"]
-		if role in self.config.roles:
-			roleSuffix = f' {self.config.roles[role][0]}'
-		else:
-			roleSuffix = ''
+		roleSuffix = f' {self.config.roles[role][0]}' if role in self.config.roles else ''
+
+		privMsgSuffix = ' (murmure)' if message['content'].startswith('/privmsg ') else ''
 
 		ds_msg = self.webhook.send(
 			self.parser.parse_bbcode2markdown(message["content"], int(message["userId"])),
 			wait=True, # so we can get the ds_msg
 			avatar_url=f"https://tiplanet.org/forum/avatar.php?id={message['userId']}",
-			username=f'{self.fullconfig.DEVPREFIX}{message["userName"]}{roleSuffix}',
+			username=f'{self.fullconfig.DEVPREFIX}{message["userName"]}{privMsgSuffix}{roleSuffix}',
 			allowed_mentions=AllowedMentions(everyone=False, users=False, roles=False, replied_user=False)
 		)
 		if ds_msg != None:
