@@ -58,10 +58,13 @@ class bonfire:
 		return f"{name if not self.config.TIPLANET.selfBot else ''}{quotePrefix}{msg}{attachmentSuffix}"
 
 	def getColor(self, author):
-		roleIds = [int(role.id) for role in author.roles]
-		for roleId, value in self.config.DISCORD.roles.items():
-			if int(roleId) in roleIds:
-				return value.split('//')[0].strip()
+		try:
+			roleIds = [int(role.id) for role in author.roles]
+			for roleId, value in self.config.DISCORD.roles.items():
+				if int(roleId) in roleIds:
+					return value.split('//')[0].strip()
+		except:
+			pass
 		return 'block'
 
 	def getName(self, user):
