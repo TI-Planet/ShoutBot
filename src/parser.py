@@ -8,6 +8,7 @@ class Parser:
 		self.config = config
 		self.bbcode2md = reParser()
 		self.md2bbcode = reParser()
+		mdescapes = '`>!()+-{_*#'
 
 		# just a shortcut
 		sp = reParser.SubParser
@@ -37,6 +38,8 @@ class Parser:
 		self.bbcode2md.declare(sp(r'\[quote=(?P<author>.*?)]', r'\[\/quote]', render_quote, escape_in_regex=False))
 		self.bbcode2md.declare(sp(r'\[url=(?P<url>.*?)]', r'\[\/url]', render_url, escape_in_regex=False))
 		self.bbcode2md.declare(sp(r'\[color=(.*?)]', r'\[\/color]', lambda value, om, cm: value, escape_in_regex=False))
+		for c in mdescapes:
+			self.bbcode2md.declare(sp(c, '', self.parserLambda(f'\\{c}', '')))
 
 		# init md2bbcode
 		self.md2bbcode.declare(sp('||', '||', self.bbcodeLambda('ispoiler')))
@@ -49,6 +52,8 @@ class Parser:
 		self.md2bbcode.declare(sp('`', '`', self.bbcodeLambda('code'), parse_value=False))
 		self.md2bbcode.declare(sp('```', '```', self.bbcodeLambda('code'), parse_value=False))
 		self.md2bbcode.declare(sp('~~', '~~', self.bbcodeLambda('s')))
+		for c in mdescapes:
+			self.md2bbcode.declare(sp(f'\\{c}', '', self.parserLambda(c, '')))
 
 	def simpleBbcodeParser(self, bbctag, mdtag):
 		self.bbcode2md.declare(reParser.SubParser(f'[{bbctag}]', f'[/{bbctag}]', lambda value, om, cm: f'{mdtag}{value}{mdtag}'))
@@ -56,6 +61,8 @@ class Parser:
 		if isinstance(tags, str):
 			tags = [tags]
 		return lambda value, om, cm: f"{''.join([f'[{tag}]' for tag in tags])}{value}{''.join([f'[/{tag}]' for tag in tags[::-1]])}"
+	def parserLambda(self, opening, closing):
+		return lambda value, om, cm: f'{opening}{value}{closing}'
 
 	def parse_bbcode2markdown(self, msg, id):
 		msg = html.unescape(msg)
