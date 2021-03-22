@@ -102,6 +102,13 @@ class Parser:
 		# bbcode
 		msg = self.bbcode2md.parse(msg)
 
+		# undo escaping in URLs
+		url = r'https?:\/\/\S+'
+		for match in re.finditer(url, msg):
+			matching_substring = match.group(0)
+			replacement = matching_substring.replace('\\', '')
+			msg = msg.replace(matching_substring, replacement)
+
 		# emojis
 		for tp_name, ds_name in self.config.emojis.items():
 			msg = msg.replace(f'{tp_name}', f'{ds_name}')
