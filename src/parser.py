@@ -32,6 +32,8 @@ class Parser:
 		self.simpleBbcodeParser('i', '*')
 		self.bbcode2md.declare(sp('[code]', '[/code]', lambda value, om, cm: f'`{value}`', parse_value=False))
 		self.bbcode2md.declare(sp('[code]\n', '[/code]', lambda value, om, cm: f'```\n{value}```', parse_value=False))
+		self.bbcode2md.declare(sp(r'\[code=(?P<lang>.*?)]', r'\[\/code]', lambda value, om, cm: f'```{om.group("lang")}\n{value}```', parse_value=False, escape_in_regex=False))
+		self.bbcode2md.declare(sp(r'\[code=(?P<lang>.*?)]\n', r'\[\/code]', lambda value, om, cm: f'```{om.group("lang")}\n{value}```', parse_value=False, escape_in_regex=False))
 		self.bbcode2md.declare(sp('$$', '$$', lambda value, om, cm: f'$${value}$$', parse_value=False))
 		self.bbcode2md.declare(sp('\n[quote]', '[/quote]', lambda value, om, cm: f'\n> {value}\n'))
 		self.bbcode2md.declare(sp('[quote]', '[/quote]', lambda value, om, cm: f'\n> {value}\n'))
@@ -42,6 +44,7 @@ class Parser:
 			self.bbcode2md.declare(sp(c, '', self.parserLambda(f'\\{c}', '')))
 
 		# init md2bbcode
+		self.md2bbcode.declare(sp('~~', '~~', self.bbcodeLambda('s')))
 		self.md2bbcode.declare(sp('||', '||', self.bbcodeLambda('ispoiler')))
 		self.md2bbcode.declare(sp('___', '___', self.bbcodeLambda(['i', 'u'])))
 		self.md2bbcode.declare(sp('__', '__', self.bbcodeLambda('u')))
@@ -51,7 +54,7 @@ class Parser:
 		self.md2bbcode.declare(sp('***', '***', self.bbcodeLambda(['i', 'b'])))
 		self.md2bbcode.declare(sp('`', '`', self.bbcodeLambda('code'), parse_value=False))
 		self.md2bbcode.declare(sp('```', '```', self.bbcodeLambda('code'), parse_value=False))
-		self.md2bbcode.declare(sp('~~', '~~', self.bbcodeLambda('s')))
+		self.md2bbcode.declare(sp(r'```(?P<lang>\S+?)\r?\n', r'```', lambda value, om, cm: f'[code={om.group("lang")}]{value}[/code]', parse_value=False, escape_in_regex=False))
 		for c in mdescapes:
 			self.md2bbcode.declare(sp(f'\\{c}', '', self.parserLambda(c, '')))
 
