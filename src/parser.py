@@ -30,7 +30,7 @@ class Parser:
 		self.simpleBbcodeParser('u', '__')
 		self.simpleBbcodeParser('s', '~~')
 		self.simpleBbcodeParser('i', '*')
-		self.simpleBbcodeParser('code', '`')
+		self.bbcode2md.declare(sp('[code]', '[/code]', lambda value, om, cm: f'`{value}`', parse_value=False))
 		self.bbcode2md.declare(sp('[code]\n', '[/code]', lambda value, om, cm: f'```\n{value}```', parse_value=False))
 		self.bbcode2md.declare(sp('$$', '$$', lambda value, om, cm: f'$${value}$$', parse_value=False))
 		self.bbcode2md.declare(sp('\n[quote]', '[/quote]', lambda value, om, cm: f'\n> {value}\n'))
