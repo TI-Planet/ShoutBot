@@ -21,7 +21,7 @@ class bonfire:
 			except:
 				raise("error while updating chat")
 
-			if chat_id != None:
+			if chat_id != None and not message.content.startswith('/'):
 				self.chat.deletionQueue[self.chat.deletionQueueIndex] = (int(chat_id), message.id)
 				self.chat.deletionQueueIndex = (self.chat.deletionQueueIndex + 1) % len(self.chat.deletionQueue)
 

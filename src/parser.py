@@ -70,6 +70,9 @@ class Parser:
 	def parse_bbcode2markdown(self, msg, id):
 		msg = html.unescape(msg)
 
+		if msg.startswith('/privmsgto '):
+			return None
+
 		if msg.startswith('/privmsg '):
 			msg = msg[9:]
 

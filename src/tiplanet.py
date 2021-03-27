@@ -145,8 +145,11 @@ class tiplanet:
 
 		privMsgSuffix = ' (murmure)' if message['content'].startswith('/privmsg ') else ''
 
+		msg = self.parser.parse_bbcode2markdown(message["content"], int(message["userId"]))
+		if msg == None: return
+
 		ds_msg = self.webhook.send(
-			self.parser.parse_bbcode2markdown(message["content"], int(message["userId"])),
+			msg,
 			wait=True, # so we can get the ds_msg
 			avatar_url=f"https://tiplanet.org/forum/avatar.php?id={message['userId']}",
 			username=f'{self.fullconfig.DEVPREFIX}{message["userName"]}{privMsgSuffix}{roleSuffix}',
