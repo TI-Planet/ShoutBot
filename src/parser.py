@@ -137,7 +137,9 @@ class Parser:
 
 	def parse_markdown2bbcode(self, msg):
 		# fix emojis
-		msg = re.sub(r'<(:\w+:)\d+>', r'\g<1>', msg)
+		for m in re.finditer(r'<(:\w+:)(\d+)>', msg):
+			emojis = [tp_name for tp_name, ds_name in self.config.TIPLANET.emojis.items() if ds_name.endswith(f':{m.group(2)}>')]
+			msg = msg.replace(m.group(0), emojis[0] if len(emojis) != 0 else m.group(1))
 
 		# quotes
 		msg = self.mdquotes2bbcode(msg)
