@@ -16,7 +16,7 @@ class Parser:
 		# init bbcode2md
 		def render_quote(value, om, cm):
 			nl = '\n' # can't use it in f-strings
-			return f"{nl.join([f'> {l}' for l in value.split(nl)])}{nl}— {om.group('author')}{nl}"
+			return f"{nl.join([f'> {l}' for l in value.split(nl)])}{nl}— {om.group('author')}.{nl}"
 		def render_url(value, om, cm):
 			url = om.group('url')
 			if 'memberlist' in url and 'viewprofile' in url:
@@ -163,6 +163,8 @@ class Parser:
 			elif line.startswith('— '):
 				if len(res)!=0 and isinstance(res[-1], list):
 					line = line[2:]
+					if line.endswith('.'):
+						line = line[:-1]
 					res[-1] = f'[quote={line}]{nl.join(res[-1])}[/quote]'
 				else:
 					res.append(line)
