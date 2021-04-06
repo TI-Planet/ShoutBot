@@ -19,6 +19,11 @@ class Parser:
 			return f"{nl.join([f'> {l}' for l in value.split(nl)])}{nl}— {om.group('author')}.{nl}"
 		def render_url(value, om, cm):
 			url = om.group('url')
+			if url.startswith('emoji/'):
+				# special case with emojis
+				# could use more checks
+				id = url.split('/')[-1]
+				return f'<{value}{id}>'
 			if 'memberlist' in url and 'viewprofile' in url:
 				url = f'<{url}>'
 			if 'album.php' in url:
@@ -139,7 +144,7 @@ class Parser:
 		# fix emojis
 		for m in re.finditer(r'<(:\w+:)(\d+)>', msg):
 			emojis = [tp_name for tp_name, ds_name in self.config.TIPLANET.emojis.items() if ds_name.endswith(f':{m.group(2)}>')]
-			msg = msg.replace(m.group(0), emojis[0] if len(emojis) != 0 else m.group(1))
+			msg = msg.replace(m.group(0), emojis[0] if len(emojis) != 0 else f'[url=emoji/{m.group(2)}]{m.group(1)}[/url]')
 
 		# quotes
 		msg = self.mdquotes2bbcode(msg)
