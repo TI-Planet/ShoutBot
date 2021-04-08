@@ -51,7 +51,10 @@ class bonfire:
 			attachmentSuffix = '\n'.join([self.attachmentToString(a) for a in message.attachments])
 			attachmentSuffix = f'\n{attachmentSuffix}'
 
-		name = f"[b][color={self.getColor(message.author)}]{self.config.DEVPREFIX}{self.getName(message.author)}{' ☎️' if str(message.webhook_id) == str(self.config.TIPLANET.irc.id) else ''}[/color][/b]: "
+		name = f"{self.config.DEVPREFIX}{self.getName(message.author)}"
+		name = f"{name}{' ☎️' if str(message.webhook_id) == str(self.config.TIPLANET.irc.id) else ''}"
+		name = f"[url={str(message.author.avatar_url).split('cdn.discordapp.com/')[-1]}]{name}[/url]"
+		name = f"[b][color={self.getColor(message.author)}]{name}[/color][/b]: "
 
 		msg = self.parser.parse_markdown2bbcode(message.clean_content)
 

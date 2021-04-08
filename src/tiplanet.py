@@ -117,11 +117,15 @@ class tiplanet:
 			await self.deleteDiscordMessage(bot, deletion['content'].strip().split(' ')[-1])
 
 		for message in messages:
+			message['avatar'] = f"https://tiplanet.org/forum/avatar.php?id={message['userId']}"
 			if int(message["userId"]) in self.config.bots: # if it's a bot we parse content for the user who post
 				content = message["content"]
-				match = re.match(r"^\[b\]\[color=(#?\w+)\]((?:\[IRC\]\s*)?[^\[]+)\[\/color\]\[\/b\]: ", content)
+				match = re.match(r"^\[b]\[color=(#?\w+)]\[url=(?P<urlinfo>.+?)](?P<name>.+?)\[\/url]\[\/color]\[\/b]: ", content)
+				urlinfo = match.group("urlinfo")
+				# urlinfo might contain more than the avatar in the future?
+				message['avatar'] = f'https://cdn.discordapp.com/{urlinfo}'
 				message["content"] = content[len(match.group()):]
-				message["userName"] = match.group(2)
+				message["userName"] = match.group("name")
 
 			self.postDiscordMessage(message)
 
@@ -151,7 +155,7 @@ class tiplanet:
 		ds_msg = self.webhook.send(
 			msg,
 			wait=True, # so we can get the ds_msg
-			avatar_url=f"https://tiplanet.org/forum/avatar.php?id={message['userId']}",
+			avatar_url=message['avatar'],
 			username=f'{self.fullconfig.DEVPREFIX}{message["userName"]}{privMsgSuffix}{roleSuffix}',
 			allowed_mentions=AllowedMentions(everyone=False, users=False, roles=False, replied_user=False)
 		)
