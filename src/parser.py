@@ -23,7 +23,7 @@ class Parser:
 				# special case with emojis
 				# could use more checks
 				id = url.split('/')[-1]
-				return f'<{value}{id}>'
+				return f'<:{value.replace(":", "_")}:{id}>'
 			if 'memberlist' in url and 'viewprofile' in url:
 				url = f'<{url}>'
 			if 'album.php' in url:
