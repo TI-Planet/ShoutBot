@@ -16,7 +16,11 @@ class Parser:
 		# init bbcode2md
 		def render_quote(value, om, cm):
 			nl = '\n' # can't use it in f-strings
-			return f"{nl.join([f'> {l}' for l in value.split(nl)])}{nl}— {om.group('author')}.{nl}"
+			try:
+				author = om.group('author')
+			except:
+				author = ""
+			return f"{nl}{nl.join([f'> {l}' for l in value.split(nl)])}{nl}{f'— {author}.{nl}' if len(author) != 0 else ''}"
 		def render_url(value, om, cm):
 			url = om.group('url')
 			if url.startswith('emoji/'):
@@ -40,11 +44,11 @@ class Parser:
 		self.bbcode2md.declare(sp(r'\[code=(?P<lang>.*?)]', r'\[\/code]', lambda value, om, cm: f'```{om.group("lang")}\n{value}```', parse_value=False, escape_in_regex=False))
 		self.bbcode2md.declare(sp(r'\[code=(?P<lang>.*?)]\n', r'\[\/code]', lambda value, om, cm: f'```{om.group("lang")}\n{value}```', parse_value=False, escape_in_regex=False))
 		self.bbcode2md.declare(sp('$$', '$$', lambda value, om, cm: f'$${value}$$', parse_value=False))
-		self.bbcode2md.declare(sp('\n[quote]', '[/quote]', lambda value, om, cm: f'\n> {value}\n'))
-		self.bbcode2md.declare(sp('[quote]', '[/quote]', lambda value, om, cm: f'\n> {value}\n'))
-		self.bbcode2md.declare(sp(r'\[quote=(?P<author>.*?)]', r'\[\/quote]', render_quote, escape_in_regex=False))
 		self.bbcode2md.declare(sp(r'\[url=(?P<url>.*?)]', r'\[\/url]', render_url, escape_in_regex=False))
 		self.bbcode2md.declare(sp(r'\[color=(.*?)]', r'\[\/color]', lambda value, om, cm: value, escape_in_regex=False))
+		for c in ['', '\n']:
+			self.bbcode2md.declare(sp(f'{c}[quote]', '[/quote]', render_quote))
+			self.bbcode2md.declare(sp(fr'{c}\[quote=(?P<author>.*?)]', r'\[\/quote]', render_quote, escape_in_regex=False))
 		for c in mdescapes:
 			self.bbcode2md.declare(sp(c, '', self.parserLambda(f'\\{c}', '')))
 
