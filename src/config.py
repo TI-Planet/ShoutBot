@@ -6,7 +6,7 @@ with open(os.path.join(os.path.dirname(__file__), '../config.json'), "r", encodi
 with open(os.path.join(os.path.dirname(__file__), '../config_override.json'), "r", encoding='utf-8') as file:
 	config_override = json.load(file)
 
-def config_field(names):
+def config_field(names, defaultValue=None):
 	global config_default, config_override
 	def load(cfg):
 		ret = cfg
@@ -15,7 +15,9 @@ def config_field(names):
 				return None
 			ret = ret[name]
 		return ret
-	return load(config_override) or load(config_default)
+	for v in [load(config_override), load(config_default)]:
+		if v != None: return v
+	return defaultValue
 
 class config:
 	PREFIX = config_field(["PREFIX"])
@@ -34,6 +36,7 @@ class config:
 			method_whitelist = config_field(["REQUESTS", "retry", "method_whitelist"])
 
 	class TIPLANET:
+		safeHttps = config_field(["TIPLANET", "safeHttps"], defaultValue=True)
 		host = config_field(["TIPLANET", "host"])
 		login = config_field(["TIPLANET", "login"])
 		logout = config_field(["TIPLANET", "logout"])

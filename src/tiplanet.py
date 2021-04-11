@@ -47,7 +47,7 @@ class tiplanet:
 			'login': 'Connexion'
 		}
 
-		self.session.post(loginUrl, data=payload)
+		self.session.post(loginUrl, data=payload, verify=self.config.safeHttps)
 		self.keepAwake = setInterval(self.login, self.config.keepAwake)
 
 	def logout(self):

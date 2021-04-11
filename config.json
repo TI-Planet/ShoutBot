@@ -18,6 +18,7 @@
 	},
 
 	"TIPLANET": {
+		"safeHttps": true,
 		"host": "tiplanet.org",
 		"login": "/forum/ucp.php?mode=login",
 		"logout": "/forum/ucp.php?mode=logout",
