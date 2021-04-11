@@ -8,6 +8,7 @@ lastId.json
 
 # ignore personal configurations
 config_override.json
+tiplanet.org*.xml
 
 # Ignore prettier config
 .prettierrc
