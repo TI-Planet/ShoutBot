@@ -49,6 +49,7 @@ class Parser:
 		for c in ['', '\n']:
 			self.bbcode2md.declare(sp(f'{c}[quote]', '[/quote]', render_quote))
 			self.bbcode2md.declare(sp(fr'{c}\[quote=(?P<author>.*?)]', r'\[\/quote]', render_quote, escape_in_regex=False))
+			self.bbcode2md.declare(sp(fr'{c}\[quote=]\[b]\[color=[^]]+]\[url=[^]]+](?P<author>.*?)\[\/url]\[\/color]\[\/b]: ', r'\[\/quote]', render_quote, escape_in_regex=False))
 		for c in mdescapes:
 			self.bbcode2md.declare(sp(c, '', self.parserLambda(f'\\{c}', '')))
 
