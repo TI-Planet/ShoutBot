@@ -47,7 +47,7 @@ class tiplanet:
 			'login': 'Connexion'
 		}
 
-		self.session.post(loginUrl, data=payload, verify=self.config.safeHttps)
+		self.session.post(loginUrl, data=payload, verify=not self.config.localServer)
 		self.keepAwake = setInterval(self.login, self.config.keepAwake)
 
 	def logout(self):
@@ -186,6 +186,9 @@ class tiplanet:
 		return f"https://{self.config.host}{url}"
 
 	def loadLastIdFile(self):
+		if self.config.localServer:
+			self.lastId = 0
+			return
 		try:
 			with open(os.path.join(os.path.dirname(__file__), '../lastId.json'), "r") as file:
 				file = json.load(file)
