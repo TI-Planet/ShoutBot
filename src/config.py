@@ -36,7 +36,7 @@ class config:
 			method_whitelist = config_field(["REQUESTS", "retry", "method_whitelist"])
 
 	class TIPLANET:
-		safeHttps = config_field(["TIPLANET", "safeHttps"], defaultValue=True)
+		localServer = config_field(["TIPLANET", "localServer"], defaultValue=False)
 		host = config_field(["TIPLANET", "host"])
 		login = config_field(["TIPLANET", "login"])
 		logout = config_field(["TIPLANET", "logout"])
