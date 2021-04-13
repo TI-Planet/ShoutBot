@@ -24,6 +24,7 @@ class bonfire:
 			if chat_id != None and not message.content.startswith('/'):
 				self.chat.deletionQueue[self.chat.deletionQueueIndex] = (int(chat_id), message.id)
 				self.chat.deletionQueueIndex = (self.chat.deletionQueueIndex + 1) % len(self.chat.deletionQueue)
+				self.chat.connectionMsg = None
 
 
 	def generateMessage(self, message):

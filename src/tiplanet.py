@@ -33,6 +33,7 @@ class tiplanet:
 		self.deletionQueue = [(0, 0) for i in range(config.SHARED.deletionQueueSize)]
 		self.deletionQueueIndex = 0
 		self.login()
+		self.connectionMsg = None
 
 
 	def login(self):
@@ -127,7 +128,7 @@ class tiplanet:
 				message["content"] = content[len(match.group()):]
 				message["userName"] = match.group("name")
 
-			self.postDiscordMessage(message)
+			await self.postDiscordMessage(message, bot)
 
 	async def deleteDiscordMessage(self, bot, id):
 		try:
@@ -140,8 +141,14 @@ class tiplanet:
 		finally:
 			pass
 
-	def postDiscordMessage(self, message):
-		if (message["content"].startswith("/login ") or message["content"].startswith("/logout ")) and not self.config.sendConnections:
+	async def postDiscordMessage(self, message, bot):
+		if (message["content"].split(' ')[0] in ['/login', '/logout']) and self.config.sendConnections:
+			newInfo = message["content"].replace('/login', '📥').replace('/logout', '📤')
+			if self.connectionMsg == None:
+				channel = await bot.fetch_channel(self.fullconfig.SHOUTBOX.channel)
+				self.connectionMsg = await channel.send(newInfo)
+			else:
+				await self.connectionMsg.edit(content=f'{self.connectionMsg.content}, {newInfo}')
 			return
 
 		role = message["userRole"]
@@ -151,6 +158,8 @@ class tiplanet:
 
 		msg = self.parser.parse_bbcode2markdown(message["content"], int(message["userId"]))
 		if msg == None: return
+
+		self.connectionMsg = None
 
 		ds_msg = self.webhook.send(
 			msg,

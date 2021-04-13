@@ -79,7 +79,7 @@ class Parser:
 	def parse_bbcode2markdown(self, msg, id):
 		msg = html.unescape(msg)
 
-		if msg.startswith('/privmsgto '):
+		if msg.split()[0] in ['/privmsgto', '/login', '/logout']:
 			return None
 
 		if msg.startswith('/privmsg '):
