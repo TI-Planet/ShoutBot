@@ -70,6 +70,7 @@ class config:
 		roles = config_field(["TIPLANET", "roles"])
 		emojis = config_field(["TIPLANET", "emojis"])
 		censorship = config_field(["TIPLANET", "censorship"])
+		notif = config_field(["TIPLANET", "notif"])
 
 		class irc:
 			id = config_field(["TIPLANET", "irc", "id"])
