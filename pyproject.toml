@@ -11,7 +11,6 @@ python = "^3.7"
 beautifulsoup4 = "^4.9.3"
 requests = "^2.25.1"
 bbcode = "^1.1.0"
-markdown-it-py = "^0.6.2"
 
 [tool.poetry.dev-dependencies]
 
