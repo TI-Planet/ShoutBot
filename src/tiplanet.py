@@ -166,7 +166,7 @@ class tiplanet:
 			wait=True, # so we can get the ds_msg
 			avatar_url=message['avatar'],
 			username=f'{self.fullconfig.DEVPREFIX}{message["userName"]}{privMsgSuffix}{roleSuffix}',
-			allowed_mentions=AllowedMentions(everyone=False, users=False, roles=False, replied_user=False)
+			allowed_mentions=AllowedMentions(everyone=False, users=[await bot.fetch_user(self.config.notif[user]) for user in self.config.notif], roles=False, replied_user=False)
 		)
 		if ds_msg != None:
 			self.deletionQueue[self.deletionQueueIndex] = (int(message["id"]), ds_msg.id)

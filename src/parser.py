@@ -132,6 +132,9 @@ class Parser:
 		for uncensored, censored in self.config.censorship.items():
 			msg = re.compile(fr'\b{uncensored}\b', re.IGNORECASE).sub([censored, choice(censored)][isinstance(censored, list)], msg)
 
+		for user, snowflake in self.config.notif.items():
+			msg = msg.replace(f'{user}', f'<@{snowflake}>')
+
 		if msg.startswith("/login "):
 			username = msg.split(" ")[1]
 			msg=f"*{username} se connecte au Chat.*"

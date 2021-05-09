@@ -108,17 +108,20 @@
 			"couille": "bonbon",
 			"enculée?": "fot-en-cul",
 			"enculer": ["dériver", "intégrer"],
-			"pute": [
-				"fille de joie",
-				"gourgandine",
-				"coureuse de remparts"
-			],
+			"pute": ["fille de joie", "gourgandine", "coureuse de remparts"],
 			"putes": [
 				"filles de joie",
 				"gourgandines",
 				"coureuses de remparts"
 			],
-			"puta?in": ["fichtre", "diantre", "bigre", "sacrebleu", "punaise", "purée"],
+			"puta?in": [
+				"fichtre",
+				"diantre",
+				"bigre",
+				"sacrebleu",
+				"punaise",
+				"purée"
+			],
 			"conn?ard": ["crétin", "benêt", "bêta", "cornichon"],
 			"conn?asse": ["cruche", "andouille"],
 			"pr[eé][nt]ium": "pre__m__ium",
@@ -131,6 +134,7 @@
 			"j'ai fais": "j'ai fait",
 			"je fait": "je fais"
 		},
+		"notif": {},
 		"irc": {
 			"id": 822125454588641340
 		}
