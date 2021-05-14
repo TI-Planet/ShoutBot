@@ -27,7 +27,8 @@ class Parser:
 				# special case with emojis
 				# could use more checks
 				id = url.split('/')[-1]
-				return f'<:_{value.strip(":").strip("_")}:{id}>'
+				backslash = "\\" # can't be in f-strings
+				return f'<:_{value.replace(backslash, "").strip(":").strip("_")}:{id}>'
 			if 'memberlist' in url and 'viewprofile' in url:
 				url = f'<{url}>'
 			if 'album.php' in url:
