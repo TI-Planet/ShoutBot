@@ -8,7 +8,7 @@ class Parser:
 		self.config = config
 		self.bbcode2md = reParser()
 		self.md2bbcode = reParser()
-		mdescapes = '`>!()+-{_*#'
+		self.mdescapes = '`>!()+-{_*#'
 
 		# just a shortcut
 		sp = reParser.SubParser
@@ -17,7 +17,7 @@ class Parser:
 		def render_quote(value, om, cm):
 			nl = '\n' # can't use it in f-strings
 			try:
-				author = om.group('author')
+				author = self.parse_basic(om.group('author'))
 			except:
 				author = ""
 			return f"{nl}{nl.join([f'> {l}' for l in value.split(nl)])}{nl}{f'— {author}.{nl}' if len(author) != 0 else ''}"
@@ -50,7 +50,7 @@ class Parser:
 		for c in ['', '\n']:
 			self.bbcode2md.declare(sp(f'{c}[quote]', '[/quote]', render_quote))
 			self.bbcode2md.declare(sp(fr'{c}\[quote=(?P<author>.*?)]', r'\[\/quote]', render_quote, escape_in_regex=False))
-		for c in mdescapes:
+		for c in self.mdescapes:
 			self.bbcode2md.declare(sp(c, '', self.parserLambda(f'\\{c}', '')))
 
 		# init md2bbcode
@@ -65,7 +65,7 @@ class Parser:
 		self.md2bbcode.declare(sp('`', '`', self.bbcodeLambda('code'), parse_value=False))
 		self.md2bbcode.declare(sp('```', '```', self.bbcodeLambda('code'), parse_value=False))
 		self.md2bbcode.declare(sp(r'```(?P<lang>\S+?)\r?\n', r'```', lambda value, om, cm: f'[code={om.group("lang")}]{value}[/code]', parse_value=False, escape_in_regex=False))
-		for c in mdescapes:
+		for c in self.mdescapes:
 			self.md2bbcode.declare(sp(f'\\{c}', '', self.parserLambda(c, '')))
 
 	def simpleBbcodeParser(self, bbctag, mdtag):
@@ -76,6 +76,12 @@ class Parser:
 		return lambda value, om, cm: f"{''.join([f'[{tag}]' for tag in tags])}{value}{''.join([f'[/{tag}]' for tag in tags[::-1]])}"
 	def parserLambda(self, opening, closing):
 		return lambda value, om, cm: f'{opening}{value}{closing}'
+
+	def parse_basic(self, msg):
+		msg = html.unescape(msg)
+		for c in self.mdescapes:
+			msg = msg.replace(c, f'\\{c}')
+		return msg
 
 	def parse_bbcode2markdown(self, msg, id):
 		msg = html.unescape(msg)

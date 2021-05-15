@@ -143,7 +143,7 @@ class tiplanet:
 
 	async def postDiscordMessage(self, message, bot):
 		if (message["content"].split(' ')[0] in ['/login', '/logout']) and self.config.sendConnections:
-			newInfo = message["content"].replace('/login', '📥').replace('/logout', '📤')
+			newInfo = self.parser.parse_basic(message["content"]).replace('/login', '📥').replace('/logout', '📤')
 			if self.connectionMsg == None:
 				channel = await bot.fetch_channel(self.fullconfig.SHOUTBOX.channel)
 				self.connectionMsg = await channel.send(newInfo)
