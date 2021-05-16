@@ -65,6 +65,7 @@ class Parser:
 		self.md2bbcode.declare(sp('`', '`', self.bbcodeLambda('code'), parse_value=False))
 		self.md2bbcode.declare(sp('```', '```', self.bbcodeLambda('code'), parse_value=False))
 		self.md2bbcode.declare(sp(r'```(?P<lang>\S+?)\r?\n', r'```', lambda value, om, cm: f'[code={om.group("lang")}]{value}[/code]', parse_value=False, escape_in_regex=False))
+		self.md2bbcode.declare(sp(r'\[(?P<text>[^]]+?)]\((?P<url>\S+?)\)', r'', lambda value, om, cm: om.group('text'), escape_in_regex=False))
 		for c in self.mdescapes:
 			self.md2bbcode.declare(sp(f'\\{c}', '', self.parserLambda(c, '')))
 
