@@ -143,12 +143,22 @@ class tiplanet:
 
 	async def postDiscordMessage(self, message, bot):
 		if (message["content"].split(' ')[0] in ['/login', '/logout']) and self.config.sendConnections:
-			newInfo = self.parser.parse_basic(message["content"]).replace('/login', '📥').replace('/logout', '📤')
+			msg = message["content"]
+			if msg.startswith('/login'):
+				emoji = '📥'
+			if msg.startswith('/logout'):
+				emoji = '⏰' if msg.endswith(' Timeout') else '📤'
+			pseudo = self.parser.parse_basic(msg.replace('/login ', '').replace('/logout ', '').replace(' Timeout', ''))
 			if self.connectionMsg == None:
 				channel = await bot.fetch_channel(self.fullconfig.SHOUTBOX.channel)
-				self.connectionMsg = await channel.send(newInfo)
+				self.connectionMsg = await channel.send(f'{pseudo} {emoji}')
 			else:
-				await self.connectionMsg.edit(content=f'{self.connectionMsg.content}, {newInfo}')
+				content = self.connectionMsg.content
+				if content.rstrip('📥📤⏰ ').endswith(pseudo.strip()):
+					content = f'{content}{emoji}'
+				else:
+					content = f'{content}, {pseudo} {emoji}'
+				await self.connectionMsg.edit(content=content)
 			return
 
 		role = message["userRole"]
