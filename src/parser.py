@@ -39,7 +39,7 @@ class Parser:
 		self.simpleBbcodeParser('b', '**')
 		self.simpleBbcodeParser('u', '__')
 		self.simpleBbcodeParser('s', '~~')
-		self.simpleBbcodeParser('i', '*')
+		self.simpleBbcodeParser('i', '*') # [i] uses '*', /me and /action use '_'
 		self.bbcode2md.declare(sp('[code]', '[/code]', lambda value, om, cm: f'`{value}`', parse_value=False))
 		self.bbcode2md.declare(sp('[code]\n', '[/code]', lambda value, om, cm: f'```\n{value}```', parse_value=False))
 		self.bbcode2md.declare(sp(r'\[code=(?P<lang>.*?)]', r'\[\/code]', lambda value, om, cm: f'```{om.group("lang")}\n{value}```', parse_value=False, escape_in_regex=False))
@@ -124,6 +124,13 @@ class Parser:
 
 		# bbcode
 		msg = self.bbcode2md.parse(msg)
+
+		# must be done after bbcode2md which escapes
+		# [i] uses '*', /me and /action use '_'
+		if msg.startswith('/me '):
+			msg = f'_{msg[4:]}_'
+		if msg.startswith('/action '):
+			msg = f'_{msg[8:]}_'
 
 		# undo escaping in URLs
 		url = r'https?:\/\/\S+'
