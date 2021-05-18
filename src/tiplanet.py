@@ -151,13 +151,13 @@ class tiplanet:
 			pseudo = self.parser.parse_basic(msg.replace('/login ', '').replace('/logout ', '').replace(' Timeout', ''))
 			if self.connectionMsg == None:
 				channel = await bot.fetch_channel(self.fullconfig.SHOUTBOX.channel)
-				self.connectionMsg = await channel.send(f'{pseudo} {emoji}')
+				self.connectionMsg = await channel.send(f'{emoji} {pseudo}')
 			else:
-				content = self.connectionMsg.content
-				if content.rstrip('📥📤⏰ ').endswith(pseudo.strip()):
-					content = f'{content}{emoji}'
+				content = self.connectionMsg.content.rstrip()
+				if content.endswith(pseudo.strip()):
+					content = f'{content[:-len(pseudo)-1]}{emoji} {pseudo}'
 				else:
-					content = f'{content}, {pseudo} {emoji}'
+					content = f'{content}, {emoji} {pseudo}'
 				await self.connectionMsg.edit(content=content)
 			return
 
