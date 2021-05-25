@@ -32,6 +32,7 @@
 		"bots": [258498, 251027],
 		"selfBot": false,
 		"sendConnections": true,
+		"urlConnection": "http://88.139.48.9/cgi-bin/show?string=",
 		"webhook": {},
 		"thumbnails": {
 			"maxWidth": 125,
