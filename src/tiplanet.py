@@ -147,19 +147,18 @@ class tiplanet:
 		if (message["content"].split(' ')[0] in ['/login', '/logout']) and self.config.sendConnections:
 			msg = message["content"]
 			if msg.startswith('/login'):
-				emoji = f'📥'
+				emoji = '📥'
 			if msg.startswith('/logout'):
-				emoji = f'⏰' if msg.endswith(' Timeout') else f'📤'
+				emoji = '⏰' if msg.endswith(' Timeout') else '📤'
 			pseudo = self.parser.parse_basic(msg.replace('/login ', '').replace('/logout ', '').replace(' Timeout', ''))
-			dateUrl = self.config.urlConnection+pseudo+"+"+emoji+"+"+message["timestamp"].strftime("%H:%M:%S")
-			emoji = f"[{emoji}]({dateUrl})"
+			date = message["timestamp"].strftime("%H:%M:%S")
+			emoji= f"[{emoji}]({self.config.urlShowText}{pseudo}+{emoji}+{date})"
 			if self.connectionMsg == None:
 				channel = await bot.fetch_channel(self.fullconfig.SHOUTBOX.channel)
 				self.connectionMsg = self.webhook.send(f'{emoji} {pseudo}', wait=True, avatar_url=message['avatar'], username=message["userName"])
 			else:
 				content = self.connectionMsg.content.rstrip()
 				if content.endswith(pseudo.strip()):
-					print("right")
 					content = f'{content[:-len(pseudo)-1]}{emoji} {pseudo}'
 				else:
 					content = f'{content}, {emoji} {pseudo}'
