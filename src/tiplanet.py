@@ -155,7 +155,7 @@ class tiplanet:
 			emoji= f"[{emoji}]({self.config.urlShowText}{pseudo}+{emoji}+{date})"
 			if self.connectionMsg == None:
 				channel = await bot.fetch_channel(self.fullconfig.SHOUTBOX.channel)
-				self.connectionMsg = self.webhook.send(f'{emoji} {pseudo}', wait=True, avatar_url=message['avatar'], username=message["userName"])
+				self.connectionMsg = self.webhook.send(f'{emoji} {pseudo}', wait=True, avatar_url=bot.user.avatar_url, username=bot.user.name)
 			else:
 				content = self.connectionMsg.content.rstrip()
 				if content.endswith(pseudo.strip()):
@@ -163,7 +163,7 @@ class tiplanet:
 				else:
 					content = f'{content}, {emoji} {pseudo}'
 				if len(content)>2000:
-					self.connectionMsg = self.webhook.send(f'{emoji} {pseudo}', wait=True, avatar_url=message['avatar'], username=message["userName"])
+					self.connectionMsg = self.webhook.send(f'{emoji} {pseudo}', wait=True, avatar_url=bot.user.avatar_url, username=bot.user.name)
 				else:
 					self.connectionMsg.edit(content=content)
 					self.connectionMsg.content = content
