@@ -20,7 +20,7 @@ class Parser:
 				author = self.parse_basic(om.group('author'))
 			except:
 				author = ""
-			return f"{nl}{nl.join([f'> {l}' for l in value.split(nl)])}{nl}{f'— {author}.{nl}' if len(author) != 0 else ''}"
+			return f"{nl}{nl.join([f'> {l}' for l in value.split(nl)])}{nl}{f'> — {author}.{nl}' if len(author) != 0 else ''}"
 		def render_url(value, om, cm):
 			url = om.group('url')
 			# get rid of stupid invisible characters
@@ -53,8 +53,8 @@ class Parser:
 		self.bbcode2md.declare(sp(r'\[url=(?P<url>.*?)]', r'\[\/url]', render_url, escape_in_regex=False))
 		self.bbcode2md.declare(sp(r'\[color=(.*?)]', r'\[\/color]', lambda value, om, cm: value, escape_in_regex=False))
 		for c in ['', '\n']:
-			self.bbcode2md.declare(sp(f'{c}[quote]', '[/quote]', render_quote))
-			self.bbcode2md.declare(sp(fr'{c}\[quote=(?P<author>.*?)]', r'\[\/quote]', render_quote, escape_in_regex=False))
+			self.bbcode2md.declare(sp(f'{c}[quote]', '[/quote] ?', render_quote))
+			self.bbcode2md.declare(sp(fr'{c}\[quote=(?P<author>.*?)]', r'\[\/quote] ?', render_quote, escape_in_regex=False))
 		for c in self.mdescapes:
 			self.bbcode2md.declare(sp(c, '', self.parserLambda(f'\\{c}', '')))
 
@@ -189,20 +189,20 @@ class Parser:
 		lines = msg.split(nl)
 		res = []
 		for line in lines:
-			if line.startswith('> '):
-				line = line[2:]
+			if line.startswith('— ') or line.startswith('> — '):
 				if len(res)!=0 and isinstance(res[-1], list):
-					res[-1].append(line)
-				else:
-					res.append([line])
-			elif line.startswith('— '):
-				if len(res)!=0 and isinstance(res[-1], list):
-					line = line[2:]
+					line = line[line.index("—")+2:]
 					if line.endswith('.'):
 						line = line[:-1]
 					res[-1] = f'[quote={line}]{nl.join(res[-1])}[/quote]'
 				else:
 					res.append(line)
+			elif line.startswith('> '):
+				line = line[2:]
+				if len(res)!=0 and isinstance(res[-1], list):
+					res[-1].append(line)
+				else:
+					res.append([line])
 			else:
 				if len(res)!=0 and isinstance(res[-1], list):
 					res[-1] = f'[quote]{nl.join(res[-1])}[/quote]'
