@@ -23,12 +23,17 @@ class Parser:
 			return f"{nl}{nl.join([f'> {l}' for l in value.split(nl)])}{nl}{f'— {author}.{nl}' if len(author) != 0 else ''}"
 		def render_url(value, om, cm):
 			url = om.group('url')
-			if url.startswith('emoji/'):
+			# get rid of stupid invisible characters
+			# note, they are not present in actually clickable urls so only in the case of emojis
+			cleanEmojiUrl = re.sub(r'[^emojia\/0-9:]', '', url)
+			if cleanEmojiUrl.startswith('emoji/'):
 				# special case with emojis
 				# could use more checks
-				id = url.split('/')[-1]
+				id = cleanEmojiUrl.split('/')[-1]
+				a = 'a' if id.startswith('a') else ''
+				id = id.lstrip('a')
 				backslash = "\\" # can't be in f-strings
-				return f'<:_{value.replace(backslash, "").strip(":").strip("_")}:{id}>'
+				return f'<{a}:_{value.replace(backslash, "").strip(":").strip("_")}:{id}>'
 			if 'memberlist' in url and 'viewprofile' in url:
 				url = f'<{url}>'
 			if 'album.php' in url:
@@ -84,7 +89,7 @@ class Parser:
 			msg = msg.replace(c, f'\\{c}')
 		return msg
 
-	def parse_bbcode2markdown(self, msg, id):
+	def parse_bbcode2markdown(self, msg, id, doEmojis=True):
 		msg = html.unescape(msg)
 
 		if msg.split()[0] in ['/privmsgto', '/login', '/logout']:
@@ -139,9 +144,9 @@ class Parser:
 			replacement = matching_substring.replace('\\', '')
 			msg = msg.replace(matching_substring, replacement)
 
-		# emojis
+		# emojis (warning, escaping happened)
 		for tp_name, ds_name in self.config.emojis.items():
-			msg = msg.replace(f'{tp_name}', f'{ds_name}')
+			if doEmojis: msg = msg.replace(f'{self.parse_bbcode2markdown(tp_name, id, doEmojis=False)}', f'{ds_name}')
 
 		# censorship
 		for uncensored, censored in self.config.censorship.items():
@@ -164,9 +169,12 @@ class Parser:
 
 	def parse_markdown2bbcode(self, msg):
 		# fix emojis
-		for m in re.finditer(r'<(:\w+:)(\d+)>', msg):
-			emojis = [tp_name for tp_name, ds_name in self.config.TIPLANET.emojis.items() if ds_name.endswith(f':{m.group(2)}>')]
-			msg = msg.replace(m.group(0), emojis[0] if len(emojis) != 0 else f'[url=emoji/{m.group(2)}]{m.group(1)}[/url]')
+		for m in re.finditer(r'<(?P<a>a?)(?P<name>:\w+:)(?P<id>\d+)>', msg):
+			emojiIsAnim = m.group('a')
+			emojiName = m.group('name')
+			emojiId = m.group('id')
+			emojis = [tp_name for tp_name, ds_name in self.config.TIPLANET.emojis.items() if ds_name.endswith(f':{emojiId}>')]
+			msg = msg.replace(m.group(0), emojis[0] if len(emojis) != 0 else f'[url=emoji/{emojiIsAnim}{emojiId}]{emojiName}[/url]')
 
 		# quotes
 		msg = self.mdquotes2bbcode(msg)
