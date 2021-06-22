@@ -1,7 +1,9 @@
-import re
 import html
-from reTagParser.reTagParser import Parser as reParser
+import re
 from random import choice
+
+from reTagParser.reTagParser import Parser as reParser
+
 
 class Parser:
 	def __init__(self, config):
@@ -20,7 +22,13 @@ class Parser:
 				author = self.parse_basic(om.group('author'))
 			except:
 				author = ""
+<<<<<<< HEAD
+
 			return f"{nl}{nl.join([f'> {l}' for l in value.split(nl)])}{nl}{f'> — {author}.{nl}' if len(author) != 0 else ''}"
+
+=======
+			return f"{nl}{nl.join([f'> {l}' for l in value.split(nl)])}{nl}{f'> — {author}.{nl}' if len(author) != 0 else ''}"
+>>>>>>> a26c2bb (💄 change how quotes are rendered on discord)
 		def render_url(value, om, cm):
 			url = om.group('url')
 			# get rid of stupid invisible characters
@@ -33,12 +41,16 @@ class Parser:
 				a = 'a' if id.startswith('a') else ''
 				id = id.lstrip('a')
 				backslash = "\\" # can't be in f-strings
+
 				return f'<{a}:_{value.replace(backslash, "").strip(":").strip("_")}:{id}>'
+
 			if 'memberlist' in url and 'viewprofile' in url:
 				url = f'<{url}>'
 			if 'album.php' in url:
 				url = f'<{url}>'
+
 			return f'[{value}]({url})'
+
 		self.simpleBbcodeParser('ispoiler', '||')
 		self.simpleBbcodeParser('img', '')
 		self.simpleBbcodeParser('b', '**')
@@ -52,6 +64,7 @@ class Parser:
 		self.bbcode2md.declare(sp('$$', '$$', lambda value, om, cm: f'$${value}$$', parse_value=False))
 		self.bbcode2md.declare(sp(r'\[url=(?P<url>.*?)]', r'\[\/url]', render_url, escape_in_regex=False))
 		self.bbcode2md.declare(sp(r'\[color=(.*?)]', r'\[\/color]', lambda value, om, cm: value, escape_in_regex=False))
+
 		for c in ['', '\n']:
 			self.bbcode2md.declare(sp(f'{c}[quote]', '[/quote] ?', render_quote))
 			self.bbcode2md.declare(sp(fr'{c}\[quote=(?P<author>.*?)]', r'\[\/quote] ?', render_quote, escape_in_regex=False))
@@ -76,10 +89,13 @@ class Parser:
 
 	def simpleBbcodeParser(self, bbctag, mdtag):
 		self.bbcode2md.declare(reParser.SubParser(f'[{bbctag}]', f'[/{bbctag}]', lambda value, om, cm: f'{mdtag}{value}{mdtag}'))
+
 	def bbcodeLambda(self, tags):
 		if isinstance(tags, str):
 			tags = [tags]
+
 		return lambda value, om, cm: f"{''.join([f'[{tag}]' for tag in tags])}{value}{''.join([f'[/{tag}]' for tag in tags[::-1]])}"
+
 	def parserLambda(self, opening, closing):
 		return lambda value, om, cm: f'{opening}{value}{closing}'
 
@@ -87,6 +103,7 @@ class Parser:
 		msg = html.unescape(msg)
 		for c in self.mdescapes:
 			msg = msg.replace(c, f'\\{c}')
+
 		return msg
 
 	def parse_bbcode2markdown(self, msg, id, doEmojis=True):
@@ -158,9 +175,11 @@ class Parser:
 		if msg.startswith("/login "):
 			username = msg.split(" ")[1]
 			msg=f"*{username} se connecte au Chat.*"
+
 		if msg.startswith("/logout "):
 			username = msg.split(" ")[1]
-			if len(msg.split(" "))>2:
+
+			if len(msg.split(" ")) > 2:
 				msg=f"*{username} a été déconnecté (Temps écoulé).*"
 			else:
 				msg=f"*{username} a été déconnecté.*"
@@ -174,7 +193,7 @@ class Parser:
 			emojiName = m.group('name')
 			emojiId = m.group('id')
 			emojis = [tp_name for tp_name, ds_name in self.config.TIPLANET.emojis.items() if ds_name.endswith(f':{emojiId}>')]
-			msg = msg.replace(m.group(0), emojis[0] if len(emojis) != 0 else f'[url=emoji/{emojiIsAnim}{emojiId}]{emojiName}[/url]')
+			msg = msg.replace(m.group(0), emojis[0] if len(emojis) else f'[url=emoji/{emojiIsAnim}{emojiId}]{emojiName}[/url]')
 
 		# quotes
 		msg = self.mdquotes2bbcode(msg)
@@ -189,9 +208,16 @@ class Parser:
 		lines = msg.split(nl)
 		res = []
 		for line in lines:
+<<<<<<< HEAD
+			if line.startswith(('— ', '> — ')):
+				if len(res) != 0 and isinstance(res[-1], list):
+					line = line[line.index("—")+2:]
+
+=======
 			if line.startswith('— ') or line.startswith('> — '):
 				if len(res)!=0 and isinstance(res[-1], list):
 					line = line[line.index("—")+2:]
+>>>>>>> a26c2bb (💄 change how quotes are rendered on discord)
 					if line.endswith('.'):
 						line = line[:-1]
 					res[-1] = f'[quote={line}]{nl.join(res[-1])}[/quote]'
@@ -199,16 +225,23 @@ class Parser:
 					res.append(line)
 			elif line.startswith('> '):
 				line = line[2:]
+<<<<<<< HEAD
+
+				if len(res) != 0 and isinstance(res[-1], list):
+=======
 				if len(res)!=0 and isinstance(res[-1], list):
+>>>>>>> a26c2bb (💄 change how quotes are rendered on discord)
 					res[-1].append(line)
 				else:
 					res.append([line])
 			else:
-				if len(res)!=0 and isinstance(res[-1], list):
+				if len(res) != 0 and isinstance(res[-1], list):
 					res[-1] = f'[quote]{nl.join(res[-1])}[/quote]'
 				res.append(line)
-		if len(res)!=0 and isinstance(res[-1], list):
+
+		if len(res) != 0 and isinstance(res[-1], list):
 			res[-1] = f'[quote]{nl.join(res[-1])}[/quote]'
+
 		return '\n'.join(res)
 
 	def remove_quotes(self, msg):

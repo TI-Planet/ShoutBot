@@ -1,23 +1,32 @@
-import os
 import json
+import os
 
-with open(os.path.join(os.path.dirname(__file__), '../config.json'), "r", encoding='utf-8') as file:
+
+with open(os.path.join(os.path.dirname(__file__), '../config.json'), encoding='utf-8') as file:
 	config_default = json.load(file)
-with open(os.path.join(os.path.dirname(__file__), '../config_override.json'), "r", encoding='utf-8') as file:
+with open(os.path.join(os.path.dirname(__file__), '../config_override.json'), encoding='utf-8') as file:
 	config_override = json.load(file)
+
 
 def config_field(names, defaultValue=None):
 	global config_default, config_override
+
 	def load(cfg):
 		ret = cfg
 		for name in names:
 			if not name in ret:
 				return None
+
 			ret = ret[name]
+
 		return ret
+
 	for v in [load(config_override), load(config_default)]:
-		if v != None: return v
+		if v is not None:
+      		return v
+
 	return defaultValue
+
 
 class config:
 	PREFIX = config_field(["PREFIX"])

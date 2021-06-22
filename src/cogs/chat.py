@@ -1,4 +1,5 @@
 import asyncio
+
 import discord
 from discord.ext import commands
 
@@ -46,4 +47,3 @@ class Chat(commands.Cog):
 				self.embed[reaction.message_id] = 0
 			else:
 				return
-

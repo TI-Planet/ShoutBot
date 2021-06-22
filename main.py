@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 
-import time
 import asyncio
+import time
+
 import discord
 from discord.ext import commands
 
+from src.bonfire import bonfire
 from src.cog import Cog
 from src.config import config
-from src.bonfire import bonfire
 from src.tiplanet import tiplanet
 
 
@@ -22,11 +23,13 @@ discord = bonfire(config, bot, chat, cogs)
 @bot.event
 async def on_ready():
 	print(f"Bot {bot.user.name} connected on {len(bot.guilds)} server{'s'*(len(bot.guilds)>1)}")
+
 	while True:
 		try:
 			await chat.updateChat(bot)
 		except:
 			pass
+
 		await asyncio.sleep(config.TIPLANET.pollingInterval)
 
 

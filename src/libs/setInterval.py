@@ -1,5 +1,6 @@
 import threading
 
+
 class setInterval():
 	def __init__(self, func, sec):
 		try:
