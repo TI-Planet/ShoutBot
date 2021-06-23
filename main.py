@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 
-import time
 import asyncio
+import time
+
 import discord
 from discord.ext import commands
 
+from src.bonfire import bonfire
 from src.cog import Cog
 from src.config import config
-from src.bonfire import bonfire
 from src.tiplanet import tiplanet
 
 

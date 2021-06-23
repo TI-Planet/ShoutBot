@@ -1,5 +1,6 @@
 import threading
 
+
 class setInterval():
 	def __init__(self, func, sec):
 		try:
@@ -11,4 +12,3 @@ class setInterval():
 			self.t.start()
 		finally:
 			self.t.cancel()
-
