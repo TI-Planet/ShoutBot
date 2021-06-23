@@ -22,13 +22,10 @@ class Parser:
 				author = self.parse_basic(om.group('author'))
 			except:
 				author = ""
-<<<<<<< HEAD
 
 			return f"{nl}{nl.join([f'> {l}' for l in value.split(nl)])}{nl}{f'> — {author}.{nl}' if len(author) != 0 else ''}"
 
-=======
-			return f"{nl}{nl.join([f'> {l}' for l in value.split(nl)])}{nl}{f'> — {author}.{nl}' if len(author) != 0 else ''}"
->>>>>>> a26c2bb (💄 change how quotes are rendered on discord)
+
 		def render_url(value, om, cm):
 			url = om.group('url')
 			# get rid of stupid invisible characters
@@ -208,16 +205,10 @@ class Parser:
 		lines = msg.split(nl)
 		res = []
 		for line in lines:
-<<<<<<< HEAD
 			if line.startswith(('— ', '> — ')):
 				if len(res) != 0 and isinstance(res[-1], list):
 					line = line[line.index("—")+2:]
 
-=======
-			if line.startswith('— ') or line.startswith('> — '):
-				if len(res)!=0 and isinstance(res[-1], list):
-					line = line[line.index("—")+2:]
->>>>>>> a26c2bb (💄 change how quotes are rendered on discord)
 					if line.endswith('.'):
 						line = line[:-1]
 					res[-1] = f'[quote={line}]{nl.join(res[-1])}[/quote]'
@@ -225,12 +216,15 @@ class Parser:
 					res.append(line)
 			elif line.startswith('> '):
 				line = line[2:]
-<<<<<<< HEAD
 
 				if len(res) != 0 and isinstance(res[-1], list):
-=======
+
 				if len(res)!=0 and isinstance(res[-1], list):
->>>>>>> a26c2bb (💄 change how quotes are rendered on discord)
+					res[-1].append(line)
+				else:
+					res.append([line])
+			else:
+				if len(res)!=0 and isinstance(res[-1], list):
 					res[-1].append(line)
 				else:
 					res.append([line])
