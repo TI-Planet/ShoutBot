@@ -1,6 +1,7 @@
 import os
 import re
 import urllib
+
 import requests
 from discord import File
 from discord.ext import commands
@@ -18,12 +19,14 @@ class Latex(commands.Cog):
 
 		os.makedirs("latex", exist_ok=True)
 		latexMsgs = re.findall(r"\$\$([\s\S]*?)\$\$", message.content)
-		
+
 		if latexMsgs:
 			ctx = await self.bot.get_context(message)
 			await message.add_reaction("🔍")
+
 			latexImg = []
 			latexFiles = []
+
 			async with ctx.typing():
 				try:
 					for i in range(len(latexMsgs)):
@@ -32,21 +35,17 @@ class Latex(commands.Cog):
 							with open(os.path.join(os.path.dirname(__file__), f"../../latex/{message.id}-{i}.png"), 'wb') as file:
 								for chunk in img:
 									file.write(chunk)
-								latexImg.append(f"../../latex/{message.id}-{i}.png")   
-					
+								latexImg.append(f"../../latex/{message.id}-{i}.png")
+
 					for file in latexImg:
 						with open(os.path.join(os.path.dirname(__file__), file), 'rb') as image:
 							latexFiles.append(File(image))
+
 					await message.reply(files=latexFiles, mention_author=False)
 					await message.clear_reaction("🔍")
 					await message.add_reaction("✅")
 				except:
 					await message.add_reaction("❌")
+
 			for file in latexImg:
 				os.remove(os.path.join(os.path.dirname(__file__), file))
-			
-
-
-
-
-		

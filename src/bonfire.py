@@ -1,5 +1,6 @@
 from .parser import Parser
 
+
 class bonfire:
 	def __init__(self, config, bot, chat, cogs):
 		self.config = config
@@ -21,7 +22,7 @@ class bonfire:
 			except:
 				raise("error while updating chat")
 
-			if chat_id != None and not message.content.startswith('/'):
+			if chat_id is not None and not message.content.startswith('/'):
 				self.chat.deletionQueue[self.chat.deletionQueueIndex] = (int(chat_id), message.id)
 				self.chat.deletionQueueIndex = (self.chat.deletionQueueIndex + 1) % len(self.chat.deletionQueue)
 				self.chat.connectionMsg = None
@@ -48,7 +49,7 @@ class bonfire:
 			quotePrefix = f'{privPrefix}[quote={author}]{quote}[/quote] '
 
 		# this contains files
-		if (message.attachments != None and len(message.attachments) != 0):
+		if (message.attachments is not None and len(message.attachments) != 0):
 			attachmentSuffix = '\n'.join([self.attachmentToString(a) for a in message.attachments])
 			attachmentSuffix = f'\n{attachmentSuffix}'
 
@@ -77,7 +78,7 @@ class bonfire:
 	def attachmentToString(self, attachment):
 		extension = attachment.url.split('.')[-1].lower()
 
-		if attachment.width != None and extension in ['png', 'jpg', 'jpeg', 'gif', 'bmp']:
+		if attachment.width is not None and extension in ['png', 'jpg', 'jpeg', 'gif', 'bmp']:
 			width, height = self.thumbnailDimensions(attachment.width, attachment.height)
 			ret = f'[url={attachment.url}][img]{attachment.proxy_url}?width={width}&height={height}[/img][/url]'
 		else:

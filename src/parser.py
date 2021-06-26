@@ -1,7 +1,9 @@
-import re
 import html
-from reTagParser.reTagParser import Parser as reParser
+import re
 from random import choice
+
+from reTagParser.reTagParser import Parser as reParser
+
 
 class Parser:
 	def __init__(self, config):
@@ -20,7 +22,9 @@ class Parser:
 				author = self.parse_basic(om.group('author'))
 			except:
 				author = ""
+
 			return f"{nl}{nl.join([f'> {l}' for l in value.split(nl)])}{nl}{f'> — {author}.{nl}' if len(author) != 0 else ''}"
+
 		def render_url(value, om, cm):
 			url = om.group('url')
 			# get rid of stupid invisible characters
@@ -38,7 +42,9 @@ class Parser:
 				url = f'<{url}>'
 			if 'album.php' in url:
 				url = f'<{url}>'
+
 			return f'[{value}]({url})'
+
 		self.simpleBbcodeParser('ispoiler', '||')
 		self.simpleBbcodeParser('img', '')
 		self.simpleBbcodeParser('b', '**')
@@ -76,15 +82,19 @@ class Parser:
 
 	def simpleBbcodeParser(self, bbctag, mdtag):
 		self.bbcode2md.declare(reParser.SubParser(f'[{bbctag}]', f'[/{bbctag}]', lambda value, om, cm: f'{mdtag}{value}{mdtag}'))
+
 	def bbcodeLambda(self, tags):
 		if isinstance(tags, str):
 			tags = [tags]
+
 		return lambda value, om, cm: f"{''.join([f'[{tag}]' for tag in tags])}{value}{''.join([f'[/{tag}]' for tag in tags[::-1]])}"
+
 	def parserLambda(self, opening, closing):
 		return lambda value, om, cm: f'{opening}{value}{closing}'
 
 	def parse_basic(self, msg):
 		msg = html.unescape(msg)
+
 		for c in self.mdescapes:
 			msg = msg.replace(c, f'\\{c}')
 		return msg
@@ -189,29 +199,35 @@ class Parser:
 		lines = msg.split(nl)
 		res = []
 		for line in lines:
-			if line.startswith('— ') or line.startswith('> — '):
-				if len(res)!=0 and isinstance(res[-1], list):
+			if line.startswith(('— ', '> — ')):
+				if len(res) != 0 and isinstance(res[-1], list):
 					line = line[line.index("—")+2:]
+
 					if line.endswith('.'):
 						line = line[:-1]
+
 					res[-1] = f'[quote={line}]{nl.join(res[-1])}[/quote]'
 				else:
 					res.append(line)
 			elif line.startswith('> '):
 				line = line[2:]
-				if len(res)!=0 and isinstance(res[-1], list):
+
+				if len(res) != 0 and isinstance(res[-1], list):
 					res[-1].append(line)
 				else:
 					res.append([line])
 			else:
-				if len(res)!=0 and isinstance(res[-1], list):
+				if len(res) != 0 and isinstance(res[-1], list):
 					res[-1] = f'[quote]{nl.join(res[-1])}[/quote]'
+
 				res.append(line)
-		if len(res)!=0 and isinstance(res[-1], list):
+
+		if len(res) != 0 and isinstance(res[-1], list):
 			res[-1] = f'[quote]{nl.join(res[-1])}[/quote]'
+
 		return '\n'.join(res)
 
 	def remove_quotes(self, msg):
-		return '\n'.join([
-			line for line in msg.split('\n') if not line.startswith('> ') and not line.startswith('— ')
-		])
+		return '\n'.join(
+			line for line in msg.split('\n') if not line.startswith(('> ', '— '))
+		)
