@@ -59,7 +59,7 @@ class Parser:
 		self.bbcode2md.declare(sp(r'\[url=(?P<url>.*?)]', r'\[\/url]', render_url, escape_in_regex=False))
 		self.bbcode2md.declare(sp(r'\[color=(.*?)]', r'\[\/color]', lambda value, om, cm: value, escape_in_regex=False))
 		for c in ['', '\n']:
-			self.bbcode2md.declare(sp(f'{c}[quote]', '[/quote] ?', render_quote))
+			self.bbcode2md.declare(sp(fr'{c}\[quote]', r'\[\/quote] ?', render_quote, escape_in_regex=False))
 			self.bbcode2md.declare(sp(fr'{c}\[quote=(?P<author>.*?)]', r'\[\/quote] ?', render_quote, escape_in_regex=False))
 		for c in self.mdescapes:
 			self.bbcode2md.declare(sp(c, '', self.parserLambda(f'\\{c}', '')))
