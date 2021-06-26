@@ -112,8 +112,9 @@ class tiplanet:
 		self.lastId = lastId
 
 		# split between deletions and actual messages
+		msgs = messages
 		deletions, messages = [], []
-		[(deletions if m['content'].startswith('/delete') else messages).append(m) for m in messages]
+		[(deletions if m['content'].startswith('/delete') else messages).append(m) for m in msgs]
 
 		for deletion in deletions:
 			await self.deleteDiscordMessage(bot, deletion['content'].strip().split(' ')[-1])
