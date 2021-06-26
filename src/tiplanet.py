@@ -214,6 +214,7 @@ class tiplanet:
 
 	def loadLastIdFile(self):
 		if self.config.localServer:
+			requests.packages.urllib3.disable_warnings(requests.packages.urllib3.exceptions.InsecureRequestWarning)
 			self.lastId = 0
 			return
 
