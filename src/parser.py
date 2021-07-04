@@ -23,7 +23,8 @@ class Parser:
 			except:
 				author = ""
 
-			return f"{nl}{nl.join([f'> {l}' for l in value.split(nl)])}{nl}{f'> — {author}.{nl}' if len(author) != 0 else ''}"
+			lines = value.split(nl)
+			return f"{nl}{nl.join([f'> {l}' for (i, l) in enumerate(lines) if i != len(lines)-1 and i != 0 or len(l.strip()) != 0])}{nl}{f'> — {author}.{nl}' if len(author) != 0 else ''}"
 
 		def render_url(value, om, cm):
 			url = om.group('url')
