@@ -10,7 +10,7 @@ class Parser:
 		self.config = config
 		self.bbcode2md = reParser()
 		self.md2bbcode = reParser()
-		self.mdescapes = '`>!()+-{_*#|\\'
+		self.mdescapes = '\\`>!()+-{_*#|'
 
 		# just a shortcut
 		sp = reParser.SubParser
