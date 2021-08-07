@@ -142,6 +142,7 @@
 
 	"DISCORD": {
 		"useDisplayName": true,
+		"messageCheckMarkDuration": 0,
 		"roles": {
 			"809439809209892866": "fuchsia // pouf",
 			"415190599780532224": "red     // admin",

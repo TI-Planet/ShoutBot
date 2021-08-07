@@ -33,7 +33,7 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-	discord.updateChat(message)
+	await discord.updateChat(message)
 	await bot.process_commands(message)
 
 

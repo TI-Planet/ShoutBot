@@ -1,4 +1,5 @@
 from .parser import Parser
+import asyncio
 
 
 class bonfire:
@@ -9,7 +10,7 @@ class bonfire:
 		self.parser = Parser(self.config)
 		self.commands = cogs.getCommands()
 
-	def updateChat(self, message):
+	async def updateChat(self, message):
 		if message.author == self.bot.user or str(message.webhook_id) == str(self.config.TIPLANET.webhook.id):
 			return
 
@@ -20,12 +21,24 @@ class bonfire:
 			try:
 				chat_id = self.chat.postChatMessage(self.generateMessage(message))
 			except:
+				try:
+					await message.add_reaction('❌')
+				except:
+					pass
 				raise("error while updating chat")
 
 			if chat_id is not None and (self.config.TIPLANET.selfBot == False or not message.content.startswith('/')):
 				self.chat.deletionQueue[self.chat.deletionQueueIndex] = (int(chat_id), message.id)
 				self.chat.deletionQueueIndex = (self.chat.deletionQueueIndex + 1) % len(self.chat.deletionQueue)
 				self.chat.connectionMsg = None
+
+			# temporarily add a reaction in case of success
+			if self.config.DISCORD.messageCheckMarkDuration:
+				async def removeReaction():
+					await asyncio.sleep(self.config.DISCORD.messageCheckMarkDuration)
+					await message.remove_reaction('✅', self.bot.user)
+				await message.add_reaction('✅')
+				asyncio.ensure_future(removeReaction())
 
 
 	def generateMessage(self, message):

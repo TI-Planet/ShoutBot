@@ -85,6 +85,7 @@ class config:
 	class DISCORD:
 		token = config_field(["DISCORD", "TOKEN"])
 		useDisplayName = config_field(["DISCORD", "useDisplayName"])
+		messageCheckMarkDuration = int(config_field(["DISCORD", "messageCheckMarkDuration"]))
 		roles = config_field(["DISCORD", "roles"])
 		class cogs:
 			class latex:
