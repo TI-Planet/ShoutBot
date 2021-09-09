@@ -8,7 +8,7 @@ license = "GPL-3.0-or-later"
 [tool.poetry.dependencies]
 python = "^3.7"
 "discord.py" = "^1.6.0"
-beautifulsoup4 = "^4.9.3"
+beautifulsoup4 = "^4.10.0"
 requests = "^2.26.0"
 bbcode = "^1.1.0"
 
